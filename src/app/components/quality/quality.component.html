@@ -1,0 +1,63 @@
+<div fxLayout="row">
+  <div fxFlex.gt-sm="60%">
+    <div class="inline">
+      <h1 *ngIf="!editMode">{{ quality?.name }}</h1>
+      <textarea *ngIf="editMode">{{ quality?.name }}</textarea>
+      <br />
+      <div style="margin-top: 10px">
+        <div *ngIf="quality != undefined">
+          <div
+            *ngFor="let a of quality.tags"
+            style="display: inline; color: green"
+          >
+            {{ a }},
+          </div>
+        </div>
+      </div>
+      <br />
+      <div
+        [ngClass]="{
+          widthDesktop: !mobileService.isMobile(),
+          widthMobile: mobileService.isMobile()
+        }"
+      >
+        <img
+          width="100%"
+          src="{{
+            'https://enrgmsdppekwfvmbdxsl.supabase.co/storage/v1/object/public/q/' +
+              quality?.id +
+              '.jpg'
+          }}"
+        />
+      </div>
+
+      <div style="height: 25px">
+        <div *ngIf="quality?.activities">
+          <div
+            *ngFor="let a of quality?.activities"
+            style="display: inline; color: blue"
+          >
+            <b
+              style="cursor: pointer"
+              routerLink="/activities/activity/{{ a.id }}"
+              >#{{ a.name }}
+            </b>
+            ({{ a.count }})
+          </div>
+        </div>
+      </div>
+      <br />
+      <p *ngIf="!editMode">{{ quality?.description }}</p>
+      <!--
+ <button *ngIf="!editMode" (click)="appendQueryParam()">edit</button>
+  <button
+    *ngIf="editMode"
+    (click)="editMode = false"
+    [routerLink]="['/qualities/quality/', quality?.id]"
+  >
+    update
+  </button>
+  -->
+    </div>
+  </div>
+</div>

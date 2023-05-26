@@ -1,0 +1,40 @@
+<div class="scroll-container">
+  <div class="gridscroll">
+    <div *ngFor="let quality of qualities">
+      <div class="inline">
+        <div
+          style="
+            border: 0.3px solid gainsboro;
+            border-radius: 15px;
+            margin: 5px;
+            padding: 5px;
+          "
+        >
+          <div style="display: flex; justify-content: center">
+            <div class="___image-cropper-arch">
+              <img
+                class="___profile-pic-arch"
+                routerLink="/qualities/quality/{{ quality.id }}"
+                style="cursor: pointer; padding: 2px"
+                width="100px"
+                src="{{
+                  'https://enrgmsdppekwfvmbdxsl.supabase.co/storage/v1/object/public/q/' +
+                    quality.id +
+                    '.jpg'
+                }}"
+              />
+            </div>
+          </div>
+          <b
+            routerLink="/qualities/quality/{{ quality.id }}"
+            style="cursor: pointer; color: green"
+            >{{ quality.name }}
+          </b>
+          <p *ngIf="quality.count != undefined && total != undefined">
+            {{ quality.count | percentageQuality : total }} %
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

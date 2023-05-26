@@ -1,0 +1,82 @@
+<div *ngIf="!isMobile" fxLayout="row">
+  <div fxFlex.gt-sm="60%">
+    <ng-container *ngTemplateOutlet="detail"></ng-container>
+  </div>
+  <div fxFlex.gt-sm="40%"></div>
+</div>
+
+<div *ngIf="isMobile">
+  <ng-container *ngTemplateOutlet="detail"></ng-container>
+</div>
+
+<ng-template #detail>
+  <div>
+    <div *ngIf="master != undefined" style="width: 100%" class="inline">
+      <h1>{{ master.name }}</h1>
+      <a href="//{{ master.website }}" target="_blank">{{ master.website }}</a>
+      <br />
+      <div style="display: flex; justify-content: center">
+        <div class="image-cropper">
+          <img
+            src="{{
+              'https://enrgmsdppekwfvmbdxsl.supabase.co/storage/v1/object/public/avatars/' +
+                master.avatar_url
+            }}"
+            alt="avatar"
+            class="profile-pic"
+            height="300px"
+          />
+        </div>
+      </div>
+
+      <div>
+        total number of experiences: <b>{{ master.tot_xps }}</b>
+      </div>
+      <br />
+      <button (click)="edit()">edit</button>
+      <button (click)="addXp()">
+        add new experience for {{ master.name }}
+      </button>
+      <br />
+
+      <br />
+
+      <h1>Activities</h1>
+      <div style="display: flex; justify-content: center">
+        <div *ngFor="let a of master.activities">
+          <div class="inlineTag">
+            <b
+              routerLink="/activities/activity/{{ a.id }}"
+              style="cursor: pointer"
+            >
+              #{{ a.name }}</b
+            >&nbsp;&nbsp;
+          </div>
+        </div>
+      </div>
+
+      <br /><br />
+      <h1>Archtypes</h1>
+      <br />
+
+      <app-qualities-list-grid
+        [qualities]="master.qualities"
+        [total]="master.tot_xps"
+      ></app-qualities-list-grid>
+
+      <div style="width: 100%; text-align: left">
+        <br /><br />
+        <h2>Experiences</h2>
+        <div class="heroes">
+          <div *ngFor="let hero of master.heroes">
+            <app-experience-item
+              [hero]="hero"
+              [reverse]="false"
+            ></app-experience-item>
+            <br />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

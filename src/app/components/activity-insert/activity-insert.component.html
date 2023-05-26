@@ -1,0 +1,31 @@
+<form class="example-form" #masterForm="ngForm">
+  <mat-form-field>
+    <mat-label>hashtag#</mat-label>
+    <input
+      [(ngModel)]="newActivity.name"
+      matInput
+      placeholder="Activity hashtag"
+      name="name"
+      #name="ngModel"
+      required
+      ngModel
+      minlength="5"
+    />
+  </mat-form-field>
+  <br />
+  <mat-form-field>
+    <mat-label>description</mat-label>
+    <input
+      matInput
+      placeholder="Vinyasa Yoga"
+      [(ngModel)]="newActivity.description"
+      name="website"
+      #name="ngModel"
+      required
+    />
+  </mat-form-field>
+  <br />
+
+  <br />
+  <button (click)="save()" [disabled]="!masterForm.form.valid">save</button>
+</form>

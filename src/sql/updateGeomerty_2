@@ -1,0 +1,13 @@
+create or replace function updateGeomerty_2 (idHero int, nameHero varchar, lon float, lat float, eventDate date)
+returns SETOF heroes
+LANGUAGE plpgsql
+AS $$
+declare
+return_record heroes%rowtype;
+begin
+  update heroes set name = nameHero, geom = ST_SetSRID(ST_MakePoint(lon, lat), 4326), event_date=eventDate where id=idHero
+   returning *
+   into return_record;
+  return next return_record;
+end
+$$

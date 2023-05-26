@@ -1,0 +1,27 @@
+<!--
+<div>
+  <input
+    type="text"
+    class="my-search-box"
+    (keydown.enter)="$event.preventDefault()"
+    placeholder="Search Location"
+    type="text"
+    #search
+  />
+</div>
+-->
+
+<google-map
+  #myGoogleMap
+  height="500px"
+  width="99%"
+  [zoom]="zoom"
+  [center]="center"
+  [options]="options"
+>
+  <map-marker [position]="center"></map-marker>
+</google-map>
+
+<!-- Use custom zoom buttons -->
+<button (click)="zoomIn()">Zoom in</button>
+<button (click)="zoomOut()">Zoom out</button>

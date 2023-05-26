@@ -1,0 +1,33 @@
+<div style="padding-left: 15px">
+  <label for="site-search">Search the site:</label>
+  <input type="search" [(ngModel)]="search" />
+  <button (click)="sendNotification()">Search</button> <br /><br />
+
+  <div>
+    <ul>
+      <div *ngFor="let el of hashMap.keys()">
+        <br />
+        <b style="color: red">
+          {{ el | virtueFinder }}
+        </b>
+
+        <hr />
+        <li *ngFor="let quality of hashMap.get(el)?.values()">
+          <mat-checkbox
+            (change)="updateItem(quality)"
+            [checked]="quality.selected"
+          >
+            {{ quality.name }}
+            <!--
+            <span *ngIf="quality.tags">
+              (<i *ngFor="let t of quality.tags">{{ t }},</i>)
+            </span>
+            -->
+          </mat-checkbox>
+        </li>
+      </div>
+    </ul>
+  </div>
+  <br />
+  <button (click)="sendNotification()">Search</button>
+</div>

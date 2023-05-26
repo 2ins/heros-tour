@@ -1,14 +1,71 @@
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms'; // <-- NgModel lives here
+import { MatTabsModule } from '@angular/material/tabs';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { ReactiveFormsModule } from '@angular/forms';
+import { MatCardModule } from '@angular/material/card';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+
+import { TextFieldModule } from '@angular/cdk/text-field';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { GoogleMapsModule } from '@angular/google-maps';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatListModule } from '@angular/material/list';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatSelectModule } from '@angular/material/select';
+import {
+  BrowserAnimationsModule,
+  NoopAnimationsModule,
+} from '@angular/platform-browser/animations';
 import { NgxsModule } from '@ngxs/store';
+import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthComponent } from './auth/auth.component';
-import { HeroDetailComponent } from './hero-detail/hero-detail.component';
-import { HeroesComponent } from './heroes/heroes.component';
+import { ActivitiesComponent } from './components/activities/activities.component';
+import { ActivityDetailComponent } from './components/activity-detail/activity-detail.component';
+import { ActivityInsertComponent } from './components/activity-insert/activity-insert.component';
+import { ActivityItemComponent } from './components/activity-item/activity-item.component';
+import { AppContainerComponent } from './components/app-container/app-container.component';
+import { ContatInfoComponent } from './components/contat-info/contat-info.component';
+import { ExperienceDetailComponent } from './components/experience-detail/experience-detail.component';
+import { ExperienceInsertComponent } from './components/experience-insert/experience-insert.component';
+import { ExperienceItemComponent } from './components/experience-item/experience-item.component';
+import { ExperiencesComponent } from './components/experiences/experiences.component';
+import { HeroDetailComponent } from './components/hero-detail/hero-detail.component';
+import { HeroesComponent } from './components/heroes/heroes.component';
+import { LocationsComponent } from './components/locations/locations.component';
+import { MasterDetailComponent } from './components/master-detail/master-detail.component';
+import { MasterInsertComponent } from './components/master-insert/master-insert.component';
+import { MasterItemComponent } from './components/master-item/master-item.component';
+import { MastersComponent } from './components/masters/masters.component';
+import { MenuListComponent } from './components/menu-list/menu-list.component';
+import { ProfilemanagerComponent } from './components/profilemanager/profilemanager.component';
+import { QualitiesListHorizontalComponent } from './components/qualities-list-horizontal/qualities-list-horizontal.component';
+import { QualitiesComponent } from './components/qualities/qualities.component';
+import { QualityComponent } from './components/quality/quality.component';
+import { SearchCompositeComponent } from './components/search-composite/search-composite.component';
+import { UserDetailComponent } from './components/user-detail/user-detail.component';
+import { UserItemComponent } from './components/user-item/user-item.component';
+import { UsersComponent } from './components/users/users.component';
+import { HoverDirective } from './customdirectives/hover.directive';
+import { SetBackGroundDirective } from './customdirectives/setbackground.directive';
+import { ErrorComponent } from './error/error.component';
+import { HeroGuardService } from './hero-guard.service';
+import { PercentageQualityPipe } from './percentage-quality.pipe';
+import { VirtueFinderPipe } from './pipes/virtue-finder.pipe';
+import { ReplacePipe } from './replace-pipe.pipe';
 import { HeroState } from './states/todo.state';
+import { QualitiesListGridComponent } from './components/qualities-list-grid/qualities-list-grid.component';
 
 @NgModule({
   declarations: [
@@ -16,14 +73,69 @@ import { HeroState } from './states/todo.state';
     HeroesComponent,
     HeroDetailComponent,
     AuthComponent,
+    QualitiesComponent,
+    LocationsComponent,
+    ErrorComponent,
+    QualityComponent,
+    ContatInfoComponent,
+    SetBackGroundDirective,
+    HoverDirective,
+    AppContainerComponent,
+    MastersComponent,
+    MasterDetailComponent,
+    PercentageQualityPipe,
+    UsersComponent,
+    UserDetailComponent,
+    ActivitiesComponent,
+    ActivityDetailComponent,
+    ExperiencesComponent,
+    ExperienceDetailComponent,
+    ProfilemanagerComponent,
+    ExperienceItemComponent,
+    UserItemComponent,
+    MasterItemComponent,
+    ActivityItemComponent,
+    QualitiesListHorizontalComponent,
+    ExperienceInsertComponent,
+    ReplacePipe,
+    MasterInsertComponent,
+    ActivityInsertComponent,
+    SearchCompositeComponent,
+    MenuListComponent,
+    VirtueFinderPipe,
+    QualitiesListGridComponent,
   ],
   imports: [
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
     NgxsModule.forRoot([HeroState]),
+    // RouterModule.forRoot(routes),
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    NoopAnimationsModule,
+    MatSlideToggleModule,
+    MatCardModule,
+    MatGridListModule,
+    MatDividerModule,
+    GoogleMapsModule,
+    MatListModule,
+    MatIconModule,
+    FlexLayoutModule,
+    MatMenuModule,
+    MatButtonModule,
+    BrowserAnimationsModule,
+    MatFormFieldModule,
+    MatCheckboxModule,
+    TextFieldModule,
+    MatSelectModule,
+    MatAutocompleteModule,
+    MatInputModule,
+    MatChipsModule,
+    MatTabsModule,
   ],
-  providers: [],
+  providers: [HeroGuardService],
   bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AppModule {}

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { SupabaseService } from './supabase.service';
 
 @Component({
@@ -12,7 +13,11 @@ export class AppComponent implements OnInit {
 
   session = this.supabase.session;
 
-  constructor(private readonly supabase: SupabaseService) {}
+  constructor(
+    private readonly supabase: SupabaseService,
+    private route: Router,
+    private activatedRoute: ActivatedRoute
+  ) {}
 
   ngOnInit() {
     this.supabase.authChanges((_, session) => (this.session = session));

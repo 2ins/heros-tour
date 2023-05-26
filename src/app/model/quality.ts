@@ -1,0 +1,28 @@
+import { Activity } from './activity';
+
+export interface Quality {
+  id: number;
+  name: string;
+  count: number;
+  description: string;
+  tags: string[];
+  virtue: string;
+  //created_at: Date;
+  activities?: Activity[];
+  selected: boolean;
+}
+
+export interface Virtue {
+  id: string;
+  name: string;
+  color: string;
+}
+
+export const VIRTUES_LIST: Virtue[] = [
+  { id: 'WI', name: 'Wisdome and Knowledge', color: '' },
+  { id: 'CO', name: 'Courage', color: 'blu' },
+  { id: 'HU', name: 'Humanity', color: 'red' },
+  { id: 'JU', name: 'Justice', color: 'gren' },
+  { id: 'TE', name: 'Temperance', color: 'orange' },
+  { id: 'TR', name: 'Trascendence', color: 'violet' },
+];

@@ -1,0 +1,55 @@
+<form class="example-form" #masterForm="ngForm">
+  <mat-form-field>
+    <mat-label>Name</mat-label>
+    <input
+      [(ngModel)]="newMaster.name"
+      matInput
+      placeholder="Master"
+      name="name"
+      #name="ngModel"
+      required
+      ngModel
+      minlength="5"
+    />
+  </mat-form-field>
+  <br />
+  <mat-form-field>
+    <mat-label>website</mat-label>
+    <input
+      matInput
+      placeholder="Ex. It makes me feel..."
+      [(ngModel)]="newMaster.website"
+      name="website"
+      #name="ngModel"
+      required
+      pattern="^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$"
+    />
+  </mat-form-field>
+  <br />
+  <div class="custom-file overflow-hidden rounded-pill mb-5">
+    <input
+      id=" customFile "
+      type="file"
+      (change)="previewImage($event)"
+      class="custom-file-input rounded-pill"
+    />
+    <br />
+    <img *ngIf="imageSrc" [src]="imageSrc" alt="Preview" width="300px" />
+  </div>
+
+  <div * ngIf="status" class="spinner" style="font-size: 18px">
+    <div class="head"></div>
+  </div>
+
+  <div *ngIf="message" class="alert alert-success" role="alert">
+    {{ message }}
+  </div>
+  <br />
+  <li *ngFor="let acti of activities | async">
+    <mat-checkbox (change)="updateItem(acti)" [checked]="acti.selected">
+      {{ acti.name }}
+    </mat-checkbox>
+  </li>
+  <br />
+  <button (click)="save()" [disabled]="!masterForm.form.valid">save</button>
+</form>

@@ -1,0 +1,72 @@
+<ng-content select=".sopra"></ng-content>
+<div setbackground appHover [defaultColor]="'yellow'">
+  <button type="button" (click)="addHero()">add Hero</button>
+  <div *ngIf="hero != undefined">
+    <h1>{{ hero.name | uppercase }}</h1>
+
+    <h2>Details</h2>
+
+    <span class="name">
+      <div *ngIf="hero.activities">
+        <div class="skill-list">
+          <label style="color: blue" *ngFor="let a of hero.activities"
+            >#{{ a.name }}&nbsp;
+          </label>
+        </div>
+      </div>
+    </span>
+
+    <div><span>id: </span>{{ hero.id }}</div>
+    <div style="display: block">
+      <label for="hero-name">Hero name: </label>
+      <input id="hero-name" [(ngModel)]="hero.name" placeholder="name" />
+    </div>
+
+    <label
+      >Master :<b>@{{ hero.master.name }}</b></label
+    >
+
+    <div style="display: block">
+      <label>date: </label>
+      <input
+        type="date"
+        #createdAt
+        [ngModel]="hero.event_date | date : 'yyyy-MM-dd'"
+        (ngModelChange)="hero.event_date = $event"
+        [value]="hero.event_date | date : 'yyyy-MM-dd'"
+        (blur)="calculateTime()"
+      />
+      {{ hero.event_date | date : "yyyy-MM-dd" }}
+    </div>
+    <div style="display: block">
+      <div *ngIf="hero != undefined"></div>
+      <label *ngIf="hero.profile != undefined"
+        >user :<b>@{{ hero.profile.username }}</b></label
+      >
+    </div>
+    <div style="display: block">
+      <button (click)="updateHero(hero)">update</button>
+      <button (click)="deleteHero(hero)">delete</button>
+    </div>
+
+    <br />
+    <h2>Qualities</h2>
+
+    <div *ngFor="let quality of hero.qualities">
+      <div class="inline">
+        {{ quality.name }}<br />
+        <img
+          width="100px"
+          src="{{
+            'https://enrgmsdppekwfvmbdxsl.supabase.co/storage/v1/object/public/tarots/' +
+              quality.id +
+              '.jpeg'
+          }}"
+        />
+      </div>
+    </div>
+  </div>
+
+  <app-locations></app-locations>
+</div>
+<ng-content select=".sotto"></ng-content>

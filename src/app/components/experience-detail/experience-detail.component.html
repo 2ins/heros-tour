@@ -1,0 +1,77 @@
+<div *ngIf="!isMobile" fxLayout="row">
+  <div fxFlex.gt-sm="60%">
+    <ng-container *ngTemplateOutlet="detail"></ng-container>
+  </div>
+  <div fxFlex.gt-sm="40%"></div>
+</div>
+
+<div *ngIf="isMobile">
+  <ng-container *ngTemplateOutlet="detail"></ng-container>
+</div>
+
+<ng-template #detail>
+  <div>
+    <div *ngIf="hero != undefined">
+      <div
+        class="div1 image-cropper-detail"
+        routerLink="/users/user/{{ hero.profile.id }}"
+        style="cursor: pointer"
+      >
+        <img
+          class="profile-pic"
+          src="{{
+            'https://enrgmsdppekwfvmbdxsl.supabase.co/storage/v1/object/public/avatars/' +
+              hero.profile.avatar_url
+          }}"
+        />
+      </div>
+      <div
+        class="div2 image-cropper-detail"
+        routerLink="/masters/master/{{ hero.master.id }}"
+        style="cursor: pointer"
+      >
+        <img
+          class="profile-pic"
+          src="{{
+            'https://enrgmsdppekwfvmbdxsl.supabase.co/storage/v1/object/public/avatars/' +
+              hero.master.avatar_url
+          }}"
+          alt=""
+        />
+      </div>
+    </div>
+
+    <div>
+      <div *ngIf="hero != undefined" style="padding-top: 300px">
+        <br />
+        <span class="name">
+          <div class="skill-list">
+            {{ hero.profile.username }} <b>@{{ hero.master.name }}</b> did
+
+            <div *ngIf="hero.activities">
+              <label style="color: blue" *ngFor="let a of hero.activities"
+                >#{{ a.name }}&nbsp;
+              </label>
+            </div>
+          </div>
+          {{ hero.event_date | date : "yyyy-MM-dd" }}
+        </span>
+        <br />
+        {{ hero.name }}
+        <br />
+        {{ hero.location }}
+        <br /><br /><br />
+        <button (click)="edit()" *ngIf="editEnabled">edit</button>
+        <h2>Archtypes</h2>
+
+        <app-qualities-list-grid
+          [qualities]="hero.qualities"
+        ></app-qualities-list-grid>
+      </div>
+
+      <div style="width: 100%">
+        <app-locations></app-locations>
+      </div>
+    </div>
+  </div>
+</ng-template>

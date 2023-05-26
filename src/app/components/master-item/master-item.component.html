@@ -1,0 +1,55 @@
+<mat-card (click)="onSelect(user)" *ngIf="user">
+  <div fxLayout="row">
+    <div style="margin-right: 10px">
+      <div
+        routerLink="/masters/master/{{ user.id }}"
+        style="cursor: pointer; text-align: center; display: inline-block"
+      >
+        <div class="image-cropper-xp">
+          <img
+            src="{{
+              'https://enrgmsdppekwfvmbdxsl.supabase.co/storage/v1/object/public/avatars/' +
+                user.avatar_url
+            }}"
+            height="100px"
+            class="profile-pic"
+          />
+        </div>
+      </div>
+      <br />
+      <br />
+    </div>
+    <div fxFlex="75">
+      <b>{{ user.name }}</b>
+      <br />
+      <br />
+      activities:
+      <br />
+
+      <span class="name">
+        <div *ngIf="user.activities">
+          <div>
+            <label
+              style="color: blue; cursor: pointer; font-weight: bold"
+              *ngFor="let a of user.activities"
+              routerLink="/activities/activity/{{ a.id }}"
+              >#{{ a.name }}&nbsp;
+            </label>
+          </div>
+        </div>
+      </span>
+    </div>
+  </div>
+  <div>
+    <div>
+      <b>{{ user.name }}</b> most picked archtipes by his students on a total of
+      <b> {{ user.tot_xps }}</b> experiences with him:<br /><br />
+
+      <app-qualities-list-horizontal
+        [qualities]="user.qualities"
+        [total]="user.tot_xps"
+      ></app-qualities-list-horizontal>
+    </div>
+  </div>
+</mat-card>
+<br />

@@ -14,6 +14,8 @@ export class AuthComponent implements OnInit {
     email: '',
   });
 
+  email = '';
+
   constructor(
     private readonly supabase: SupabaseService,
     private readonly formBuilder: FormBuilder
@@ -26,6 +28,8 @@ export class AuthComponent implements OnInit {
       this.loading = true;
       const email = this.signInForm.value.email as string;
       const { error } = await this.supabase.signIn(email);
+      this.email = email;
+      console.log('EMAIL', email);
       if (error) throw error;
       alert('Check your email for the login link!');
     } catch (error) {

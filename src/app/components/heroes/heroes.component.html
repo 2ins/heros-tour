@@ -1,0 +1,59 @@
+<h2>My Heroes</h2>
+
+<div class="container">
+  <div>
+    <div>
+      <label for="site-search">Search the site:</label>
+      <input type="search" [(ngModel)]="search" />
+
+      <button (click)="onSearch()">Search</button>
+    </div>
+
+    <ul class="heroes">
+      <li *ngFor="let hero of heroes | async" appHover [defaultColor]="'pink'">
+        <button
+          [class.selected]="hero === myHero"
+          type="button"
+          (click)="onSelect(hero)"
+        >
+          <span class="badge">{{ hero.id }}</span>
+          <div class="name" style="text-align: left">
+            <span style="display: block"> {{ hero.name }}</span>
+            <span style="display: block; font-size: xx-small">
+              {{ hero.profile.username }}</span
+            >
+
+            <span class="name">
+              <div *ngIf="hero.qualities">
+                <div class="skill-list">
+                  <label style="color: green" *ngFor="let q of hero.qualities"
+                    >*{{ q.name }}&nbsp;
+                  </label>
+                </div>
+              </div>
+            </span>
+            <span class="name">
+              <div *ngIf="hero.activities">
+                <div class="skill-list">
+                  <label style="color: blue" *ngFor="let a of hero.activities"
+                    >#{{ a.name }}&nbsp;
+                  </label>
+                </div>
+              </div>
+            </span>
+          </div>
+        </button>
+      </li>
+    </ul>
+  </div>
+
+  <div style="margin-left: 50px">
+    <app-hero-detail
+      [auxValueFromFather]="'123Stella'"
+      (upsertHeroEvent)="onHeroUpdate($event)"
+    >
+      <h1 class="sopra">sopra</h1>
+      <h1 class="sotto">sotto</h1>
+    </app-hero-detail>
+  </div>
+</div>

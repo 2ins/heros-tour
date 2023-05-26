@@ -1,0 +1,44 @@
+<div>id:{{ myUser?.id }}</div>
+<div>
+  username:
+  <input
+    *ngIf="myUser"
+    id="hero-name"
+    [(ngModel)]="myUser.username"
+    placeholder="name"
+  />
+</div>
+<div>avatarUrl:{{ myUser?.avatar_url }}</div>
+
+<img
+  *ngIf="_avatarUrl"
+  [src]="_avatarUrl"
+  alt="Avatar"
+  class="avatar image"
+  style="width: 300px"
+/>
+
+<div class="custom-file overflow-hidden rounded-pill mb-5">
+  <input
+    id=" customFile "
+    type="file"
+    (change)="selectFile($event)"
+    class="custom-file-input rounded-pill"
+  />
+  <label for="customFile" class="custom-file-label rounded-pill">
+    Choose file
+  </label>
+</div>
+
+<div * ngIf="status" class="spinner" style="font-size: 18px">
+  <div class="head"></div>
+</div>
+
+<div *ngIf="message" class="alert alert-success" role="alert">
+  {{ message }}
+</div>
+
+<br />
+<div>
+  <button (click)="saveProfile()">Update Profile</button>
+</div>

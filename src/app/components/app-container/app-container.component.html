@@ -1,0 +1,62 @@
+<!--HEADER-->
+<div
+  style="
+    float: left;
+    width: 100%;
+    z-index: 0;
+    margin-bottom: 20px;
+    background-color: white;
+    border: solid grey 1px;
+    position: fixed;
+    z-index: 10;
+  "
+>
+  <div class="alignleft">
+    <span
+      ><div (click)="backClicked()" style="float: left; margin-top: 7px">
+        <mat-icon>arrow_back</mat-icon>
+      </div>
+      <div style="float: left; margin-left: 15px; margin-top: 10px">
+        {{ session.user.email }}
+      </div>
+    </span>
+  </div>
+
+  <div class="alignright">
+    <button mat-button [matMenuTriggerFor]="menu">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+  </div>
+</div>
+<!--END of HEADER-->
+
+<div
+  *ngIf="!isMobile"
+  class="container"
+  [ngClass]="{ class1: !isMobile }"
+  style="padding-top: 50px"
+>
+  <div fxLayout="row">
+    <div fxFlex.gt-sm="20%">
+      <app-menu-list></app-menu-list>
+    </div>
+    <div fxFlex.gt-sm="80%">
+      <div class="container" style="width: 99%">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="isMobile" class="container" style="padding-top: 50px">
+  <div class="container" style="width: 99%">
+    <router-outlet></router-outlet>
+  </div>
+</div>
+
+<!-- MENU drop down -->
+<mat-menu #menu="matMenu">
+  <app-menu-list></app-menu-list>
+</mat-menu>
+
+<!--end of Menu-->

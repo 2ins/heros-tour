@@ -1,0 +1,84 @@
+<div style="padding-right: 15px">
+  <button
+    mat-menu-item
+    style="padding: 5px"
+    [routerLinkActive]="'active'"
+    [routerLink]="'/qualities'"
+  >
+    Archtypes
+  </button>
+  <hr />
+  <button
+    mat-menu-item
+    style="padding: 5px"
+    [routerLinkActive]="'active'"
+    routerLink="/experiences"
+  >
+    Experiences
+  </button>
+
+  <button
+    mat-menu-item
+    style="padding: 5px"
+    [routerLinkActive]="'active'"
+    routerLink="/users"
+  >
+    Heroes
+  </button>
+  <button
+    mat-menu-item
+    style="padding: 5px"
+    [routerLinkActive]="'active'"
+    routerLink="/masters"
+  >
+    Masters
+  </button>
+  <button
+    mat-menu-item
+    style="padding: 5px"
+    [routerLinkActive]="'active'"
+    routerLink="/activities"
+  >
+    Activities
+  </button>
+  <button
+    mat-menu-item
+    style="padding: 5px"
+    [routerLinkActive]="'active'"
+    routerLink="/locations"
+  >
+    Locations
+  </button>
+
+  <!--
+  <button
+    mat-menu-item
+    style="padding: 5px"
+    [routerLinkActive]="'active'"
+    routerLink="/addnew"
+  >
+    Add New Experience
+  </button>
+
+  <button
+    mat-menu-item
+    style="padding: 5px"
+    [routerLinkActive]="'active'"
+    routerLink="/addMaster"
+  >
+    Add New Master
+  </button>
+-->
+  <hr />
+  <button
+    mat-menu-item
+    style="padding: 5px"
+    [routerLinkActive]="'active'"
+    routerLink="/profile"
+  >
+    My Profile
+  </button>
+  <button (click)="onLogOut()" mat-menu-item style="padding: 5px">
+    Sign Out
+  </button>
+</div>

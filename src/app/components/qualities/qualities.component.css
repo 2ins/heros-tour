@@ -1,0 +1,19 @@
+#innerbox {
+  width: 250px; /* or whatever width you want. */
+  max-width: 250px; /* or whatever width you want. */
+  display: inline-block;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+}
+
+div.inline {
+  float: left;
+
+  text-align: center;
+}
+.clearBoth {
+  clear: both;
+}

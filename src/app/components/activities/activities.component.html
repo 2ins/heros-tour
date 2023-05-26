@@ -1,0 +1,44 @@
+<div fxLayout="row" *ngIf="!isMobile">
+  <div fxFlex.gt-sm="60%">
+    <h2>Activities</h2>
+
+    <div style="width: 99%">
+      <button [routerLinkActive]="'active'" routerLink="/addActivity">
+        Add New Activity
+      </button>
+      <div>
+        <div *ngFor="let a of activities | async">
+          <app-activity-item [activity]="a"></app-activity-item>
+          <br />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div fxFlex.gt-sm="40%">
+    <app-search-composite
+      (notifyParent)="getNotification($event)"
+    ></app-search-composite>
+  </div>
+</div>
+
+<div *ngIf="isMobile">
+  <mat-tab-group
+    mat-stretch-tabs="false"
+    mat-align-tabs="start"
+    [(selectedIndex)]="indxTab"
+  >
+    <mat-tab label="Activities">
+      <div *ngFor="let a of activities | async">
+        <app-activity-item [activity]="a"></app-activity-item>
+      </div>
+    </mat-tab>
+    <mat-tab label="Search">
+      <app-search-composite
+        (notifyParent)="getNotification($event)"
+      ></app-search-composite>
+    </mat-tab>
+    <mat-tab label="Add">
+      <app-activity-insert></app-activity-insert>
+    </mat-tab>
+  </mat-tab-group>
+</div>

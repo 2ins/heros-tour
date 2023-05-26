@@ -1,0 +1,96 @@
+<mat-card (click)="onSelect(hero)" *ngIf="hero">
+  <div fxLayout="row">
+    <div style="margin-right: 10px">
+      <div
+        routerLink="/users/user/{{ hero.profile.id }}"
+        style="cursor: pointer; text-align: center; display: inline-block"
+        class="right-aligned"
+      >
+        <ng-template [ngIf]="reverse" [ngIfElse]="normal">
+          <div>
+            <div class="image-cropper-xp">
+              <img
+                src="{{
+                  'https://enrgmsdppekwfvmbdxsl.supabase.co/storage/v1/object/public/avatars/' +
+                    hero.master.avatar_url
+                }}"
+                height="100px"
+                class="profile-pic"
+              />
+            </div>
+
+            <div>
+              <b>{{ hero.master.name }}</b>
+            </div>
+          </div>
+        </ng-template>
+
+        <ng-template #normal>
+          <div class="image-cropper-xp">
+            <img
+              src="{{
+                'https://enrgmsdppekwfvmbdxsl.supabase.co/storage/v1/object/public/avatars/' +
+                  hero.profile.avatar_url
+              }}"
+              height="100px"
+              class="profile-pic"
+            />
+          </div>
+          <!--
+                  <div>
+                  <b>{{ hero.profile.username }}</b>
+                </div>
+                -->
+        </ng-template>
+      </div>
+      <br />
+      <br />
+    </div>
+    <div fxFlex="75">
+      <b>{{ hero.profile.username }}</b> did an experience
+      <b>@{{ hero.master.name }}</b> improving his skills with the following
+      activities:
+
+      <br />
+      <span class="name">
+        <div *ngIf="hero.activities">
+          <div>
+            <label
+              style="color: blue; cursor: pointer; font-weight: bold"
+              *ngFor="let a of hero.activities"
+              routerLink="/activities/activity/{{ a.id }}"
+              >#{{ a.name }}&nbsp;
+            </label>
+          </div>
+        </div>
+      </span>
+
+      {{ hero.location }}
+      <br />
+      {{ hero.event_date | date : "MMMM, Y" }}
+      <Br />
+    </div>
+
+    <span
+      *ngIf="hero.master.id"
+      style="display: block"
+      routerLink="/masters/master/{{ hero.master.id }}"
+      style="cursor: pointer"
+    >
+    </span>
+  </div>
+  <div>
+    <div>
+      {{ hero.name }}
+
+      <br />
+      <br />
+      <b>{{ hero.profile.username }}</b> picked the following archtipes for this
+      experience :<br /><br />
+
+      <app-qualities-list-horizontal
+        [qualities]="hero.qualities"
+      ></app-qualities-list-horizontal>
+    </div>
+  </div>
+</mat-card>

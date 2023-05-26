@@ -1,0 +1,12 @@
+div.inline {
+  float: left;
+  width: 150px;
+  text-align: center;
+}
+.clearBoth {
+  clear: both;
+}
+.skill-list {
+  display: flex;
+  justify-content: between;
+}

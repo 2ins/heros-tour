@@ -1,0 +1,11 @@
+div.inline {
+  float: left;
+  width: 150px;
+  text-align: center;
+}
+div.inlineTag {
+  float: left;
+  text-align: center;
+  color: blue;
+  font-size: larger;
+}

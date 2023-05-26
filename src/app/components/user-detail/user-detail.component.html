@@ -1,0 +1,77 @@
+<div *ngIf="!isMobile" fxLayout="row">
+  <div fxFlex.gt-sm="60%">
+    <ng-container *ngTemplateOutlet="detail"></ng-container>
+  </div>
+  <div fxFlex.gt-sm="40%"></div>
+</div>
+
+<div *ngIf="isMobile">
+  <ng-container *ngTemplateOutlet="detail"></ng-container>
+</div>
+
+<ng-template #detail>
+  <div>
+    <div *ngIf="user != undefined" style="width: 100%" class="inline">
+      <h1>{{ user.username }}</h1>
+      <div>{{ user.website }}</div>
+
+      <div style="display: flex; justify-content: center">
+        <div class="image-cropper">
+          <img
+            src="{{
+              'https://enrgmsdppekwfvmbdxsl.supabase.co/storage/v1/object/public/avatars/' +
+                user.avatar_url
+            }}"
+            alt="avatar"
+            class="profile-pic"
+          />
+        </div>
+      </div>
+
+      <div>
+        experiences experienced: <b>{{ user.tot_xps }}</b>
+      </div>
+      <br /><br />
+      <h2>Activities</h2>
+
+      <div style="display: flex; justify-content: center">
+        <span class="name">
+          <div *ngIf="user.activities">
+            <div>
+              <label
+                style="color: blue; cursor: pointer; font-weight: bold"
+                *ngFor="let a of user.activities"
+                routerLink="/activities/activity/{{ a.id }}"
+                >#{{ a.name }}&nbsp;
+              </label>
+            </div>
+          </div>
+        </span>
+      </div>
+      <br /><br /><br />
+
+      <h2>Qualities</h2>
+      <div>
+        <app-qualities-list-grid
+          [qualities]="user.qualities"
+          [total]="user.tot_xps"
+        ></app-qualities-list-grid>
+      </div>
+      <br />
+
+      <div style="text-align: left">
+        <br /><br />
+        <h2>Experiences</h2>
+        <div class="heroes">
+          <div *ngFor="let hero of user.heroes">
+            <app-experience-item
+              [hero]="hero"
+              [reverse]="true"
+            ></app-experience-item>
+            <br />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

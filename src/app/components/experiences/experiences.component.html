@@ -1,0 +1,39 @@
+<div fxLayout="row" *ngIf="!isMobile">
+  <div fxFlex.gt-sm="60%">
+    <h2>Experiences</h2>
+    <div class="container" style="width: 99%">
+      <div>
+        <div class="heroes">
+          <div *ngFor="let hero of heroes | async">
+            <app-experience-item [hero]="hero"></app-experience-item>
+            <br />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div fxFlex.gt-sm="40%">
+    <app-search-composite
+      (notifyParent)="getNotification($event)"
+    ></app-search-composite>
+  </div>
+</div>
+
+<div *ngIf="isMobile">
+  <mat-tab-group
+    mat-stretch-tabs="false"
+    mat-align-tabs="start"
+    [(selectedIndex)]="indxTab"
+  >
+    <mat-tab label="Experiences">
+      <div *ngFor="let hero of heroes | async">
+        <app-experience-item [hero]="hero"></app-experience-item>
+      </div>
+    </mat-tab>
+    <mat-tab label="Search">
+      <app-search-composite
+        (notifyParent)="getNotification($event)"
+      ></app-search-composite>
+    </mat-tab>
+  </mat-tab-group>
+</div>
