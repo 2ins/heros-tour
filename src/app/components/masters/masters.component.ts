@@ -6,7 +6,6 @@ import { MobileService } from 'src/app/services/mobile.service';
 import {
   GetMastersOverview,
   GetMastersOverviewSearch,
-  SetSelectedMaster,
 } from '../../actions/master.action';
 import { Master } from '../../model/master';
 import { HeroState } from '../../states/todo.state';
@@ -34,13 +33,16 @@ export class MastersComponent implements OnInit {
     this.isMobile = this.ms.isMobile();
     this.store.dispatch(new GetMastersOverview());
   }
+  /*
   onSelect(master: Master): void {
     this.store.dispatch(new SetSelectedMaster(master.id));
   }
+  */
 
   getNotification(evt: Event) {
     var x = evt as unknown as Search;
-    this.store.dispatch(new GetMastersOverviewSearch(x));
-    this.indxTab = 0;
+    this.store.dispatch(new GetMastersOverviewSearch(x)).subscribe(() => {
+      this.indxTab = 0;
+    });
   }
 }

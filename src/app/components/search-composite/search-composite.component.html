@@ -1,15 +1,28 @@
 <div style="padding-left: 15px">
-  <label for="site-search">Search the site:</label>
-  <input type="search" [(ngModel)]="search" />
-  <button (click)="sendNotification()">Search</button> <br /><br />
+  <input
+    type="search"
+    [(ngModel)]="search"
+    [placeholder]="placeHolder"
+  /><br /><br />
+  <button
+    (click)="sendNotification()"
+    mat-button
+    mat-stroked-button
+    style="margin-right: 10px; margin-bottom: 10px; color: blue"
+  >
+    Search
+  </button>
+  <br /><br />
 
   <div>
     <ul>
       <div *ngFor="let el of hashMap.keys()">
         <br />
-        <b style="color: red">
-          {{ el | virtueFinder }}
-        </b>
+        <p [ngClass]="el">
+          <b>
+            {{ el | virtueFinder }}
+          </b>
+        </p>
 
         <hr />
         <li *ngFor="let quality of hashMap.get(el)?.values()">
@@ -29,5 +42,11 @@
     </ul>
   </div>
   <br />
-  <button (click)="sendNotification()">Search</button>
+  <button
+    (click)="sendNotification()"
+    mat-stroked-button
+    style="float: left; margin-right: 10px; margin-bottom: 10px; color: blue"
+  >
+    Search
+  </button>
 </div>

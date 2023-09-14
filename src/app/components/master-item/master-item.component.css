@@ -13,6 +13,11 @@
 .profile-pic {
   display: inline;
   margin: 0 auto;
+}
+.profile-pic-height {
+  height: 100%;
+}
+.profile-pic-width {
   width: 100%;
 }
 div.inline {

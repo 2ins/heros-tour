@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngxs/store';
 import { SetSelectedUser } from 'src/app/actions/profiles.action';
-import { Profile, SupabaseService } from 'src/app/supabase.service';
+import { MyProfile, SupabaseService } from 'src/app/supabase.service';
 
 @Component({
   selector: 'app-user-item',
@@ -11,7 +11,7 @@ import { Profile, SupabaseService } from 'src/app/supabase.service';
 })
 export class UserItemComponent implements OnInit {
   @Input()
-  user?: Profile;
+  user?: MyProfile;
 
   constructor(
     private readonly supabase: SupabaseService,
@@ -21,7 +21,7 @@ export class UserItemComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  onSelect(u: Profile): void {
+  onSelect(u: MyProfile): void {
     this.store.dispatch(new SetSelectedUser(u.id));
     this.router.navigate(['/users/user/', u.id]);
   }

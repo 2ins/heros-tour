@@ -37,10 +37,10 @@
   style="padding-top: 50px"
 >
   <div fxLayout="row">
-    <div fxFlex.gt-sm="20%">
-      <app-menu-list></app-menu-list>
+    <div fxFlex.gt-sm="15%">
+      <app-menu-list [session]="session"></app-menu-list>
     </div>
-    <div fxFlex.gt-sm="80%">
+    <div fxFlex.gt-sm="85%">
       <div class="container" style="width: 99%">
         <router-outlet></router-outlet>
       </div>
@@ -56,7 +56,7 @@
 
 <!-- MENU drop down -->
 <mat-menu #menu="matMenu">
-  <app-menu-list></app-menu-list>
+  <app-menu-list [session]="session"></app-menu-list>
 </mat-menu>
 
 <!--end of Menu-->

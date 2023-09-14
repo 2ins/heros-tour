@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { Select, Store } from '@ngxs/store';
-import { map, Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { GetActivitiesOverview } from 'src/app/actions/activity.action';
 import { AddMaster } from 'src/app/actions/master.action';
 import { Activity } from 'src/app/model/activity';
@@ -63,6 +63,8 @@ export class MasterInsertComponent implements OnInit {
 
     console.log('preselectedActivities', preselectedActivities);
 
+    var search: Search = { search: '', arr: [] };
+    this.store.dispatch(new GetActivitiesOverview(search));
     this.activities?.subscribe((as) => {
       if (as && as.length != 0) {
         as.forEach((e) => {
@@ -76,8 +78,6 @@ export class MasterInsertComponent implements OnInit {
           });
         });
       } else {
-        var search: Search = { search: '', arr: [] };
-        this.store.dispatch(new GetActivitiesOverview(search));
       }
     });
   }

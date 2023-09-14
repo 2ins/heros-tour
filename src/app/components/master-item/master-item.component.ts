@@ -1,7 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngxs/store';
-import { SetSelectedMaster } from 'src/app/actions/master.action';
 import { Master } from 'src/app/model/master';
 import { SupabaseService } from 'src/app/supabase.service';
 
@@ -14,6 +13,8 @@ export class MasterItemComponent implements OnInit {
   @Input()
   user?: Master;
 
+  @ViewChild('mrImgElement', { static: false }) mrImgElementRef!: ElementRef;
+
   constructor(
     private readonly supabase: SupabaseService,
     private store: Store,
@@ -23,7 +24,17 @@ export class MasterItemComponent implements OnInit {
   ngOnInit(): void {}
 
   onSelect(u: Master): void {
-    this.store.dispatch(new SetSelectedMaster(u.id));
     this.router.navigate(['/masters/master/', u.id]);
+  }
+  ngAfterViewInit() {
+    //this.calculateImageClass();
+  }
+
+  calculateImageClass() {
+    const mrImg: HTMLImageElement = this.mrImgElementRef.nativeElement;
+    const imageClass =
+      mrImg.width >= mrImg.height ? 'profile-pic-height' : 'profile-pic-width';
+    mrImg.classList.add(imageClass);
+    console.log(this.user?.name + ' - ' + imageClass);
   }
 }

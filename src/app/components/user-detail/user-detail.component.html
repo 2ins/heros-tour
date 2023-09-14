@@ -1,56 +1,84 @@
-<div *ngIf="!isMobile" fxLayout="row">
-  <div fxFlex.gt-sm="60%">
-    <ng-container *ngTemplateOutlet="detail"></ng-container>
+<div *ngIf="user != undefined">
+  <div *ngIf="!isMobile">
+    <div fxLayout="row">
+      <div fxFlex.gt-sm="60%">
+        <ng-container *ngTemplateOutlet="detail"></ng-container>
+      </div>
+      <div fxFlex.gt-sm="40%">
+        <ng-container *ngTemplateOutlet="VirtuePie"></ng-container>
+      </div>
+    </div>
+    <ng-container *ngTemplateOutlet="prospect"></ng-container>
   </div>
-  <div fxFlex.gt-sm="40%"></div>
-</div>
 
-<div *ngIf="isMobile">
-  <ng-container *ngTemplateOutlet="detail"></ng-container>
-</div>
+  <div *ngIf="isMobile">
+    <ng-container *ngTemplateOutlet="detail"></ng-container>
+    <ng-container *ngTemplateOutlet="VirtuePie"></ng-container>
+    <br />
+    <ng-container *ngTemplateOutlet="prospect"></ng-container>
+  </div>
 
-<ng-template #detail>
-  <div>
-    <div *ngIf="user != undefined" style="width: 100%" class="inline">
-      <h1>{{ user.username }}</h1>
-      <div>{{ user.website }}</div>
+  <ng-template #detail>
+    <div>
+      <div style="width: 100%" class="inline">
+        <h1>{{ user.username }}</h1>
+        <div>{{ user.website }}</div>
 
-      <div style="display: flex; justify-content: center">
-        <div class="image-cropper">
-          <img
-            src="{{
-              'https://enrgmsdppekwfvmbdxsl.supabase.co/storage/v1/object/public/avatars/' +
-                user.avatar_url
-            }}"
-            alt="avatar"
-            class="profile-pic"
-          />
-        </div>
-      </div>
-
-      <div>
-        experiences experienced: <b>{{ user.tot_xps }}</b>
-      </div>
-      <br /><br />
-      <h2>Activities</h2>
-
-      <div style="display: flex; justify-content: center">
-        <span class="name">
-          <div *ngIf="user.activities">
-            <div>
-              <label
-                style="color: blue; cursor: pointer; font-weight: bold"
-                *ngFor="let a of user.activities"
-                routerLink="/activities/activity/{{ a.id }}"
-                >#{{ a.name }}&nbsp;
-              </label>
-            </div>
+        <div style="display: flex; justify-content: center">
+          <div class="image-cropper">
+            <img
+              #hdImage
+              src="{{
+                'https://enrgmsdppekwfvmbdxsl.supabase.co/storage/v1/object/public/avatars/' +
+                  user.avatar_url
+              }}"
+              alt="avatar"
+              class="profile-pic"
+              [ngClass]="
+                hdImage.width >= hdImage.height
+                  ? 'profile-pic-height'
+                  : 'profile-pic-width'
+              "
+            />
           </div>
-        </span>
-      </div>
-      <br /><br /><br />
+        </div>
 
-      <h2>Qualities</h2>
+        <br /><br />
+        <h3>Activities</h3>
+
+        <div style="display: flex; justify-content: center">
+          <span class="name">
+            <div *ngIf="user.activities">
+              <div>
+                <label
+                  style="color: blue; cursor: pointer"
+                  *ngFor="let a of user.activities"
+                  routerLink="/activities/activity/{{ a.id }}"
+                  >#{{ a.name }}&nbsp;
+                </label>
+              </div>
+            </div>
+          </span>
+        </div>
+        <br /><br />
+
+        <br />
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template #VirtuePie>
+    <br />
+    <app-virtues-pie [qualities]="user.qualities"></app-virtues-pie>
+    <br />
+    <div style="text-align: center">
+      experiences experienced: <b>{{ user.tot_xps }}</b>
+    </div>
+  </ng-template>
+
+  <ng-template #prospect>
+    <div>
+      <h3 style="text-align: center">Strenghts</h3>
       <div>
         <app-qualities-list-grid
           [qualities]="user.qualities"
@@ -61,7 +89,7 @@
 
       <div style="text-align: left">
         <br /><br />
-        <h2>Experiences</h2>
+        <h3 style="text-align: center">Experiences</h3>
         <div class="heroes">
           <div *ngFor="let hero of user.heroes">
             <app-experience-item
@@ -73,5 +101,5 @@
         </div>
       </div>
     </div>
-  </div>
-</ng-template>
+  </ng-template>
+</div>

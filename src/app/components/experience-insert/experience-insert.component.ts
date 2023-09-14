@@ -20,7 +20,7 @@ import { Master } from 'src/app/model/master';
 import { Quality } from 'src/app/model/quality';
 import { MobileService } from 'src/app/services/mobile.service';
 import { HeroState } from 'src/app/states/todo.state';
-import { Profile, SupabaseService } from 'src/app/supabase.service';
+import { MyProfile, SupabaseService } from 'src/app/supabase.service';
 
 @Component({
   selector: 'app-experience-insert',
@@ -29,15 +29,17 @@ import { Profile, SupabaseService } from 'src/app/supabase.service';
 })
 export class ExperienceInsertComponent implements OnInit {
   @Select(HeroState.getQualityList) qualities?: Observable<Quality[]>;
-  @Select(HeroState.getMasterList) masters?: Observable<Master[]>;
-  @Select(HeroState.getUserProfile) profile?: Observable<Profile>;
+
+  @Select(HeroState.getUserProfile) profile?: Observable<MyProfile>;
+
+  @Select(HeroState.getNewHeroTable) newHeroTable?: Observable<HeroTable>;
 
   comment: string = '';
   selectedMaster?: Master;
   searchMaster?: string;
   myControl = new FormControl('');
-  myMasters?: Master[];
-  myProfile?: Profile;
+
+  myProfile?: MyProfile;
   textareaValue?: string;
   isMobile: boolean = false;
   isTablet: boolean = false;
@@ -61,17 +63,6 @@ export class ExperienceInsertComponent implements OnInit {
     private lctn: Location
   ) {}
 
-  getMasterByName(name: String) {
-    if (this.masters) {
-      return this.masters.pipe(
-        map((masters: Master[]) =>
-          masters.filter((x: Master) => x.name === name)
-        )
-      );
-    }
-    return [];
-  }
-
   ngOnInit(): void {
     var experience: Hero = history.state.experience;
     var preselectedQs: Quality[] = [];
@@ -83,7 +74,9 @@ export class ExperienceInsertComponent implements OnInit {
       preselectedQs = experience.qualities;
       this.id = experience.id;
       this.event_date = experience.event_date;
+      this.geom = experience.geom;
       if (experience.location) this.location = experience.location;
+      console.log('preselectedQs', preselectedQs);
     } else if (history.state.oggetto) {
       this.selectedMaster = history.state.oggetto;
     }
@@ -103,17 +96,13 @@ export class ExperienceInsertComponent implements OnInit {
               if (pr.id == e.id) {
                 console.log('yes');
                 e.selected = true;
+                e.desc_xp = pr.desc_xp;
               }
             });
           }
         });
       } else {
         this.store.dispatch(new GetQualities());
-      }
-    });
-    this.masters?.subscribe((ms) => {
-      if (ms) {
-        this.myMasters = ms;
       }
     });
 
@@ -136,19 +125,30 @@ export class ExperienceInsertComponent implements OnInit {
 
   save(): void {
     var newHero = this.getNewHero();
-    this.store.dispatch(new AddHero2(newHero));
+    this.store.dispatch(new AddHero2(newHero)).subscribe(() => {
+      console.log('BEFORE LAST');
+
+      this.sleep(1500).then(() => {
+        this.newHeroTable?.subscribe((auxHero) => {
+          this.router.navigateByUrl('/experiences/experience/' + auxHero.id);
+        });
+      });
+    });
   }
 
+  sleep(ms: number) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  }
   //utilities
-  getArr(): number[] {
-    var arr: number[] = [];
+  getArr(): Quality[] {
+    var arr: Quality[] = [];
     if (this.qualities) {
       this.qualities
         .pipe(
           map((array: Quality[]) => {
             array.forEach((item: Quality) => {
               if (item.selected) {
-                arr.push(item.id);
+                arr.push(item);
               }
             });
           })
@@ -179,11 +179,15 @@ export class ExperienceInsertComponent implements OnInit {
       event_date = this.event_date;
     }
 
+    var lat = 0;
+    var long = 0;
+
     //add hero_qualities to the heroTable
     var appo: HeroQualitiesTable[] = [];
     arr.forEach(async (a) => {
       var hq: HeroQualitiesTable = {
-        quality_id: a,
+        quality_id: a.id,
+        desc_xp: a.desc_xp,
       };
       appo.push(hq);
     });

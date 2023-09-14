@@ -1,68 +1,90 @@
-<div *ngIf="!isMobile" fxLayout="row">
-  <div fxFlex.gt-sm="60%">
-    <ng-container *ngTemplateOutlet="actDetail"></ng-container>
-  </div>
-  <div fxFlex.gt-sm="40%"></div>
-</div>
-
-<div *ngIf="isMobile">
-  <ng-container *ngTemplateOutlet="actDetail"></ng-container>
-</div>
-
-<ng-template #actDetail>
-  <div>
-    <div *ngIf="activity != undefined" style="width: 100%" class="inline">
-      <h1>{{ activity.description }}</h1>
-      <div style="color: blue">
-        <b>#{{ activity.name }}</b>
+<div *ngIf="activity != undefined">
+  <div *ngIf="!isMobile">
+    <div fxLayout="row">
+      <div fxFlex.gt-sm="60%">
+        <ng-container *ngTemplateOutlet="detail"></ng-container>
       </div>
-
-      <br />
-      <div style="color: blue">
-        <a
-          *ngIf="activity.description"
-          href="{{ activity.description | replace : ' ' : '+' }}"
-          target="_blank"
-          ><img style="width: 50px" class="img-responsive" src="assets/gg.png"
-        /></a>
-      </div>
-      <br />
-      <div>
-        total number of experiences done by people:
-        <b>{{ activity.xps_count }}</b>
-      </div>
-
-      <div>
-        total number of master teaching:
-        <b>{{ activity.master_count }}</b>
-      </div>
-      <br />
-      <button (click)="edit()">edit</button>
-      <br /><br />
-
-      <br /><br />
-      <h1>Archtypes</h1>
-      <br />
-      <!--<app-qualities-list-horizontal
-        [qualities]="activity.qualities"
-        [total]="activity.xps_count"
-      ></app-qualities-list-horizontal>-->
-      <app-qualities-list-grid
-        [qualities]="activity.qualities"
-        [total]="activity.xps_count"
-      ></app-qualities-list-grid>
-      <br />
-
-      <div class="inline" style="width: 100%">
-        <br /><br />
-        <h1>Masters</h1>
-        <p>the list of masters teaching this activity</p>
-        <br />
-        <div *ngFor="let master of activity.masters" style="text-align: left">
-          <app-master-item [user]="master"></app-master-item>
-          <br />
-        </div>
+      <div fxFlex.gt-sm="40%">
+        <ng-container *ngTemplateOutlet="VirtuePie"></ng-container>
       </div>
     </div>
+    <ng-container *ngTemplateOutlet="prospect"></ng-container>
   </div>
-</ng-template>
+
+  <div *ngIf="isMobile">
+    <ng-container *ngTemplateOutlet="detail"></ng-container>
+    <ng-container *ngTemplateOutlet="VirtuePie"></ng-container>
+    <br />
+    <ng-container *ngTemplateOutlet="prospect"></ng-container>
+  </div>
+
+  <ng-template #detail>
+    <div>
+      <div *ngIf="activity != undefined" style="width: 100%" class="inline">
+        <h1>{{ activity.description }}</h1>
+        <div style="color: blue">
+          <b>#{{ activity.name }}</b>
+        </div>
+
+        <br />
+        <div style="color: blue">
+          <a
+            *ngIf="activity.description"
+            href="{{ activity.description | replace : ' ' : '+' }}"
+            target="_blank"
+            ><img
+              style="width: 50px"
+              class="img-responsive"
+              src="assets/gg.png"
+          /></a>
+        </div>
+
+        <button
+          (click)="edit()"
+          mat-stroked-button
+          style="margin-right: 10px; margin-bottom: 10px; color: blue"
+        >
+          Edit
+        </button>
+        <br />
+        <br />
+        <div style="text-align: center">
+          experiences:
+          <b>{{ activity.xps_count }}</b>
+        </div>
+
+        <div style="text-align: center">
+          masters:
+          <b>{{ activity.master_count }}</b>
+        </div>
+        <br />
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template #VirtuePie>
+    <br />
+    <app-virtues-pie [qualities]="activity.qualities"></app-virtues-pie>
+  </ng-template>
+
+  <ng-template #prospect>
+    <h3 style="text-align: center">Strenghts</h3>
+
+    <app-qualities-list-grid
+      [qualities]="activity.qualities"
+      [total]="activity.xps_count"
+    ></app-qualities-list-grid>
+    <br />
+
+    <div class="inline" style="width: 100%">
+      <br /><br />
+      <h3 style="text-align: center">Masters</h3>
+
+      <br />
+      <div *ngFor="let master of activity.masters" style="text-align: left">
+        <app-master-item [user]="master"></app-master-item>
+        <br />
+      </div>
+    </div>
+  </ng-template>
+</div>

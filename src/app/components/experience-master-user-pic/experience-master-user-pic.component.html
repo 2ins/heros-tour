@@ -1,0 +1,60 @@
+<div>
+  <div
+    *ngIf="hero != undefined"
+    routerLink="/masters/master/{{ hero.master.id }}"
+    style="cursor: pointer; text-align: center; display: inline-block"
+  >
+    @{{ hero.master.name }}
+  </div>
+  <div id="container" *ngIf="hero != undefined">
+    <div id="infoi">
+      <div
+        class="image-cropper-detail"
+        routerLink="/users/user/{{ hero.profile.id }}"
+        style="cursor: pointer"
+      >
+        <img
+          #prImg
+          class="profile-pic"
+          src="{{
+            'https://enrgmsdppekwfvmbdxsl.supabase.co/storage/v1/object/public/avatars/' +
+              hero.profile.avatar_url
+          }}"
+          [ngClass]="
+            prImg.width >= prImg.height
+              ? 'profile-pic-height'
+              : 'profile-pic-width'
+          "
+        />
+      </div>
+    </div>
+    <div id="navi">
+      <div
+        class="image-cropper-detail"
+        routerLink="/masters/master/{{ hero.master.id }}"
+        style="cursor: pointer"
+      >
+        <img
+          #mstrImg
+          class="profile-pic"
+          src="{{
+            'https://enrgmsdppekwfvmbdxsl.supabase.co/storage/v1/object/public/avatars/' +
+              hero.master.avatar_url
+          }}"
+          [ngClass]="
+            mstrImg.width >= mstrImg.height
+              ? 'profile-pic-height'
+              : 'profile-pic-width'
+          "
+        />
+      </div>
+    </div>
+  </div>
+  <div
+    *ngIf="hero != undefined"
+    routerLink="/users/user/{{ hero.profile.id }}"
+    style="cursor: pointer; float: right; margin-top: 5px"
+  >
+    {{ hero.profile.username }}
+  </div>
+</div>

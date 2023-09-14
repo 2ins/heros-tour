@@ -1,77 +1,103 @@
-<div *ngIf="!isMobile" fxLayout="row">
-  <div fxFlex.gt-sm="60%">
-    <ng-container *ngTemplateOutlet="detail"></ng-container>
-  </div>
-  <div fxFlex.gt-sm="40%"></div>
-</div>
-
-<div *ngIf="isMobile">
-  <ng-container *ngTemplateOutlet="detail"></ng-container>
-</div>
-
-<ng-template #detail>
-  <div>
-    <div *ngIf="hero != undefined">
-      <div
-        class="div1 image-cropper-detail"
-        routerLink="/users/user/{{ hero.profile.id }}"
-        style="cursor: pointer"
-      >
-        <img
-          class="profile-pic"
-          src="{{
-            'https://enrgmsdppekwfvmbdxsl.supabase.co/storage/v1/object/public/avatars/' +
-              hero.profile.avatar_url
-          }}"
-        />
+<div *ngIf="selectedHero | async as heroX">
+  <div *ngIf="!isMobile">
+    <div fxLayout="row">
+      <div fxFlex.gt-sm="60%">
+        <ng-container *ngTemplateOutlet="detail"></ng-container>
       </div>
-      <div
-        class="div2 image-cropper-detail"
-        routerLink="/masters/master/{{ hero.master.id }}"
-        style="cursor: pointer"
-      >
-        <img
-          class="profile-pic"
-          src="{{
-            'https://enrgmsdppekwfvmbdxsl.supabase.co/storage/v1/object/public/avatars/' +
-              hero.master.avatar_url
-          }}"
-          alt=""
-        />
+      <div fxFlex.gt-sm="40%">
+        <app-virtues-pie [qualities]="heroX.qualities"></app-virtues-pie>
       </div>
     </div>
+    <br />
+    <ng-container *ngTemplateOutlet="detailText"></ng-container>
+    <h1 style="text-align: center">Strenghts</h1>
+    <app-qualities-list-grid
+      *ngIf="heroX.qualities"
+      [qualities]="heroX.qualities"
+    ></app-qualities-list-grid>
+    <app-locations></app-locations>
+  </div>
+
+  <div *ngIf="isMobile">
+    <ng-container *ngTemplateOutlet="detail"></ng-container>
+    <br />
+    <ng-container *ngTemplateOutlet="detailText"></ng-container>
+    <app-virtues-pie [qualities]="heroX.qualities"></app-virtues-pie>
+
+    <h1 style="text-align: center">Strenghts</h1>
+    <app-qualities-list-vertical
+      *ngIf="heroX.qualities"
+      [qualities]="heroX.qualities"
+    ></app-qualities-list-vertical>
+    <div style="margin: 10px">
+      <app-locations></app-locations>
+    </div>
+
+    <br />
+  </div>
+
+  <ng-template #detail>
+    <button
+      #btnEdit
+      (click)="edit()"
+      *ngIf="editEnabled"
+      mat-stroked-button
+      style="float: right; margin-right: 10px; margin-bottom: 10px; color: blue"
+    >
+      Edit
+    </button>
+
+    <button
+      #btnDel
+      (click)="deleteX()"
+      *ngIf="editEnabled"
+      mat-stroked-button
+      style="float: right; margin-right: 10px; margin-bottom: 10px; color: red"
+    >
+      Delete
+    </button>
 
     <div>
-      <div *ngIf="hero != undefined" style="padding-top: 300px">
-        <br />
-        <span class="name">
-          <div class="skill-list">
-            {{ hero.profile.username }} <b>@{{ hero.master.name }}</b> did
-
-            <div *ngIf="hero.activities">
-              <label style="color: blue" *ngFor="let a of hero.activities"
-                >#{{ a.name }}&nbsp;
-              </label>
-            </div>
-          </div>
-          {{ hero.event_date | date : "yyyy-MM-dd" }}
-        </span>
-        <br />
-        {{ hero.name }}
-        <br />
-        {{ hero.location }}
-        <br /><br /><br />
-        <button (click)="edit()" *ngIf="editEnabled">edit</button>
-        <h2>Archtypes</h2>
-
-        <app-qualities-list-grid
-          [qualities]="hero.qualities"
-        ></app-qualities-list-grid>
+      <div style="padding: 15px">
+        <app-experience-pic [hero]="heroX"></app-experience-pic>
       </div>
 
-      <div style="width: 100%">
-        <app-locations></app-locations>
+      <div>
+        <div style="width: 100%"></div>
       </div>
     </div>
-  </div>
-</ng-template>
+  </ng-template>
+
+  <ng-template #detailText>
+    <div *ngIf="heroX != undefined">
+      <ng-container *ngTemplateOutlet="activities"></ng-container>
+      <div style="text-align: center"></div>
+      <span>
+        <mat-icon class="mat-icon-size">location_on</mat-icon>
+        {{ heroX.location | locationCompactDetail }}
+      </span>
+      <br />
+      <span>
+        <mat-icon class="mat-icon-size">date_range</mat-icon>
+        {{ heroX.event_date | date : "MMMM, Y" }}
+      </span>
+      <br /><br />
+      <div>
+        {{ heroX.name }}
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template #activities>
+    <span style="display: flex; margin-left: 25px">
+      <div *ngIf="heroX.activities" style="text-align: right">
+        <i
+          style="color: blue; cursor: pointer"
+          *ngFor="let a of heroX.activities"
+          routerLink="/activities/activity/{{ a.id }}"
+          >#{{ a.name }}&nbsp;
+        </i>
+      </div>
+    </span>
+  </ng-template>
+</div>

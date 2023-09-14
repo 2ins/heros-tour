@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { MobileService } from 'src/app/services/mobile.service';
+import * as descs from '../../../assets/strenghts_desc.json';
 import { GetQualities } from '../../actions/quality.action';
 import { Quality } from '../../model/quality';
 import { HeroState } from '../../states/todo.state';
@@ -19,6 +20,9 @@ export class QualityComponent implements OnInit {
   editMode?: Boolean = false;
   isMobile: boolean = false;
 
+  data: any = descs;
+  qualityDesc: string = '';
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private store: Store,
@@ -32,8 +36,12 @@ export class QualityComponent implements OnInit {
     this.isMobile = this.mobileService.isMobile();
     this.activatedRoute.paramMap.subscribe((map) => {
       this.qualityId = map.get('id');
+
       console.log(this.qualityId);
       console.log(map);
+      var index = this.qualityId - 1;
+      this.qualityDesc = this.data[index].title;
+      console.log(this.qualityDesc);
     });
 
     this.qualities?.subscribe((h) => {

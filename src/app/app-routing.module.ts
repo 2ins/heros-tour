@@ -16,6 +16,7 @@ import { QualitiesComponent } from './components/qualities/qualities.component';
 import { QualityComponent } from './components/quality/quality.component';
 import { UserDetailComponent } from './components/user-detail/user-detail.component';
 import { UsersComponent } from './components/users/users.component';
+import { VirtuesComponent } from './components/virtues/virtues.component';
 import { ErrorComponent } from './error/error.component';
 import { HeroGuardService } from './hero-guard.service';
 
@@ -26,6 +27,7 @@ const routes: Routes = [
     component: HeroesComponent,
   },
   { path: 'qualities', component: QualitiesComponent },
+  { path: 'virtues', component: VirtuesComponent },
   { path: 'masters', component: MastersComponent },
   { path: 'users', component: UsersComponent },
   { path: 'activities', component: ActivitiesComponent },

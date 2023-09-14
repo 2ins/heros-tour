@@ -27,7 +27,31 @@ import {
   BrowserAnimationsModule,
   NoopAnimationsModule,
 } from '@angular/platform-browser/animations';
+import { ChartjsModule } from '@ctrl/ngx-chartjs';
 import { NgxsModule } from '@ngxs/store';
+import {
+  ArcElement,
+  BarController,
+  BarElement,
+  CategoryScale,
+  Chart,
+  DoughnutController,
+  Legend,
+  LineController,
+  LineElement,
+  LinearScale,
+  PieController,
+  PointElement,
+  PolarAreaController,
+  RadarController,
+  RadialLinearScale,
+  Title,
+  Tooltip,
+} from 'chart.js';
+
+import { LocationStrategy, PathLocationStrategy } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
+import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthComponent } from './auth/auth.component';
@@ -40,6 +64,8 @@ import { ContatInfoComponent } from './components/contat-info/contat-info.compon
 import { ExperienceDetailComponent } from './components/experience-detail/experience-detail.component';
 import { ExperienceInsertComponent } from './components/experience-insert/experience-insert.component';
 import { ExperienceItemComponent } from './components/experience-item/experience-item.component';
+import { ExperienceMasterUserPicComponent } from './components/experience-master-user-pic/experience-master-user-pic.component';
+import { ExperiencePicComponent } from './components/experience-pic/experience-pic.component';
 import { ExperiencesComponent } from './components/experiences/experiences.component';
 import { HeroDetailComponent } from './components/hero-detail/hero-detail.component';
 import { HeroesComponent } from './components/heroes/heroes.component';
@@ -50,22 +76,54 @@ import { MasterItemComponent } from './components/master-item/master-item.compon
 import { MastersComponent } from './components/masters/masters.component';
 import { MenuListComponent } from './components/menu-list/menu-list.component';
 import { ProfilemanagerComponent } from './components/profilemanager/profilemanager.component';
+import { QualitiesListGridComponent } from './components/qualities-list-grid/qualities-list-grid.component';
 import { QualitiesListHorizontalComponent } from './components/qualities-list-horizontal/qualities-list-horizontal.component';
+import { QualitiesListVerticalComponent } from './components/qualities-list-vertical/qualities-list-vertical.component';
 import { QualitiesComponent } from './components/qualities/qualities.component';
 import { QualityComponent } from './components/quality/quality.component';
 import { SearchCompositeComponent } from './components/search-composite/search-composite.component';
+import { SpinnerComponent } from './components/spinner/spinner.component';
+import { TestinoComponent } from './components/testino/testino.component';
 import { UserDetailComponent } from './components/user-detail/user-detail.component';
 import { UserItemComponent } from './components/user-item/user-item.component';
 import { UsersComponent } from './components/users/users.component';
+import { VirtuesPieComponent } from './components/virtues-pie/virtues-pie.component';
+import { VirtuesComponent } from './components/virtues/virtues.component';
 import { HoverDirective } from './customdirectives/hover.directive';
 import { SetBackGroundDirective } from './customdirectives/setbackground.directive';
 import { ErrorComponent } from './error/error.component';
-import { HeroGuardService } from './hero-guard.service';
 import { PercentageQualityPipe } from './percentage-quality.pipe';
+import { LocationCompactDetailPipe } from './pipes/location-compact-detail.pipe';
+import { LocationCompactPipe } from './pipes/location-compact.pipe';
+import { VirtueColorFinderPipe } from './pipes/virtue-color-finder.pipe';
 import { VirtueFinderPipe } from './pipes/virtue-finder.pipe';
 import { ReplacePipe } from './replace-pipe.pipe';
 import { HeroState } from './states/todo.state';
-import { QualitiesListGridComponent } from './components/qualities-list-grid/qualities-list-grid.component';
+
+//import ChartDataLabels from 'chartjs-plugin-datalabels';
+
+// TODO: register only in dedicated components
+Chart.register(
+  ArcElement,
+  BarController,
+  BarElement,
+  CategoryScale,
+  DoughnutController,
+  LinearScale,
+  LineController,
+  LineElement,
+  PieController,
+  PointElement,
+  PolarAreaController,
+  RadarController,
+  RadialLinearScale,
+  Title,
+  Tooltip,
+  Legend,
+  ChartDataLabels
+);
+
+Chart.defaults.plugins.tooltip.enabled = false;
 
 @NgModule({
   declarations: [
@@ -104,6 +162,16 @@ import { QualitiesListGridComponent } from './components/qualities-list-grid/qua
     MenuListComponent,
     VirtueFinderPipe,
     QualitiesListGridComponent,
+    VirtueColorFinderPipe,
+    ExperienceMasterUserPicComponent,
+    LocationCompactPipe,
+    LocationCompactDetailPipe,
+    ExperiencePicComponent,
+    QualitiesListVerticalComponent,
+    VirtuesPieComponent,
+    VirtuesComponent,
+    TestinoComponent,
+    SpinnerComponent,
   ],
   imports: [
     BrowserModule,
@@ -133,8 +201,13 @@ import { QualitiesListGridComponent } from './components/qualities-list-grid/qua
     MatInputModule,
     MatChipsModule,
     MatTabsModule,
+    ChartjsModule,
+    HttpClientModule,
   ],
-  providers: [HeroGuardService],
+  providers: [
+    //HeroGuardService,
+    { provide: LocationStrategy, useClass: PathLocationStrategy },
+  ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

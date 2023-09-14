@@ -1,7 +1,7 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { Select, Store } from '@ngxs/store';
-import { map, Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { GetQualities } from 'src/app/actions/quality.action';
 import { Quality, VIRTUES_LIST } from 'src/app/model/quality';
 import { Search } from 'src/app/model/search';
@@ -18,6 +18,9 @@ export class SearchCompositeComponent implements OnInit {
   search: string = '';
   hashMap = new Map<string, Quality[]>();
   virtuesList = VIRTUES_LIST;
+
+  @Input()
+  placeHolder?: string;
 
   @Output() notifyParent: EventEmitter<any> = new EventEmitter();
   sendNotification() {
@@ -48,9 +51,6 @@ export class SearchCompositeComponent implements OnInit {
             this.hashMap.get(el.virtue)?.push(el);
           });
         }
-
-        console.log(this.hashMap);
-        console.log('qualita', this.qualities);
       } else {
         this.store.dispatch(new GetQualities());
       }

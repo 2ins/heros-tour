@@ -11,66 +11,59 @@
                   <div fxLayout="row">
                     <div fxFlex="50">
                       <div
+                        [ngClass]="quality.virtue"
                         class="inline"
-                        style="margin-bottom: 50px; float: right"
+                        style="
+                          margin-bottom: 50px;
+                          float: right;
+                          width: 100%;
+                          border-radius: 5%;
+                          border: solid black 1px;
+                        "
                       >
-                        <img
-                          routerLink="/qualities/quality/{{ quality.id }}"
-                          style="
-                            cursor: pointer;
-                            max-width: 200px;
-                            border-radius: 5%;
-                          "
-                          width="100%"
-                          src="{{
-                            'https://enrgmsdppekwfvmbdxsl.supabase.co/storage/v1/object/public/q/' +
-                              quality.id +
-                              '.jpg'
-                          }}"
-                        />
+                        <div>
+                          <p>
+                            <b style="color: green; font-size: large">{{
+                              quality.name
+                            }}</b>
+                          </p>
+                        </div>
+                        <div style="width: 100%">
+                          <img
+                            routerLink="/qualities/quality/{{ quality.id }}"
+                            style="
+                              cursor: pointer;
+                              max-width: 200px;
+                              border-radius: 5%;
+                              width: 95%;
+                              text-align: center;
+                            "
+                            src="{{
+                              'https://enrgmsdppekwfvmbdxsl.supabase.co/storage/v1/object/public/q/' +
+                                quality.id +
+                                '.jpg'
+                            }}"
+                          />
+                        </div>
+
+                        <div>
+                          <div *ngIf="quality.tags">
+                            <div
+                              *ngFor="let a of quality.tags"
+                              style="display: inline; color: green"
+                            >
+                              {{ a }},
+                            </div>
+                          </div>
+
+                          <i style="color: black; font-size: xx-small">
+                            {{ quality.virtue | virtueFinder }}
+                          </i>
+                        </div>
                       </div>
                     </div>
                     <div fxFlex="50" style="margin-left: 5px">
-                      <div>
-                        <div
-                          style="cursor: pointer"
-                          routerLink="/qualities/quality/{{ quality.id }}"
-                        >
-                          <b style="color: green; font-size: large">{{
-                            quality.name
-                          }}</b>
-                        </div>
-                      </div>
-                      <div style="margin-top: 10px">
-                        <div *ngIf="quality.tags">
-                          <div
-                            *ngFor="let a of quality.tags"
-                            style="display: inline; color: green"
-                          >
-                            {{ a }},
-                          </div>
-                        </div>
-                      </div>
-
                       {{ quality.description }}
-                      <!--
-                      <div style="height: 25px">
-                        
-                          <br />
-                        <div *ngIf="quality.activities">
-                          <div
-                            *ngFor="let a of quality.activities"
-                            style="display: inline; color: blue"
-                          >
-                            <b
-                              routerLink="/activities/activity/{{ a.id }}"
-                              style="cursor: pointer"
-                              >#{{ a.name }}
-                            </b>
-                            ({{ a.count }})
-                          </div>
-                        </div>
-                     </div> -->
                     </div>
                   </div>
                 </mat-card>

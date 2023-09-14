@@ -1,22 +1,102 @@
 <div class="scroll-container">
-  <div class="gridscroll">
-    <div *ngFor="let quality of qualities">
+  <div
+    style="
+      width: 60px;
+      background-image: linear-gradient(
+        to right,
+        rgba(255, 0, 0, 0),
+        rgba(255, 255, 255, 1)
+      );
+      z-index: 10;
+      position: absolute;
+      right: 0;
+      height: 220px;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: normal;
+
+      display: inline-block;
+      vertical-align: middle;
+      line-height: normal;
+    "
+  >
+    <div
+      style="
+        display: inline-block;
+        vertical-align: middle;
+        line-height: normal;
+        height: 100%;
+        width: 50%;
+      "
+    ></div>
+  </div>
+  <div class="gridscroll infoi">
+    <div></div>
+
+    <div *ngFor="let quality of qualities; let i = index">
       <div class="inline">
         <div
+          *ngIf="i == 0 && hero"
           style="
-            border: 0.3px solid gainsboro;
+            border: 1px solid gray;
             border-radius: 15px;
             margin: 5px;
             padding: 5px;
+            width: 130px;
+            height: 200px;
+            background-color: white;
+            color: blue;
           "
         >
+          <div style="display: flex">
+            <div class="___image-cropper-arch">
+              <div
+                style="
+                  cursor: pointer;
+                  padding: 2px;
+                  width: 125px;
+                  height: 168px;
+                  border: 0px solid black;
+                "
+              >
+                <app-experience-master-user-pic
+                  [hero]="hero"
+                ></app-experience-master-user-pic>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div>
+              {{ quality.count }}
+            </div>
+          </div>
+        </div>
+        <div
+          [ngClass]="quality.virtue"
+          style="
+            border: 1px solid gray;
+            border-radius: 15px;
+            margin: 5px;
+            padding: 5px;
+            text-align: center;
+            width: 130px;
+            height: 200px;
+          "
+        >
+          <p>
+            <i style="color: black; font-size: xx-small">
+              {{ quality.virtue | virtueFinder }}
+            </i>
+          </p>
+
           <div style="display: flex; justify-content: center">
             <div class="___image-cropper-arch">
               <img
                 class="___profile-pic-arch"
                 routerLink="/qualities/quality/{{ quality.id }}"
                 style="cursor: pointer; padding: 2px"
-                width="100px"
+                width="100%"
                 src="{{
                   'https://enrgmsdppekwfvmbdxsl.supabase.co/storage/v1/object/public/q/' +
                     quality.id +
@@ -25,13 +105,20 @@
               />
             </div>
           </div>
-          <b
-            routerLink="/qualities/quality/{{ quality.id }}"
-            style="cursor: pointer; color: green"
-            >{{ quality.name }}
-          </b>
+
+          <div>
+            <div>
+              <b
+                routerLink="/qualities/quality/{{ quality.id }}"
+                style="cursor: pointer; color: green; font-size: 0.8em"
+                >{{ quality.name }}
+              </b>
+              {{ quality.count }}
+            </div>
+          </div>
+
           <p *ngIf="quality.count != undefined && total != undefined">
-            {{ quality.count | percentageQuality : total }} %
+            <!--{{ quality.count | percentageQuality : total }} %-->
           </p>
         </div>
       </div>

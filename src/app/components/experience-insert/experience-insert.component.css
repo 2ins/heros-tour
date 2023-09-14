@@ -2,7 +2,7 @@ div.inline {
   float: left;
   width: 29%;
   text-align: center;
-  height: 450px;
+  height: 500px;
 }
 div.inlineTag {
   float: left;
@@ -29,16 +29,31 @@ li {
   border-radius: 50%;
 }
 .image-cropper-xp {
-  width: 75px;
-  height: 75px;
+  width: 200px;
+  height: 200px;
   overflow: hidden;
   border-radius: 50%;
+  border: 1px solid black;
 }
 .profile-pic {
   display: inline;
   margin: 0 auto;
+}
+.profile-pic-height {
+  height: 100%;
+}
+.profile-pic-width {
   width: 100%;
 }
-.heightMobile {
-  height: 135px;
+
+/* container */
+.three-columns-grid {
+  display: grid;
+  grid-auto-rows: 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+/* columns */
+.three-columns-grid > * {
+  padding: 1rem;
 }

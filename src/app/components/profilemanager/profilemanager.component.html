@@ -1,44 +1,46 @@
-<div>id:{{ myUser?.id }}</div>
-<div>
-  username:
-  <input
-    *ngIf="myUser"
-    id="hero-name"
-    [(ngModel)]="myUser.username"
-    placeholder="name"
+<div *ngIf="userProfile | async as myUser">
+  <div>
+    username:
+    <input
+      *ngIf="myUser"
+      id="hero-name"
+      [(ngModel)]="myUser.username"
+      placeholder="name"
+    />
+  </div>
+
+  <img
+    *ngIf="!imageSrc"
+    src="{{
+      'https://enrgmsdppekwfvmbdxsl.supabase.co/storage/v1/object/public/avatars/' +
+        myUser.avatar_url
+    }}"
+    alt="Avatar"
+    class="avatar image"
+    style="width: 300px"
   />
-</div>
-<div>avatarUrl:{{ myUser?.avatar_url }}</div>
 
-<img
-  *ngIf="_avatarUrl"
-  [src]="_avatarUrl"
-  alt="Avatar"
-  class="avatar image"
-  style="width: 300px"
-/>
+  <div class="custom-file overflow-hidden rounded-pill mb-5">
+    <img *ngIf="imageSrc" [src]="imageSrc" alt="Preview" width="300px" />
+    <br />
+    <input
+      id="customFile"
+      type="file"
+      (change)="previewImage($event)"
+      class="custom-file-input rounded-pill"
+    />
+  </div>
 
-<div class="custom-file overflow-hidden rounded-pill mb-5">
-  <input
-    id=" customFile "
-    type="file"
-    (change)="selectFile($event)"
-    class="custom-file-input rounded-pill"
-  />
-  <label for="customFile" class="custom-file-label rounded-pill">
-    Choose file
-  </label>
-</div>
+  <div * ngIf="status" class="spinner" style="font-size: 18px">
+    <div class="head"></div>
+  </div>
 
-<div * ngIf="status" class="spinner" style="font-size: 18px">
-  <div class="head"></div>
-</div>
+  <div *ngIf="message" class="alert alert-success" role="alert">
+    {{ message }}
+  </div>
 
-<div *ngIf="message" class="alert alert-success" role="alert">
-  {{ message }}
-</div>
-
-<br />
-<div>
-  <button (click)="saveProfile()">Update Profile</button>
+  <br />
+  <div>
+    <button (click)="saveProfile()">Update Profile</button>
+  </div>
 </div>

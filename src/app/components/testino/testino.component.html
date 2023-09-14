@@ -1,0 +1,100 @@
+<div *ngIf="selectedMaster | async as x">
+  <div *ngIf="!isMobile; else detailXp">
+    <div>
+      <div fxFlex.gt-sm="60%">
+        <ng-container *ngTemplateOutlet="detailXp"></ng-container>
+      </div>
+      <div fxFlex.gt-sm="40%">
+        <br /><br />
+
+        <!-- <app-virtues-pie [qualities]="x.qualities"></app-virtues-pie>-->
+        <app-testino [qualities]="x.qualities"></app-testino>
+
+        <br />
+        <div style="text-align: center">
+          experiences: <b>{{ x.tot_xps }}</b>
+        </div>
+        <br /><br />
+        <div style="text-align: center"></div>
+        <br />
+      </div>
+    </div>
+    <div *ngIf="x.heroes && x.heroes.length > 0">
+      <br />
+      <h1 style="text-align: center">Strenghts</h1>
+      <br />
+
+      <app-qualities-list-grid
+        [qualities]="x.qualities"
+        [total]="x.tot_xps"
+      ></app-qualities-list-grid>
+
+      <div style="width: 100%; text-align: left">
+        <br /><br />
+        <h1 style="text-align: center">Experiences</h1>
+        <div class="heroes">
+          <div *ngFor="let hero of x.heroes">
+            <app-experience-item
+              [hero]="hero"
+              [reverse]="true"
+            ></app-experience-item>
+            <br />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #detailXp>
+    <div>
+      <div style="width: 100%" class="inline">
+        <div>
+          <div style="width: 100%; margin-top: 0px">
+            <div style="float: center">
+              <h1 style="text-align: center">
+                {{ x.name }}
+              </h1>
+              <a href="//{{ x.website }}" target="_blank">{{ x.website }}</a>
+            </div>
+            <br />
+          </div>
+        </div>
+
+        <div style="display: flex; justify-content: center">
+          <div class="image-cropper">
+            <img
+              #hdImage
+              src="{{
+                'https://enrgmsdppekwfvmbdxsl.supabase.co/storage/v1/object/public/avatars/' +
+                  x.avatar_url
+              }}"
+              alt="avatar"
+              class="profile-pic"
+              [ngClass]="
+                hdImage.width >= hdImage.height
+                  ? 'profile-pic-height'
+                  : 'profile-pic-width'
+              "
+            />
+          </div>
+        </div>
+        <br />
+        <h3 style="text-align: center">Activities</h3>
+        <div style="display: flex; justify-content: center">
+          <div *ngFor="let a of x.activities">
+            <div class="inlineTag">
+              <div
+                routerLink="/activities/activity/{{ a.id }}"
+                style="cursor: pointer"
+              >
+                #{{ a.name }}&nbsp;
+              </div>
+            </div>
+          </div>
+        </div>
+        <br />
+        <span> </span>
+      </div>
+    </div>
+  </ng-template>
+</div>

@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { GetUsers, SetSelectedUser } from 'src/app/actions/profiles.action';
 import { MobileService } from 'src/app/services/mobile.service';
 import { HeroState } from 'src/app/states/todo.state';
-import { Profile, SupabaseService } from 'src/app/supabase.service';
+import { MyProfile, SupabaseService } from 'src/app/supabase.service';
 
 @Component({
   selector: 'app-users',
@@ -12,7 +12,7 @@ import { Profile, SupabaseService } from 'src/app/supabase.service';
   styleUrls: ['./users.component.css'],
 })
 export class UsersComponent implements OnInit {
-  @Select(HeroState.getUsers) users?: Observable<Profile[]>;
+  @Select(HeroState.getUsers) users?: Observable<MyProfile[]>;
 
   searchUser?: string;
   isMobile: boolean = false;
@@ -35,8 +35,16 @@ export class UsersComponent implements OnInit {
         }
       }
     });
+
+    this.users?.subscribe((us) => {
+      us.forEach((u) => {
+        u.qualities?.sort((a, b) => {
+          return b.count - a.count;
+        });
+      });
+    });
   }
-  onSelect(user: Profile): void {
+  onSelect(user: MyProfile): void {
     console.log('user clicked: ', user.id);
     this.store.dispatch(new SetSelectedUser(user.id));
   }

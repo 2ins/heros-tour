@@ -1,4 +1,4 @@
-import { Profile } from '../supabase.service';
+import { MyProfile } from '../supabase.service';
 import { Activity } from './activity';
 import { Geom } from './geom';
 import { Master } from './master';
@@ -11,7 +11,7 @@ export interface Hero {
   event_date: Date;
   qualities: Quality[];
   geom?: Geom;
-  profile: Profile;
+  profile: MyProfile;
   profile_id: string;
   master: Master;
   master_id: number;
@@ -33,4 +33,5 @@ export interface HeroTable {
 export interface HeroQualitiesTable {
   hero_id?: number;
   quality_id: number;
+  desc_xp?: string;
 }

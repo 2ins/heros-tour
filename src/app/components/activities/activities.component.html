@@ -1,21 +1,33 @@
 <div fxLayout="row" *ngIf="!isMobile">
-  <div fxFlex.gt-sm="60%">
-    <h2>Activities</h2>
-
+  <div fxFlex.gt-sm="75%">
     <div style="width: 99%">
-      <button [routerLinkActive]="'active'" routerLink="/addActivity">
-        Add New Activity
-      </button>
+      <p>
+        <b style="font-size: x-large">Activities</b
+        ><button
+          [routerLinkActive]="'active'"
+          routerLink="/addActivity"
+          mat-stroked-button
+          style="
+            margin-right: 10px;
+            margin-bottom: 10px;
+            color: blue;
+            float: right;
+          "
+        >
+          Add New Activity
+        </button>
+      </p>
+      <br />
       <div>
         <div *ngFor="let a of activities | async">
           <app-activity-item [activity]="a"></app-activity-item>
-          <br />
         </div>
       </div>
     </div>
   </div>
-  <div fxFlex.gt-sm="40%">
+  <div fxFlex.gt-sm="25%">
     <app-search-composite
+      placeHolder="Search activities"
       (notifyParent)="getNotification($event)"
     ></app-search-composite>
   </div>
@@ -33,8 +45,10 @@
       </div>
     </mat-tab>
     <mat-tab label="Search">
+      <br />
       <app-search-composite
         (notifyParent)="getNotification($event)"
+        placeHolder="Search activities"
       ></app-search-composite>
     </mat-tab>
     <mat-tab label="Add">

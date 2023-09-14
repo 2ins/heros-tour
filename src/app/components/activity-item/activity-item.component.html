@@ -1,29 +1,37 @@
-<mat-card (click)="onSelect(activity)" *ngIf="activity">
-  <div fxLayout="row">
-    <div
-      routerLink="/activities/activity/{{ activity.id }}"
-      style="cursor: pointer; text-align: left; display: inline-block"
-    >
-      <div style="color: blue">
-        <b>{{ activity.description }}</b>
+<mat-card (click)="onSelect(activity)" *ngIf="activity" style="margin: 10px">
+  <div style="width: 100%">
+    <div style="width: 100%; margin-top: 0px">
+      <div
+        routerLink="/activities/activity/{{ activity.id }}"
+        style="cursor: pointer; text-align: left; float: left"
+      >
+        <div style="color: blue">
+          <b>{{ activity.description }}</b>
+          <div>#{{ activity.name }}</div>
+        </div>
       </div>
 
-      <div style="color: blue">#{{ activity.name }}</div>
-
-      total experiences for this activity: {{ activity.xps_count }} <br />
-      total amount of masters teaching this activity:
-      {{ activity.master_count }}
-
-      <br />
-      <br />
+      <div
+        style="
+          float: right;
+          color: gray;
+          font-size: xx-small;
+          font-style: italic;
+        "
+      >
+        <div>experiences: {{ activity.xps_count }}</div>
+        <span>
+          masters:
+          {{ activity.master_count }}
+        </span>
+      </div>
     </div>
   </div>
+  <br />
+  <br />
 
   <div>
     <div>
-      <b>{{ activity.name }}</b> has been picked with the following archtipes by
-      its attenders:<br /><br />
-
       <app-qualities-list-horizontal
         [qualities]="activity.qualities"
         [total]="activity.xps_count"

@@ -39,3 +39,13 @@ export class SearchHeroes {
   static readonly type = '[Hero] Search';
   constructor(public search: Search) {}
 }
+
+export class GetHeroById {
+  static readonly type = '[Hero] GetById';
+  constructor(public id: string) {}
+}
+
+export class GetNewHeroTable {
+  static readonly type = '[Hero] GetNewOneAdded';
+  constructor() {}
+}

@@ -1,12 +1,13 @@
 <mat-card (click)="onSelect(user)" *ngIf="user">
   <div fxLayout="row">
-    <div style="margin-right: 10px">
+    <div>
       <div
         routerLink="/masters/master/{{ user.id }}"
         style="cursor: pointer; text-align: center; display: inline-block"
       >
         <div class="image-cropper-xp">
           <img
+            #mrImgElement
             src="{{
               'https://enrgmsdppekwfvmbdxsl.supabase.co/storage/v1/object/public/avatars/' +
                 user.avatar_url
@@ -22,15 +23,12 @@
     <div fxFlex="75">
       <b>{{ user.name }}</b>
       <br />
-      <br />
-      activities:
-      <br />
 
       <span class="name">
         <div *ngIf="user.activities">
           <div>
             <label
-              style="color: blue; cursor: pointer; font-weight: bold"
+              style="color: blue; cursor: pointer"
               *ngFor="let a of user.activities"
               routerLink="/activities/activity/{{ a.id }}"
               >#{{ a.name }}&nbsp;
@@ -38,12 +36,14 @@
           </div>
         </div>
       </span>
+      <div *ngIf="user && user.tot_xps && user.tot_xps > 0">
+        experiences: {{ user.tot_xps }}
+      </div>
     </div>
   </div>
   <div>
-    <div>
-      <b>{{ user.name }}</b> most picked archtipes by his students on a total of
-      <b> {{ user.tot_xps }}</b> experiences with him:<br /><br />
+    <div *ngIf="user && user.tot_xps && user.tot_xps > 0">
+      Most picked archtipes by heroes
 
       <app-qualities-list-horizontal
         [qualities]="user.qualities"
@@ -52,4 +52,3 @@
     </div>
   </div>
 </mat-card>
-<br />

@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngxs/store';
+import { Hero } from 'src/app/model/hero';
 import { Quality } from 'src/app/model/quality';
 import { SupabaseService } from 'src/app/supabase.service';
 
@@ -12,6 +13,9 @@ import { SupabaseService } from 'src/app/supabase.service';
 export class QualitiesListHorizontalComponent implements OnInit {
   @Input()
   qualities?: Quality[] = [];
+
+  @Input()
+  hero?: Hero;
 
   @Input()
   total?: number;

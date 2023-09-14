@@ -1,81 +1,63 @@
 <div style="padding-top: 50px">
   <div *ngIf="selectedMaster">
     <div fxLayout="row">
-      <!--
-      <div fxFlex="">
-        <form class="example-form">
-          <mat-form-field class="example-full-width" appearance="fill">
-            <mat-label>Master</mat-label>
-            <input
-              type="text"
-              placeholder="Pick one"
-              aria-label="Number"
-              matInput
-              [formControl]="myControl"
-              [matAutocomplete]="auto"
+      <div style="margin: 10px">
+        <div>
+          <div class="image-cropper-xp">
+            <img
+              #hdImage
+              src="{{
+                'https://enrgmsdppekwfvmbdxsl.supabase.co/storage/v1/object/public/avatars/' +
+                  selectedMaster.avatar_url
+              }}"
+              class="profile-pic"
+              [ngClass]="
+                hdImage.width >= hdImage.height
+                  ? 'profile-pic-height'
+                  : 'profile-pic-width'
+              "
             />
-            <mat-autocomplete #auto="matAutocomplete">
-              <mat-option
-                *ngFor="let master of myMasters"
-                [value]="master.name"
-                (click)="setSelected(master)"
-              >
-                {{ master.name }}
-              </mat-option>
-            </mat-autocomplete>
-          </mat-form-field>
-        </form>
-      
+          </div>
+        </div>
+        <br />
+        <br />
       </div>
-      -->
+      <div>
+        <br />
+        <b>{{ selectedMaster.name }}</b>
+        <br />
 
-      <div fxLayout="row">
-        <div style="margin-right: 10px">
-          <div>
-            <div class="image-cropper-xp">
-              <img
-                src="{{
-                  'https://enrgmsdppekwfvmbdxsl.supabase.co/storage/v1/object/public/avatars/' +
-                    selectedMaster.avatar_url
-                }}"
-                height="100px"
-                class="profile-pic"
-              />
+        <span class="name">
+          <div *ngIf="selectedMaster.activities">
+            <div>
+              <br />
+              <label
+                style="color: blue; cursor: pointer; font-style: italic"
+                *ngFor="let a of selectedMaster.activities"
+                routerLink="/activities/activity/{{ a.id }}"
+                >#{{ a.name }}&nbsp;
+              </label>
             </div>
           </div>
-          <br />
-          <br />
-        </div>
+        </span>
         <div>
-          <b>{{ selectedMaster.name }}</b>
           <br />
-          <br />
-          activities:
-          <br />
-
-          <span class="name">
-            <div *ngIf="selectedMaster.activities">
-              <div>
-                <label
-                  style="color: blue; cursor: pointer; font-weight: bold"
-                  *ngFor="let a of selectedMaster.activities"
-                  routerLink="/activities/activity/{{ a.id }}"
-                  >#{{ a.name }}&nbsp;
-                </label>
-              </div>
-            </div>
-          </span>
-        </div>
-        <div>
-          <button (click)="save()">save</button>
+          <button
+            mat-stroked-button
+            style="margin-right: 10px; margin-bottom: 10px; color: blue"
+            (click)="save()"
+          >
+            save
+          </button>
         </div>
       </div>
     </div>
   </div>
 
   <textarea
+    placeholder="Experience description"
     [(ngModel)]="textareaValue"
-    style="width: 95%"
+    style="width: 95%; border: 1px solid gray; margin: 10px"
     matInput
     cdkTextareaAutosize
     #autosize="cdkTextareaAutosize"
@@ -84,8 +66,7 @@
   ></textarea>
 
   <br />
-  <div style="display: block">
-    <label>date: </label>
+  <div style="display: block; margin: 10px">
     <input
       type="date"
       #createdAt
@@ -94,16 +75,16 @@
       [value]="event_date | date : 'yyyy-MM-dd'"
     />
   </div>
-  <br />
+
   <div>
-    {{ location }}
     <input
-      style="width: 95%"
+      style="width: 95%; margin: 10px"
       type="text"
       class="my-search-box"
       (keydown.enter)="$event.preventDefault()"
       placeholder="Search Location"
       type="text"
+      [value]="location"
       #search
     />
   </div>
@@ -124,32 +105,107 @@
 
   <br />
 
-  <div *ngFor="let quality of qualities | async">
-    <div
-      *ngIf="quality.selected == true"
-      [ngClass]="{ inline: !isMobile, widthMobile: isMobile }"
-      style="
-        border: solid gray 1px;
-        padding: 5px;
-        margin: 1px;
-        border-radius: 5%;
-        float: left;
-      "
-    >
-      <img
-        style="border-radius: 3%"
-        width="99%"
-        src="{{
-          'https://enrgmsdppekwfvmbdxsl.supabase.co/storage/v1/object/public/q/' +
-            quality.id +
-            '.jpg'
-        }}"
-      />
-      <div style="color: green; margin-left: 30; height: 35px">
-        <b>{{ quality.name }} </b>
+  <div *ngIf="isMobile">
+    <div *ngFor="let quality of qualities | async">
+      <div
+        *ngIf="quality.selected == true"
+        class="widthMobile"
+        style="
+          border: solid gray 1px;
+          padding: 5px;
+          margin: 1px;
+          border-radius: 5%;
+          float: left;
+        "
+      >
+        <img
+          style="border-radius: 3%"
+          width="99%"
+          src="{{
+            'https://enrgmsdppekwfvmbdxsl.supabase.co/storage/v1/object/public/q/' +
+              quality.id +
+              '.jpg'
+          }}"
+        />
+        <div style="color: green; margin-left: 30">
+          <b>{{ quality.name }} </b>
 
-        <div style="color: gray" [ngClass]="{ heightMobile: !isMobile }">
-          {{ quality.description }}
+          <div style="color: gray; border-radius: 5%; background-color: bisque">
+            {{ quality.description }}
+          </div>
+          <br />
+          <div>
+            your experience
+
+            <textarea
+              placeholder="Describe how {{ quality.name }} has been good"
+              style="width: 95%; border: 1px solid gray; margin-left: 5px"
+              matInput
+              cdkTextareaAutosize
+              #autosize="cdkTextareaAutosize"
+              cdkAutosizeMinRows="3"
+              cdkAutosizeMaxRows="10"
+              [(ngModel)]="quality.desc_xp"
+            ></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!isMobile">
+    <div *ngFor="let quality of qualities | async">
+      <div class="three-columns-grid" *ngIf="quality.selected == true">
+        <!--
+
+
+        -->
+
+        <div
+          style="
+            border: solid gray 1px;
+            padding: 5px;
+            margin: 1px;
+            border-radius: 5%;
+            float: left;
+          "
+        >
+          <img
+            style="border-radius: 3%"
+            width="99%"
+            src="{{
+              'https://enrgmsdppekwfvmbdxsl.supabase.co/storage/v1/object/public/q/' +
+                quality.id +
+                '.jpg'
+            }}"
+          />
+          <div
+            style="color: green; margin-left: 30"
+            [ngClass]="{ parent: !isMobile }"
+          ></div>
+        </div>
+        <div>
+          <b>{{ quality.name }} </b>
+          <div style="color: gray; border-radius: 5%; background-color: bisque">
+            {{ quality.description }}
+          </div>
+          <br />
+        </div>
+        <div>
+          <div [ngClass]="{ child: !isMobile }">
+            your experience
+
+            <textarea
+              placeholder="Describe how {{ quality.name }} has been good"
+              style="width: 95%; border: 1px solid gray; margin-left: 5px"
+              matInput
+              cdkTextareaAutosize
+              #autosize="cdkTextareaAutosize"
+              cdkAutosizeMinRows="5"
+              cdkAutosizeMaxRows="10"
+              [(ngModel)]="quality.desc_xp"
+            ></textarea>
+          </div>
         </div>
       </div>
     </div>

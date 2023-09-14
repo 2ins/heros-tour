@@ -43,6 +43,15 @@ export class ExperiencesComponent implements OnInit {
         this.myHero = h;
       }
     });
+
+    this.heroes?.subscribe((h) => {
+      h?.sort((a, b) => {
+        const dateA = new Date(a.event_date);
+        const dateB = new Date(b.event_date);
+        return dateB.getTime() - dateA.getTime();
+      });
+    });
+
     console.log('searching');
     this.store.dispatch(new SearchHeroes(this.searchc));
     console.log('done');
@@ -59,7 +68,8 @@ export class ExperiencesComponent implements OnInit {
 
   getNotification(evt: Event) {
     this.searchc = evt as unknown as Search;
-    this.store.dispatch(new SearchHeroes(this.searchc));
-    this.indxTab = 0;
+    this.store.dispatch(new SearchHeroes(this.searchc)).subscribe(() => {
+      this.indxTab = 0;
+    });
   }
 }

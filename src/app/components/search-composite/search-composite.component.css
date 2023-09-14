@@ -7,3 +7,22 @@ li {
   display: block;
   margin-right: 15px;
 }
+
+.WI {
+  background: rgba(255, 252, 127, 0.3);
+}
+.CO {
+  background: rgba(3, 138, 255, 0.3);
+}
+.HU {
+  background: rgba(254, 121, 104, 0.3);
+}
+.JU {
+  background: rgba(201, 242, 155, 0.3);
+}
+.TE {
+  background: rgba(255, 148, 112, 0.3);
+}
+.TR {
+  background: rgba(213, 184, 255, 0.3);
+}

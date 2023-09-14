@@ -1,10 +1,18 @@
-<div fxLayout="row">
-  <div fxFlex.gt-sm="60%">
-    <div class="inline">
-      <h1 *ngIf="!editMode">{{ quality?.name }}</h1>
-      <textarea *ngIf="editMode">{{ quality?.name }}</textarea>
-      <br />
-      <div style="margin-top: 10px">
+<div fxLayout="row" *ngIf="quality">
+  <div fxFlex.gt-sm="60%" style="padding: 10px">
+    <div
+      class="inline"
+      style="
+        border: solid gray 1px;
+        padding: 0;
+        width: 100%;
+        border-radius: 5%;
+        text-align: center;
+      "
+      [ngClass]="quality.virtue"
+    >
+      <h1 style="color: green">{{ quality.name }}</h1>
+      <div style="margin-bottom: 10px">
         <div *ngIf="quality != undefined">
           <div
             *ngFor="let a of quality.tags"
@@ -14,7 +22,12 @@
           </div>
         </div>
       </div>
-      <br />
+      <p style="text-align: center">
+        <i style="color: black; font-size: xx-small">
+          {{ quality.virtue | virtueFinder }}
+        </i>
+      </p>
+
       <div
         [ngClass]="{
           widthDesktop: !mobileService.isMobile(),
@@ -25,29 +38,14 @@
           width="100%"
           src="{{
             'https://enrgmsdppekwfvmbdxsl.supabase.co/storage/v1/object/public/q/' +
-              quality?.id +
+              quality.id +
               '.jpg'
           }}"
         />
       </div>
 
-      <div style="height: 25px">
-        <div *ngIf="quality?.activities">
-          <div
-            *ngFor="let a of quality?.activities"
-            style="display: inline; color: blue"
-          >
-            <b
-              style="cursor: pointer"
-              routerLink="/activities/activity/{{ a.id }}"
-              >#{{ a.name }}
-            </b>
-            ({{ a.count }})
-          </div>
-        </div>
-      </div>
       <br />
-      <p *ngIf="!editMode">{{ quality?.description }}</p>
+      <p *ngIf="!editMode">{{ quality.description }}</p>
       <!--
  <button *ngIf="!editMode" (click)="appendQueryParam()">edit</button>
   <button
@@ -58,6 +56,34 @@
     update
   </button>
   -->
+    </div>
+    <br /><br />
+    <div>
+      <h1 style="color: green">In Depth</h1>
+      {{ qualityDesc }}
+      <br /><br />
+      <div *ngIf="quality">
+        <div *ngIf="quality.activities">
+          <h1 style="color: green">Activities for this Archtype</h1>
+
+          <div *ngIf="quality.activities">
+            <div
+              *ngFor="let a of quality.activities"
+              style="display: inline; color: blue"
+            >
+              <p
+                style="cursor: pointer"
+                routerLink="/activities/activity/{{ a.id }}"
+              >
+                #{{ a.name }}
+
+                ({{ a.count }})
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br />
     </div>
   </div>
 </div>

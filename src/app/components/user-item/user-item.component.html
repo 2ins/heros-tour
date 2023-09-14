@@ -30,7 +30,7 @@
         <div *ngIf="user.activities">
           <div>
             <label
-              style="color: blue; cursor: pointer; font-weight: bold"
+              style="color: blue; cursor: pointer"
               *ngFor="let a of user.activities"
               routerLink="/activities/activity/{{ a.id }}"
               >#{{ a.name }}&nbsp;

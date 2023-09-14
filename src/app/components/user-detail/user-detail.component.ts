@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 import { GetUsers, SetSelectedUser } from 'src/app/actions/profiles.action';
 import { MobileService } from 'src/app/services/mobile.service';
 import { HeroState } from 'src/app/states/todo.state';
-import { Profile, SupabaseService } from 'src/app/supabase.service';
+import { MyProfile, SupabaseService } from 'src/app/supabase.service';
 
 @Component({
   selector: 'app-user-detail',
@@ -14,10 +14,10 @@ import { Profile, SupabaseService } from 'src/app/supabase.service';
   styleUrls: ['./user-detail.component.css'],
 })
 export class UserDetailComponent implements OnInit {
-  @Select(HeroState.getSelectedUser) selectedUser?: Observable<Profile>;
-  @Select(HeroState.getUsers) users?: Observable<Profile[]>;
+  @Select(HeroState.getSelectedUser) selectedUser?: Observable<MyProfile>;
+  @Select(HeroState.getUsers) users?: Observable<MyProfile[]>;
 
-  user?: Profile;
+  user?: MyProfile;
   userId?: any;
   isMobile: boolean = false;
 
@@ -35,6 +35,13 @@ export class UserDetailComponent implements OnInit {
     this.selectedUser?.subscribe((u) => {
       this.user = u;
       u.qualities?.sort((a, b) => b.count - a.count);
+      console.log('antes', u.heroes);
+      u.heroes?.sort((a, b) => {
+        const dateA = new Date(a.event_date);
+        const dateB = new Date(b.event_date);
+        return dateB.getTime() - dateA.getTime();
+      });
+      console.log('lates', u.heroes);
     });
 
     this.activatedRoute.paramMap.subscribe((map) => {

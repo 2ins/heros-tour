@@ -28,7 +28,7 @@
   <br />
   <div class="custom-file overflow-hidden rounded-pill mb-5">
     <input
-      id=" customFile "
+      id="customFile"
       type="file"
       (change)="previewImage($event)"
       class="custom-file-input rounded-pill"
@@ -37,7 +37,7 @@
     <img *ngIf="imageSrc" [src]="imageSrc" alt="Preview" width="300px" />
   </div>
 
-  <div * ngIf="status" class="spinner" style="font-size: 18px">
+  <div *ngIf="status" class="spinner" style="font-size: 18px">
     <div class="head"></div>
   </div>
 

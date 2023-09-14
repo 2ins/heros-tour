@@ -1,5 +1,5 @@
 import { User } from '@supabase/supabase-js';
-import { Profile } from '../supabase.service';
+import { MyProfile } from '../supabase.service';
 
 //USERS alias profiles
 export class GetUsers {
@@ -13,7 +13,7 @@ export class SetSelectedUser {
 }
 
 export class SetUserProfile {
-  static readonly type = '[Profile] Set';
+  static readonly type = '[Profile] SetUserProfile';
   constructor(public payload: User) {}
 }
 
@@ -22,6 +22,6 @@ export class GetUserProfile {
 }
 
 export class SetProfile {
-  static readonly type = '[Profile] Set';
-  constructor(public payload: Profile) {}
+  static readonly type = '[Profile] SetProfile';
+  constructor(public payload: MyProfile) {}
 }

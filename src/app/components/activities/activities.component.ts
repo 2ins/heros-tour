@@ -32,16 +32,16 @@ export class ActivitiesComponent implements OnInit {
 
   ngOnInit(): void {
     this.isMobile = this.ms.isMobile();
+
     this.activities?.subscribe((as) => {
-      if (as) {
-        if (
-          as.length == 0 &&
-          (!this.searchActivity || this.searchActivity.trim() == '')
-        ) {
-          this.store.dispatch(new GetActivitiesOverview(this.search));
-        }
-      }
+      as?.sort((a, b) =>
+        b.name.toLowerCase() > a.name.toLowerCase() ? -1 : 1
+      );
     });
+
+    console.log('searching');
+    this.store.dispatch(new GetActivitiesOverview(this.search));
+    console.log('done');
   }
 
   onSelect(activity: Activity): void {
@@ -50,7 +50,8 @@ export class ActivitiesComponent implements OnInit {
 
   getNotification(evt: Event) {
     var x = evt as unknown as Search;
-    this.store.dispatch(new GetActivitiesOverview(x));
-    this.indxTab = 0;
+    this.store.dispatch(new GetActivitiesOverview(x)).subscribe(() => {
+      this.indxTab = 0;
+    });
   }
 }

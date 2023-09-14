@@ -1,5 +1,5 @@
 <div fxLayout="row" *ngIf="!isMobile">
-  <div fxFlex.gt-sm="60%">
+  <div fxFlex.gt-sm="75%">
     <h2>Heroes</h2>
     <div>
       <div style="width: 100%">
@@ -9,20 +9,37 @@
       </div>
     </div>
   </div>
-  <div fxFlex.gt-sm="40%">
+  <div fxFlex.gt-sm="25%">
     <div style="margin-left: 15px">
-      <label for="site-search">Search Users:</label><br />
-      <input type="search" [(ngModel)]="searchUser" />
-
-      <button (click)="onSearch()" style="margin-left: 5px">Search</button>
+      <input
+        type="search"
+        [(ngModel)]="searchUser"
+        placeholder="Search heroes"
+      />
+      <br /><br />
+      <button
+        (click)="onSearch()"
+        mat-stroked-button
+        style="margin-right: 10px; margin-bottom: 10px; color: blue"
+      >
+        Search
+      </button>
     </div>
   </div>
 </div>
 
 <div *ngIf="isMobile">
-  <label for="site-search">Search Users:</label><br />
-  <input type="search" [(ngModel)]="searchUser" />
-  <button (click)="onSearch()" style="margin-left: 5px">Search</button>
+  <input type="search" [(ngModel)]="searchUser" placeholder="Search heroes" />
+  <br />
+  <br />
+  <button
+    (click)="onSearch()"
+    mat-stroked-button
+    style="margin-right: 10px; margin-bottom: 10px; color: blue"
+  >
+    Search
+  </button>
+
   <div *ngFor="let user of users | async">
     <app-user-item [user]="user"></app-user-item>
   </div>

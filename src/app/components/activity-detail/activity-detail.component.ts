@@ -37,6 +37,7 @@ export class ActivityDetailComponent implements OnInit {
     this.isMobile = this.ms.isMobile();
     this.selectedActivity?.subscribe((a) => {
       this.activity = a;
+      a.qualities?.sort((a, b) => b.count - a.count);
     });
 
     this.activatedRoute.paramMap.subscribe((map) => {

@@ -38,7 +38,8 @@ export class LocationsComponent implements OnInit {
   center: google.maps.LatLngLiteral;
   options: google.maps.MapOptions = {
     mapTypeId: 'hybrid',
-    zoomControl: true,
+    disableDefaultUI: true,
+    zoomControl: false,
     scrollwheel: false,
     disableDoubleClickZoom: false,
     //maxZoom: 50,

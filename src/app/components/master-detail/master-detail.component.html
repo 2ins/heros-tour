@@ -1,77 +1,51 @@
-<div *ngIf="!isMobile" fxLayout="row">
-  <div fxFlex.gt-sm="60%">
-    <ng-container *ngTemplateOutlet="detail"></ng-container>
-  </div>
-  <div fxFlex.gt-sm="40%"></div>
-</div>
+<div *ngIf="master as x">
+  <div *ngIf="!isMobile; else detailXp">
+    <div>
+      <div fxFlex.gt-sm="60%">
+        <ng-container *ngTemplateOutlet="detailXp"></ng-container>
+      </div>
+      <div fxFlex.gt-sm="40%">
+        <br /><br />
 
-<div *ngIf="isMobile">
-  <ng-container *ngTemplateOutlet="detail"></ng-container>
-</div>
+        conta: {{ x.qualities?.length }}
+        <app-virtues-pie [qualities]="x.qualities"></app-virtues-pie>
+        <!--  <app-testino [qualities]="x.qualities"></app-testino>-->
 
-<ng-template #detail>
-  <div>
-    <div *ngIf="master != undefined" style="width: 100%" class="inline">
-      <h1>{{ master.name }}</h1>
-      <a href="//{{ master.website }}" target="_blank">{{ master.website }}</a>
-      <br />
-      <div style="display: flex; justify-content: center">
-        <div class="image-cropper">
-          <img
-            src="{{
-              'https://enrgmsdppekwfvmbdxsl.supabase.co/storage/v1/object/public/avatars/' +
-                master.avatar_url
-            }}"
-            alt="avatar"
-            class="profile-pic"
-            height="300px"
-          />
+        <br />
+        <div style="text-align: center">
+          experiences: <b>{{ x.tot_xps }}</b>
         </div>
-      </div>
-
-      <div>
-        total number of experiences: <b>{{ master.tot_xps }}</b>
-      </div>
-      <br />
-      <button (click)="edit()">edit</button>
-      <button (click)="addXp()">
-        add new experience for {{ master.name }}
-      </button>
-      <br />
-
-      <br />
-
-      <h1>Activities</h1>
-      <div style="display: flex; justify-content: center">
-        <div *ngFor="let a of master.activities">
-          <div class="inlineTag">
-            <b
-              routerLink="/activities/activity/{{ a.id }}"
-              style="cursor: pointer"
-            >
-              #{{ a.name }}</b
-            >&nbsp;&nbsp;
-          </div>
+        <br /><br />
+        <div style="text-align: center">
+          <button
+            (click)="addXp()"
+            mat-stroked-button
+            style="margin-right: 10px; margin-bottom: 10px; color: blue"
+          >
+            add new experience
+          </button>
         </div>
+        <br />
       </div>
-
-      <br /><br />
-      <h1>Archtypes</h1>
+    </div>
+    <div *ngIf="x.heroes && x.heroes.length > 0">
+      <br />
+      <h1 style="text-align: center">Strenghts</h1>
       <br />
 
       <app-qualities-list-grid
-        [qualities]="master.qualities"
-        [total]="master.tot_xps"
+        [qualities]="x.qualities"
+        [total]="x.tot_xps"
       ></app-qualities-list-grid>
 
       <div style="width: 100%; text-align: left">
         <br /><br />
-        <h2>Experiences</h2>
+        <h1 style="text-align: center">Experiences</h1>
         <div class="heroes">
-          <div *ngFor="let hero of master.heroes">
+          <div *ngFor="let hero of x.heroes">
             <app-experience-item
               [hero]="hero"
-              [reverse]="false"
+              [reverse]="true"
             ></app-experience-item>
             <br />
           </div>
@@ -79,4 +53,65 @@
       </div>
     </div>
   </div>
-</ng-template>
+
+  <ng-template #detailXp>
+    <div>
+      <div style="width: 100%" class="inline">
+        <div>
+          <div style="width: 100%; margin-top: 0px">
+            <div style="float: center">
+              <h1 style="text-align: center">
+                {{ x.name }}
+              </h1>
+              <a href="//{{ x.website }}" target="_blank">{{ x.website }}</a>
+            </div>
+            <br />
+          </div>
+        </div>
+
+        <div style="display: flex; justify-content: center">
+          <div class="image-cropper">
+            <img
+              #hdImage
+              src="{{
+                'https://enrgmsdppekwfvmbdxsl.supabase.co/storage/v1/object/public/avatars/' +
+                  x.avatar_url
+              }}"
+              alt="avatar"
+              class="profile-pic"
+              [ngClass]="
+                hdImage.width >= hdImage.height
+                  ? 'profile-pic-height'
+                  : 'profile-pic-width'
+              "
+            />
+          </div>
+        </div>
+        <br />
+        <h3 style="text-align: center">Activities</h3>
+        <div style="display: flex; justify-content: center">
+          <div *ngFor="let a of x.activities">
+            <div class="inlineTag">
+              <div
+                routerLink="/activities/activity/{{ a.id }}"
+                style="cursor: pointer"
+              >
+                #{{ a.name }}&nbsp;
+              </div>
+            </div>
+          </div>
+        </div>
+        <br />
+        <span>
+          <button
+            (click)="edit()"
+            mat-stroked-button
+            style="margin-right: 10px; margin-bottom: 10px; color: blue"
+          >
+            edit
+          </button>
+        </span>
+      </div>
+    </div>
+  </ng-template>
+</div>

@@ -21,8 +21,8 @@ div.inlineTag {
 }
 
 .image-cropper-detail {
-  width: 200px;
-  height: 200px;
+  width: 100%;
+  height: 100%;
   overflow: hidden;
   border-radius: 50%;
   border: black solid 1px;
@@ -31,23 +31,4 @@ div.inlineTag {
   display: inline;
   margin: 0 auto;
   width: 100%;
-  height: 100%;
-}
-
-.div1 {
-  position: absolute;
-  height: 220px;
-  width: 220px;
-  z-index: 3;
-  margin-top: 100px;
-  margin-left: 170px;
-  float: right;
-  opacity: 0.9;
-}
-
-.div2 {
-  position: absolute;
-  width: 270px;
-  height: 270px;
-  z-index: 1;
 }

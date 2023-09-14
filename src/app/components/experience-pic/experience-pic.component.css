@@ -1,0 +1,47 @@
+.image-cropper-detail {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 50%;
+  border: black solid 1px;
+}
+.profile-pic {
+  display: inline;
+  margin: 0 auto;
+}
+.profile-pic-height {
+  height: 100%;
+}
+.profile-pic-width {
+  width: 100%;
+}
+
+#container {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 70%;
+  padding-top: 70%;
+  position: relative;
+}
+#navi {
+  width: 80%;
+  height: 80%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+
+  opacity: 0.9;
+}
+#infoi {
+  width: 60%;
+  height: 60%;
+
+  position: absolute;
+  bottom: 0%;
+  right: 0%;
+  z-index: 2;
+
+  opacity: 0.9;
+}

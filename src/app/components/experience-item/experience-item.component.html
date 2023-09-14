@@ -1,96 +1,93 @@
-<mat-card (click)="onSelect(hero)" *ngIf="hero">
-  <div fxLayout="row">
-    <div style="margin-right: 10px">
-      <div
-        routerLink="/users/user/{{ hero.profile.id }}"
-        style="cursor: pointer; text-align: center; display: inline-block"
-        class="right-aligned"
-      >
-        <ng-template [ngIf]="reverse" [ngIfElse]="normal">
-          <div>
-            <div class="image-cropper-xp">
-              <img
-                src="{{
-                  'https://enrgmsdppekwfvmbdxsl.supabase.co/storage/v1/object/public/avatars/' +
-                    hero.master.avatar_url
-                }}"
-                height="100px"
-                class="profile-pic"
-              />
-            </div>
-
-            <div>
-              <b>{{ hero.master.name }}</b>
-            </div>
-          </div>
-        </ng-template>
-
-        <ng-template #normal>
-          <div class="image-cropper-xp">
-            <img
-              src="{{
-                'https://enrgmsdppekwfvmbdxsl.supabase.co/storage/v1/object/public/avatars/' +
-                  hero.profile.avatar_url
-              }}"
-              height="100px"
-              class="profile-pic"
-            />
-          </div>
-          <!--
-                  <div>
-                  <b>{{ hero.profile.username }}</b>
-                </div>
-                -->
-        </ng-template>
+<mat-card
+  (click)="onSelect(hero)"
+  *ngIf="hero && !isMobile"
+  style="margin-bottom: 5px"
+>
+  <div style="width: 100%; font-style: italic; color: gray">
+    <div style="width: 100%; margin-top: 0px">
+      <div style="float: left">
+        <div>{{ hero.location | locationCompact }}</div>
       </div>
-      <br />
-      <br />
+
+      <div style="float: right">
+        <span>
+          {{ hero.event_date | date : "MMM, Y" }}
+        </span>
+      </div>
     </div>
-    <div fxFlex="75">
-      <b>{{ hero.profile.username }}</b> did an experience
-      <b>@{{ hero.master.name }}</b> improving his skills with the following
-      activities:
-
-      <br />
-      <span class="name">
-        <div *ngIf="hero.activities">
-          <div>
-            <label
-              style="color: blue; cursor: pointer; font-weight: bold"
-              *ngFor="let a of hero.activities"
-              routerLink="/activities/activity/{{ a.id }}"
-              >#{{ a.name }}&nbsp;
-            </label>
-          </div>
-        </div>
-      </span>
-
-      {{ hero.location }}
-      <br />
-      {{ hero.event_date | date : "MMMM, Y" }}
-      <Br />
+  </div>
+  <br />
+  <div fxLayout="row" style="margin-top: 5px">
+    <div fxFlex="100" style="margin-left: 10px">
+      <app-qualities-list-horizontal
+        [qualities]="hero.qualities"
+        [hero]="hero"
+      ></app-qualities-list-horizontal>
     </div>
-
-    <span
-      *ngIf="hero.master.id"
-      style="display: block"
-      routerLink="/masters/master/{{ hero.master.id }}"
-      style="cursor: pointer"
-    >
+  </div>
+  <div style="float: left">
+    <span style="display: flex">
+      <div *ngIf="hero.activities">
+        <label
+          style="color: blue; cursor: pointer"
+          *ngFor="let a of hero.activities"
+          routerLink="/activities/activity/{{ a.id }}"
+          >#{{ a.name }}&nbsp;
+        </label>
+      </div>
     </span>
+  </div>
+  <br />
+  <div style="font-style: italic; color: gray">
+    {{ hero.name | slice : 0 : 300 }}
+    <b *ngIf="hero.name.length > 300">...continue</b>
+  </div>
+</mat-card>
+
+<mat-card (click)="onSelect(hero)" *ngIf="hero && isMobile">
+  <div style="width: 100%; margin-top: 0px">
+    <div style="float: left">
+      <div>
+        {{ hero.location | locationCompact }}
+      </div>
+    </div>
+    <div style="float: right">
+      <span>
+        {{ hero.event_date | date : "MMM, Y" }}
+      </span>
+    </div>
+  </div>
+  <br />
+
+  <div fxLayout="row" style="margin-top: 5px">
+    <div fxFlex="100" style="margin-left: 10px">
+      <app-qualities-list-horizontal
+        [qualities]="hero.qualities"
+        [hero]="hero"
+      ></app-qualities-list-horizontal>
+    </div>
   </div>
   <div>
     <div>
-      {{ hero.name }}
+      <div style="float: left">
+        <span style="display: flex">
+          <div *ngIf="hero.activities">
+            <i
+              style="color: blue; cursor: pointer"
+              *ngFor="let a of hero.activities"
+              routerLink="/activities/activity/{{ a.id }}"
+              >#{{ a.name }}&nbsp;
+            </i>
+          </div>
+        </span>
+      </div>
 
       <br />
-      <br />
-      <b>{{ hero.profile.username }}</b> picked the following archtipes for this
-      experience :<br /><br />
 
-      <app-qualities-list-horizontal
-        [qualities]="hero.qualities"
-      ></app-qualities-list-horizontal>
+      <div style="margin: 10px">
+        {{ hero.name | slice : 0 : 200 }}
+        <b *ngIf="hero.name.length > 200">...continue</b>
+      </div>
     </div>
   </div>
 </mat-card>

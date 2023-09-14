@@ -13,8 +13,7 @@ import { Hero, HeroQualitiesTable, HeroTable } from './model/hero';
 import { MasterActivityTable, MasterTable } from './model/master';
 import { Quality } from './model/quality';
 import { Search } from './model/search';
-
-export interface Profile {
+export interface MyProfile {
   id: string;
   username: string;
   website: string;
@@ -107,7 +106,7 @@ export class SupabaseService {
   //
 
   //PROFILE
-  updateProfile(profile: Profile) {
+  updateProfile(profile: MyProfile) {
     const update = {
       ...profile,
       updated_at: new Date(),
@@ -158,6 +157,13 @@ export class SupabaseService {
   }
   deleteHeroQuality(id: number) {
     return this.supabase.from('hero_qualities').delete().match({ hero_id: id });
+  }
+
+  getHeroById(idHero: string) {
+    return this.supabase
+      .from('overview_experiences')
+      .select(`*`)
+      .eq('id', idHero);
   }
 
   //
@@ -227,6 +233,8 @@ export class SupabaseService {
       namehero: hero.name,
       eventdate: hero.event_date,
       profileid: idProfile,
+      masterid: hero.master_id,
+      loc: hero.location,
     });
     //return this.supabase.from('heroes').insert(hero);
   }
