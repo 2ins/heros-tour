@@ -27,14 +27,21 @@
   </mat-form-field>
   <br />
   <div class="custom-file overflow-hidden rounded-pill mb-5">
-    <input
-      id="customFile"
-      type="file"
-      (change)="previewImage($event)"
-      class="custom-file-input rounded-pill"
-    />
     <br />
     <img *ngIf="imageSrc" [src]="imageSrc" alt="Preview" width="300px" />
+
+    <image-cropper
+      style="max-width: 500px"
+      [imageChangedEvent]="imageChangedEvent"
+      [maintainAspectRatio]="true"
+      [aspectRatio]="1"
+      format="png"
+      (imageCropped)="imageCropped($event)"
+      (imageLoaded)="imageLoaded()"
+      (cropperReady)="cropperReady()"
+      (loadImageFailed)="loadImageFailed()"
+    ></image-cropper>
+    <input type="file" (change)="fileChangeEvent($event)" />
   </div>
 
   <div *ngIf="status" class="spinner" style="font-size: 18px">

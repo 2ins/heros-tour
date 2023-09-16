@@ -3,6 +3,7 @@
 {{ qualities?.length }}
 <div>
   <ngx-chartjs
+    #ref
     [data]="datasource"
     [options]="options"
     type="polarArea"

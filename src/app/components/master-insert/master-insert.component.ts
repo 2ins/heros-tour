@@ -1,15 +1,19 @@
 import { Component, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { Select, Store } from '@ngxs/store';
+import { ImageCroppedEvent } from 'ngx-image-cropper';
 import { Observable, map } from 'rxjs';
 import { GetActivitiesOverview } from 'src/app/actions/activity.action';
 import { AddMaster } from 'src/app/actions/master.action';
 import { Activity } from 'src/app/model/activity';
 import { MasterActivityTable, MasterTable } from 'src/app/model/master';
 import { Search } from 'src/app/model/search';
+import { LoaderService } from 'src/app/services/loader.service';
 import { HeroState } from 'src/app/states/todo.state';
 import { SupabaseService } from 'src/app/supabase.service';
+import { PopupComponent } from '../popup/popup.component';
 
 @Component({
   selector: 'app-master-insert',
@@ -37,7 +41,9 @@ export class MasterInsertComponent implements OnInit {
     private readonly supabase: SupabaseService,
     private store: Store,
     private router: Router,
-    private readonly dom: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private _snackBar: MatSnackBar,
+    private loadingService: LoaderService
   ) {
     console.log('constructor');
   }
@@ -146,7 +152,7 @@ export class MasterInsertComponent implements OnInit {
       const { data } = await this.supabase.downLoadImage(path);
       if (data instanceof Blob) {
         console.log('downloadImage 2');
-        this._avatarUrl = this.dom.bypassSecurityTrustResourceUrl(
+        this._avatarUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
           URL.createObjectURL(data)
         );
         console.log(this._avatarUrl);
@@ -194,6 +200,79 @@ export class MasterInsertComponent implements OnInit {
       appo.push(ma);
     });
     this.newMaster.arr = appo;
-    this.store.dispatch(new AddMaster(this.newMaster));
+    this.store.dispatch(new AddMaster(this.newMaster)).subscribe(() => {
+      this.openSnackBar();
+    });
+  }
+
+  openSnackBar() {
+    this._snackBar.openFromComponent(PopupComponent, {
+      duration: 2 * 1000,
+    });
+  }
+
+  //Corpper
+  /* cropper */
+  imageChangedEvent: any = '';
+  croppedImage: any = '';
+
+  fileChangeEvent(event: any): void {
+    this.imageChangedEvent = event;
+  }
+  imageCropped(event: ImageCroppedEvent) {
+    if (event.objectUrl != undefined || event.objectUrl != null) {
+      this.croppedImage = this.sanitizer.bypassSecurityTrustUrl(
+        event.objectUrl
+      );
+      console.log(event);
+      if (event.blob) {
+        this.name = this.makeid(20) + '.png';
+        var f = this.blobToFile(event.blob, this.name);
+        console.log(f);
+
+        const reader = new FileReader();
+        reader.onload = () => {
+          this.imageSrc = reader.result as string;
+        };
+        reader.readAsDataURL(f);
+
+        this.status = true;
+        this.file = f;
+      }
+    }
+
+    // event.blob can be used to upload the cropped image
+  }
+  imageLoaded() {
+    //this.showCropper = true;
+    console.log('Image loaded');
+  }
+  cropperReady() {
+    console.log(this.croppedImage);
+  }
+  loadImageFailed() {
+    // show message
+  }
+  public blobToFile = (theBlob: Blob, fileName: string): File => {
+    const b: any = theBlob;
+    //A Blob() is almost a File() - it's just missing the two properties below which we will add
+    b.lastModifiedDate = new Date();
+    b.name = fileName;
+
+    //Cast to a File() type
+    return theBlob as File;
+  };
+
+  makeid(length: number) {
+    let result = '';
+    const characters =
+      'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    const charactersLength = characters.length;
+    let counter = 0;
+    while (counter < length) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+      counter += 1;
+    }
+    return result;
   }
 }

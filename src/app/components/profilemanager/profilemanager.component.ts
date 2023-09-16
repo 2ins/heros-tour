@@ -1,11 +1,15 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { DomSanitizer } from '@angular/platform-browser';
 import { Select, Store } from '@ngxs/store';
 import { AuthSession } from '@supabase/supabase-js';
+import { ImageCroppedEvent } from 'node_modules/ngx-image-cropper';
 import { Observable } from 'rxjs';
 import { SetProfile } from 'src/app/actions/profiles.action';
+import { LoaderService } from 'src/app/services/loader.service';
 import { HeroState } from 'src/app/states/todo.state';
 import { MyProfile, SupabaseService } from 'src/app/supabase.service';
+import { PopupComponent } from '../popup/popup.component';
 
 @Component({
   selector: 'app-profilemanager',
@@ -16,7 +20,7 @@ export class ProfilemanagerComponent implements OnInit {
   message?: string;
   status?: boolean;
   bucket: string = 'avatars';
-  _avatarUrl: SafeResourceUrl | undefined;
+  //_avatarUrl: SafeResourceUrl | undefined;
 
   ///
   file?: File;
@@ -31,40 +35,30 @@ export class ProfilemanagerComponent implements OnInit {
 
   constructor(
     private readonly supabase: SupabaseService,
-    private readonly dom: DomSanitizer,
-    private store: Store
+    private store: Store,
+    private sanitizer: DomSanitizer,
+    private _snackBar: MatSnackBar,
+    private loadingService: LoaderService
   ) {}
 
   ngOnInit(): void {
     this.userProfile?.subscribe((us) => {
       if (us) {
         this.myUser = us;
-        //this.downloadImage(us.avatar_url);
         console.log('us.avatar_url', us.avatar_url);
-        /*
-        this.imageSrc =
-          'https://enrgmsdppekwfvmbdxsl.supabase.co/storage/v1/object/public/avatars/' +
-          us.avatar_url;
-           */
       }
     });
   }
 
-  selectFile(event: Event) {
-    const input = event.target as HTMLInputElement;
-
-    if (!input.files || input.files.length == 0) {
-      this.message = 'You must select an image to upload.';
-      return;
-    }
-
-    this.status = true;
-    const file: File = input.files[0];
-    const name = file.name.replace(/ /g, '');
+  openSnackBar() {
+    this._snackBar.openFromComponent(PopupComponent, {
+      duration: 2 * 1000,
+    });
   }
 
   saveProfile(): void {
     console.log('save');
+    this.loadingService.start();
 
     if (this.myUser) {
       this.uploadFile();
@@ -98,6 +92,7 @@ export class ProfilemanagerComponent implements OnInit {
             this.message = `File ${this.file.name} uploaded with success!`;
             this.status = true;
             if (this.myUser) {
+              console.log('SON QUI, ' + this.myUser);
               this.myUser.avatar_url = this.file.name;
             }
             if (this.status) {
@@ -117,13 +112,6 @@ export class ProfilemanagerComponent implements OnInit {
     try {
       console.log('downloadImage 1');
       const { data } = await this.supabase.downLoadImage(path);
-      if (data instanceof Blob) {
-        console.log('downloadImage 2');
-        this._avatarUrl = this.dom.bypassSecurityTrustResourceUrl(
-          URL.createObjectURL(data)
-        );
-        console.log(this._avatarUrl);
-      }
     } catch (error) {
       if (error instanceof Error) {
         console.error('Error downloading image: ', error.message);
@@ -132,7 +120,74 @@ export class ProfilemanagerComponent implements OnInit {
   }
   doBis() {
     if (this.myUser) {
-      this.store.dispatch(new SetProfile(this.myUser));
+      this.store.dispatch(new SetProfile(this.myUser)).subscribe(() => {
+        this.openSnackBar();
+        this.loadingService.stop();
+      });
     }
+  }
+
+  /* cropper */
+  imageChangedEvent: any = '';
+  croppedImage: any = '';
+
+  fileChangeEvent(event: any): void {
+    this.imageChangedEvent = event;
+  }
+  imageCropped(event: ImageCroppedEvent) {
+    if (event.objectUrl != undefined || event.objectUrl != null) {
+      this.croppedImage = this.sanitizer.bypassSecurityTrustUrl(
+        event.objectUrl
+      );
+      console.log(event);
+      if (event.blob) {
+        this.name = this.makeid(20) + '.png';
+        var f = this.blobToFile(event.blob, this.name);
+        console.log(f);
+
+        const reader = new FileReader();
+        reader.onload = () => {
+          this.imageSrc = reader.result as string;
+        };
+        reader.readAsDataURL(f);
+
+        this.status = true;
+        this.file = f;
+      }
+    }
+
+    // event.blob can be used to upload the cropped image
+  }
+  imageLoaded() {
+    //this.showCropper = true;
+    console.log('Image loaded');
+  }
+  cropperReady() {
+    console.log(this.croppedImage);
+  }
+  loadImageFailed() {
+    // show message
+  }
+  public blobToFile = (theBlob: Blob, fileName: string): File => {
+    const b: any = theBlob;
+    //A Blob() is almost a File() - it's just missing the two properties below which we will add
+    b.lastModifiedDate = new Date();
+    b.name = fileName;
+
+    //Cast to a File() type
+    return theBlob as File;
+  };
+
+  makeid(length: number) {
+    let result = '';
+    const characters =
+      'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    const charactersLength = characters.length;
+    let counter = 0;
+    while (counter < length) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+      counter += 1;
+    }
+    return result;
   }
 }

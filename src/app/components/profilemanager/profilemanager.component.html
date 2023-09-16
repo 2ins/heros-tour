@@ -8,9 +8,8 @@
       placeholder="name"
     />
   </div>
-
+  <br />
   <img
-    *ngIf="!imageSrc"
     src="{{
       'https://enrgmsdppekwfvmbdxsl.supabase.co/storage/v1/object/public/avatars/' +
         myUser.avatar_url
@@ -21,18 +20,8 @@
   />
 
   <div class="custom-file overflow-hidden rounded-pill mb-5">
-    <img *ngIf="imageSrc" [src]="imageSrc" alt="Preview" width="300px" />
     <br />
-    <input
-      id="customFile"
-      type="file"
-      (change)="previewImage($event)"
-      class="custom-file-input rounded-pill"
-    />
-  </div>
-
-  <div * ngIf="status" class="spinner" style="font-size: 18px">
-    <div class="head"></div>
+    <input type="file" (change)="fileChangeEvent($event)" />
   </div>
 
   <div *ngIf="message" class="alert alert-success" role="alert">
@@ -43,4 +32,16 @@
   <div>
     <button (click)="saveProfile()">Update Profile</button>
   </div>
+
+  <image-cropper
+    style="max-width: 500px"
+    [imageChangedEvent]="imageChangedEvent"
+    [maintainAspectRatio]="true"
+    [aspectRatio]="1"
+    format="png"
+    (imageCropped)="imageCropped($event)"
+    (imageLoaded)="imageLoaded()"
+    (cropperReady)="cropperReady()"
+    (loadImageFailed)="loadImageFailed()"
+  ></image-cropper>
 </div>

@@ -1,11 +1,14 @@
 import {
-  ChangeDetectionStrategy,
   Component,
   Input,
   NgZone,
+  OnChanges,
   OnInit,
+  SimpleChanges,
+  ViewChild,
 } from '@angular/core';
 import { Router } from '@angular/router';
+import { ChartjsComponent } from '@ctrl/ngx-chartjs';
 import { Store } from '@ngxs/store';
 import { ChartData, ChartOptions } from 'chart.js';
 import { Quality } from 'src/app/model/quality';
@@ -14,9 +17,10 @@ import { SupabaseService } from 'src/app/supabase.service';
   selector: 'app-virtues-pie',
   templateUrl: './virtues-pie.component.html',
   styleUrls: ['./virtues-pie.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush, // Utilizza OnPush
 })
-export class VirtuesPieComponent implements OnInit {
+export class VirtuesPieComponent implements OnInit, OnChanges {
+  @ViewChild('ref', { static: true }) ref!: ChartjsComponent;
+
   @Input()
   qualities?: Quality[];
 
@@ -26,6 +30,52 @@ export class VirtuesPieComponent implements OnInit {
     private router: Router,
     private ngZone: NgZone
   ) {}
+
+  ngOnChanges(changes: SimpleChanges): void {
+    const { qualities } = changes;
+    if (qualities.currentValue != qualities.previousValue) {
+      //console.log('Changes');
+      //console.log('adesso: ', changes['qualities'].currentValue);
+      //console.log('prima: ', changes['qualities'].previousValue);
+      //console.log(' this.qualities ', this.qualities?.length);
+
+      this.hashmap.set('WI', 0);
+      this.hashmap.set('CO', 0);
+      this.hashmap.set('HU', 0);
+      this.hashmap.set('JU', 0);
+      this.hashmap.set('TE', 0);
+      this.hashmap.set('TR', 0);
+
+      var qualitiesAux: Quality[] | undefined = qualities.currentValue;
+
+      console.log('qualitiesAux', qualitiesAux);
+      qualitiesAux?.map((x) => {
+        var newVal = 0;
+        if (x.count) {
+          newVal = x.count;
+        }
+        newVal = 1;
+        const mapV = this.hashmap.get(x.virtue);
+        //console.log('mapv', mapV);
+        if (mapV != undefined) {
+          newVal = newVal + mapV;
+        }
+        this.hashmap.set(x.virtue, newVal);
+      });
+      // console.log(this.hashmap);
+      var data = this.datasource.datasets[0].data;
+
+      data[0] = this.hashmap.get('WI') as number;
+      data[1] = this.hashmap.get('CO') as number;
+      data[2] = this.hashmap.get('HU') as number;
+      data[3] = this.hashmap.get('JU') as number;
+      data[4] = this.hashmap.get('TE') as number;
+      data[5] = this.hashmap.get('TR') as number;
+
+      //this.ref.chartInstance.data.datasets[0].data = data;
+      this.ref.chartInstance?.update();
+    }
+  }
 
   ngAfterViewInit() {
     // console.log('Valore di qualities:', this.qualities);
@@ -153,39 +203,5 @@ export class VirtuesPieComponent implements OnInit {
 
   hashmap = new Map<string, number>();
 
-  ngOnInit(): void {
-    //console.log(' this.qualities ', this.qualities?.length);
-
-    this.hashmap.set('WI', 0);
-    this.hashmap.set('CO', 0);
-    this.hashmap.set('HU', 0);
-    this.hashmap.set('JU', 0);
-    this.hashmap.set('TE', 0);
-    this.hashmap.set('TR', 0);
-
-    var qualitiesAux: Quality[] | undefined = this.qualities;
-
-    qualitiesAux?.map((x) => {
-      var newVal = 0;
-      if (x.count) {
-        newVal = x.count;
-      }
-      newVal = 1;
-      const mapV = this.hashmap.get(x.virtue);
-      //console.log('mapv', mapV);
-      if (mapV != undefined) {
-        newVal = newVal + mapV;
-      }
-      this.hashmap.set(x.virtue, newVal);
-    });
-    // console.log(this.hashmap);
-    var data = this.datasource.datasets[0].data;
-
-    data[0] = this.hashmap.get('WI') as number;
-    data[1] = this.hashmap.get('CO') as number;
-    data[2] = this.hashmap.get('HU') as number;
-    data[3] = this.hashmap.get('JU') as number;
-    data[4] = this.hashmap.get('TE') as number;
-    data[5] = this.hashmap.get('TR') as number;
-  }
+  ngOnInit(): void {}
 }

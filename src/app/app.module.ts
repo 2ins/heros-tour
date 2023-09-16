@@ -51,7 +51,9 @@ import {
 
 import { LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
+import { ImageCropperModule } from 'node_modules/ngx-image-cropper';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthComponent } from './auth/auth.component';
@@ -203,6 +205,8 @@ Chart.defaults.plugins.tooltip.enabled = false;
     MatTabsModule,
     ChartjsModule,
     HttpClientModule,
+    ImageCropperModule,
+    MatSnackBarModule,
   ],
   providers: [
     //HeroGuardService,

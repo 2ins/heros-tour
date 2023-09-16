@@ -1,26 +1,36 @@
+//YES STATE
 import { Location } from '@angular/common';
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Store } from '@ngxs/store';
-import { Subscription, forkJoin, from } from 'rxjs';
+import { Select, Store } from '@ngxs/store';
+import { Observable, Subscription } from 'rxjs';
+import { SetSelectedMaster } from 'src/app/actions/master.action';
 import { Quality } from 'src/app/model/quality';
-import { LoaderService } from 'src/app/services/loader.service';
 import { MobileService } from 'src/app/services/mobile.service';
-import { SupabaseService } from 'src/app/supabase.service';
 import { Master } from '../../model/master';
+import { HeroState } from '../../states/todo.state';
+import { PopupComponent } from '../popup/popup.component';
 @Component({
   selector: 'app-master-detail',
   templateUrl: './master-detail.component.html',
   styleUrls: ['./master-detail.component.css'],
 })
-export class MasterDetailComponent implements OnInit {
+export class MasterDetailComponent implements OnInit, OnDestroy {
+  @Select(HeroState.getSelectedMaster) selectedMaster?: Observable<Master>;
+  //@Select(HeroState.getMasterList) masters?: Observable<Master[]>;
   private subscription?: Subscription;
 
   @Output() selectedChange: EventEmitter<Master> = new EventEmitter();
 
   master?: Master;
   masterId?: any;
-  masterIdOld?: any;
   isMobile: boolean = false;
   qualities?: Quality[];
   randomNumber?: number;
@@ -31,9 +41,22 @@ export class MasterDetailComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private location: Location,
     private ms: MobileService,
-    private supabase: SupabaseService,
-    private loadingService: LoaderService
-  ) {}
+    private _snackBar: MatSnackBar
+  ) {
+    this.subscription = this.selectedMaster?.subscribe((m) => {
+      //console.log('subscribe');
+      console.log('MASTER SELEZIONATO', m.id);
+      //console.log('MASTER old', this.master);
+      this.master = m;
+      this.qualities = m.qualities;
+
+      m.heroes?.sort((a, b) => {
+        const dateA = new Date(a.event_date);
+        const dateB = new Date(b.event_date);
+        return dateB.getTime() - dateA.getTime();
+      });
+    });
+  }
 
   addXp() {
     this.isMobile = false;
@@ -46,35 +69,23 @@ export class MasterDetailComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.paramMap.subscribe((map) => {
       this.masterId = map.get('id');
-      console.log('masterid?:' + this.masterId);
-      return this.executeSupaBiz();
+      //console.log('masterid?:' + this.masterId);
+
+      this.store.dispatch(new SetSelectedMaster(this.masterId));
+
+      //const master = this.store.selectSnapshot(HeroState.getSelectedMaster);
+      //console.log('Master xx', master);
     });
-  }
 
-  private executeSupaBiz() {
-    const queryMaster = this.supabase.getMasterById(this.masterId);
-    const queryExperiences = this.supabase.getMasterHeroes(this.masterId);
-    console.log('AAA1');
-    this.loadingService.start();
-
-    return forkJoin([from(queryMaster), from(queryExperiences)]).subscribe(
-      (response: any) => {
-        console.log('AAA2');
-
-        this.loadingService.stop();
-        var selMast = response[0].data[0] as Master;
-        var mapped = response[1].data.map(function (obj: any) {
-          return obj.j;
-        });
-        selMast.heroes = mapped;
-        this.master = selMast;
-        this.master.heroes?.sort((a, b) => {
-          const dateA = new Date(a.event_date);
-          const dateB = new Date(b.event_date);
-          return dateB.getTime() - dateA.getTime();
-        });
+    /*
+    this.masters?.subscribe((ms) => {
+      if (ms) {
+        if (ms.length == 0) {
+          this.store.dispatch(new GetMasters());
+        }
       }
-    );
+    });
+    */
   }
 
   backClicked() {
@@ -84,5 +95,16 @@ export class MasterDetailComponent implements OnInit {
     const appo = { master: this.master };
     console.log('prima', appo);
     this.route.navigateByUrl('/addMaster', { state: appo });
+  }
+
+  ngOnDestroy() {
+    this.subscription?.unsubscribe();
+    // Pulisci lo stato o esegui altre operazioni necessarie quando si lascia la pagina di dettaglio
+  }
+
+  openSnackBar() {
+    this._snackBar.openFromComponent(PopupComponent, {
+      duration: 2 * 1000,
+    });
   }
 }
