@@ -43,5 +43,5 @@ Thumbs.db
 
 .firebase
 /src/environments
-/src/index.html
+./src/index.html
 
