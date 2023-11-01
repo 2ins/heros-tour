@@ -26,3 +26,68 @@ li {
 .TR {
   background: rgba(213, 184, 255, 0.3);
 }
+
+.alignleft {
+  float: left;
+}
+.alignright {
+  float: right;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.icon-left,
+.icon-right {
+  flex: 0 0 auto;
+  margin: 0 5px; /* Spazio tra icone e input */
+}
+
+.input-text {
+  flex: 1;
+  padding: 5px;
+}
+
+.circle-icon {
+  background-color: #007bff; /* Colore dello sfondo del cerchio */
+  border-radius: 50%; /* Rendi il bordo circolare */
+  padding: 8px; /* Spazio tra l'icona e il bordo del cerchio */
+  font-size: 24px; /* Imposta la dimensione dell'icona */
+  color: #fff; /* Colore dell'icona */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 15px; /* Imposta l'altezza del cerchio */
+  width: 15px; /* Imposta la larghezza del cerchio */
+}
+
+.icon-back {
+  border-radius: 50%; /* Rendi il bordo circolare */
+  padding: 8px; /* Spazio tra l'icona e il bordo del cerchio */
+  font-size: 24px; /* Imposta la dimensione dell'icona */
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 15px; /* Imposta l'altezza del cerchio */
+  width: 15px; /* Imposta la larghezza del cerchio */
+}
+
+.flex-container {
+  display: flex;
+  flex-wrap: wrap; /* Permette il passaggio a una nuova riga quando non c'è spazio */
+}
+
+.flex-item {
+  border: 1px solid gray;
+  padding: 10px;
+  margin: 5px;
+  flex: 1; /* Fa in modo che le div occupino tutto lo spazio disponibile orizzontalmente */
+  max-width: calc(
+    50% - 10px
+  ); /* Limita la larghezza massima a un terzo della larghezza del contenitore */
+  box-sizing: border-box; /* Includi padding e bordo nella larghezza */
+}

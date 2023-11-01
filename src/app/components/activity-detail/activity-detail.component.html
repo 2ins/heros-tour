@@ -12,16 +12,59 @@
   </div>
 
   <div *ngIf="isMobile">
-    <ng-container *ngTemplateOutlet="detail"></ng-container>
+    <ng-container *ngTemplateOutlet="detailXp"></ng-container>
     <ng-container *ngTemplateOutlet="VirtuePie"></ng-container>
     <br />
     <ng-container *ngTemplateOutlet="prospect"></ng-container>
   </div>
 
+  <ng-template #detailXp>
+    <ng-container *ngTemplateOutlet="header"></ng-container>
+    <div>
+      <div style="width: 100%; padding-top: 50px" class="inline">
+        <div style="display: flex; justify-content: center">
+          <div class="image-main">
+            <img
+              src="{{
+                'https://enrgmsdppekwfvmbdxsl.supabase.co/storage/v1/object/public/avatars/' +
+                  activity.img_url
+              }}"
+              class="profile-pic"
+            />
+          </div>
+        </div>
+
+        <div>
+          <div style="width: 100%; margin: 10px">
+            <div>
+              <h1 style="text-align: center">
+                {{ activity.description }}
+              </h1>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+  <!-- MENU drop down -->
+  <mat-menu #menu="matMenu">
+    <div style="padding-right: 15px">
+      <button
+        (click)="edit()"
+        mat-menu-item
+        style="margin-right: 10px; margin-bottom: 10px; color: blue"
+      >
+        <mat-icon class="circle-icon-actions-item">edit</mat-icon>
+        edit
+      </button>
+    </div>
+  </mat-menu>
+
   <ng-template #detail>
     <div>
       <div *ngIf="activity != undefined" style="width: 100%" class="inline">
-        <h1>{{ activity.description }}</h1>
+        <h1 style="text-align: center">{{ activity.description }}</h1>
         <div style="color: blue">
           <b>#{{ activity.name }}</b>
         </div>
@@ -64,26 +107,71 @@
 
   <ng-template #VirtuePie>
     <br />
-    <app-virtues-pie [qualities]="activity.qualities"></app-virtues-pie>
+    {{ "." }}
+    <div style="width: 100%">
+      <div style="display: flex; justify-content: center; align-items: center">
+        <div
+          style="width: 80%; border: 0px solid black; justify-content: center"
+        >
+          <app-virtues-pie
+            [qualities]="activity.qualities"
+            [imgurl]="activity.img_url"
+          ></app-virtues-pie>
+        </div>
+      </div>
+    </div>
+
+    <br />
   </ng-template>
 
   <ng-template #prospect>
-    <h3 style="text-align: center">Strenghts</h3>
-
-    <app-qualities-list-grid
-      [qualities]="activity.qualities"
-      [total]="activity.xps_count"
-    ></app-qualities-list-grid>
+    <div style="border-top: 1px solid gray">
+      <app-qualities-list-grid
+        [qualities]="activity.qualities"
+        [total]="activity.xps_count"
+      ></app-qualities-list-grid>
+    </div>
     <br />
 
-    <div class="inline" style="width: 100%">
-      <br /><br />
-      <h3 style="text-align: center">Masters</h3>
+    <div class="inline" style="width: 100%; border-top: 1px solid gray">
+      <h2 style="text-align: left; margin-left: 25px">Masters</h2>
 
-      <br />
-      <div *ngFor="let master of activity.masters" style="text-align: left">
-        <app-master-item [user]="master"></app-master-item>
-        <br />
+      <mat-grid-list cols="2" rowHeight="230px">
+        <ng-container *ngFor="let master of activity.masters">
+          <mat-grid-tile [colspan]="!isMobile ? 1 : 2">
+            <div style="width: 100%; height: 100%; margin: 5px">
+              <app-master-item [user]="master"></app-master-item>
+            </div>
+          </mat-grid-tile>
+        </ng-container>
+      </mat-grid-list>
+    </div>
+  </ng-template>
+  <ng-template #header>
+    <div
+      style="
+        float: left;
+        width: 100%;
+        z-index: 0;
+        margin-bottom: 20px;
+        background-color: white;
+        border: solid grey 1px;
+        position: fixed;
+        z-index: 10;
+      "
+    >
+      <div style="border-bottom: 0px solid black">
+        <button mat-button (click)="backClicked()">
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+        activity: <b>{{ activity.description }}</b>
+        <button
+          mat-button
+          [matMenuTriggerFor]="menu"
+          style="border: 0px solid black; background-color: white; float: right"
+        >
+          <mat-icon class="circle-icon-actions">more_horizon</mat-icon>
+        </button>
       </div>
     </div>
   </ng-template>

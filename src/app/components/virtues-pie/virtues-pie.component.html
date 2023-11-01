@@ -1,13 +1,8 @@
-<br />
-<h3 style="text-align: center">Virtues</h3>
-{{ qualities?.length }}
-<div>
-  <ngx-chartjs
-    #ref
-    [data]="datasource"
-    [options]="options"
-    type="polarArea"
-    style="width: 300px; text-align: center; margin: auto"
-  >
-  </ngx-chartjs>
-</div>
+<ngx-chartjs
+  #ref
+  [data]="datasource"
+  [options]="options"
+  type="polarArea"
+  style="width: 100%; text-align: center; margin: auto"
+>
+</ngx-chartjs>

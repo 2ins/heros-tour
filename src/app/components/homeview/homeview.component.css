@@ -1,0 +1,81 @@
+/* tab-scroll.component.css */
+.tab-scroll-container {
+  overflow-x: auto;
+  white-space: nowrap;
+  /* Imposta la larghezza massima desiderata del contenitore */
+  max-width: 100%;
+}
+
+.tab-scroll-content {
+  display: inline-block;
+  /* Imposta la larghezza totale delle schede */
+  width: 100%;
+}
+
+.alignleft {
+  float: left;
+}
+.alignright {
+  float: right;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.icon-left,
+.icon-right {
+  flex: 0 0 auto;
+  margin: 0 5px; /* Spazio tra icone e input */
+}
+
+.input-text {
+  flex: 1;
+  padding: 5px;
+}
+
+.circle-icon {
+  background-color: #007bff; /* Colore dello sfondo del cerchio */
+  border-radius: 50%; /* Rendi il bordo circolare */
+  padding: 8px; /* Spazio tra l'icona e il bordo del cerchio */
+  font-size: 24px; /* Imposta la dimensione dell'icona */
+  color: #fff; /* Colore dell'icona */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 15px; /* Imposta l'altezza del cerchio */
+  width: 15px; /* Imposta la larghezza del cerchio */
+}
+
+.icon-back {
+  border-radius: 50%; /* Rendi il bordo circolare */
+  padding: 8px; /* Spazio tra l'icona e il bordo del cerchio */
+  font-size: 24px; /* Imposta la dimensione dell'icona */
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 15px; /* Imposta l'altezza del cerchio */
+  width: 15px; /* Imposta la larghezza del cerchio */
+}
+
+.WI {
+  background-color: rgba(255, 252, 127);
+}
+.CO {
+  background-color: rgba(3, 138, 255);
+}
+.HU {
+  background-color: rgba(254, 121, 104);
+}
+.JU {
+  background-color: rgba(201, 242, 155);
+}
+.TE {
+  background-color: rgba(255, 148, 112);
+}
+.TR {
+  background-color: rgba(213, 184, 255);
+}

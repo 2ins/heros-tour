@@ -1,78 +1,59 @@
-<div fxLayout="row">
-  <div fxFlex.gt-sm="60%">
-    <div class="container" style="width: 99%">
-      <div>
-        <h1 style="text-align: center">Archtypes</h1>
-        <div class="heroes">
-          <div id="parent">
-            <div style="height: 1500px">
-              <div *ngFor="let quality of qualities | async" class="child">
-                <mat-card>
-                  <div fxLayout="row">
-                    <div fxFlex="50">
-                      <div
-                        [ngClass]="quality.virtue"
-                        class="inline"
-                        style="
-                          margin-bottom: 50px;
-                          float: right;
-                          width: 100%;
-                          border-radius: 5%;
-                          border: solid black 1px;
-                        "
-                      >
-                        <div>
-                          <p>
-                            <b style="color: green; font-size: large">{{
-                              quality.name
-                            }}</b>
-                          </p>
-                        </div>
-                        <div style="width: 100%">
-                          <img
-                            routerLink="/qualities/quality/{{ quality.id }}"
-                            style="
-                              cursor: pointer;
-                              max-width: 200px;
-                              border-radius: 5%;
-                              width: 95%;
-                              text-align: center;
-                            "
-                            src="{{
-                              'https://enrgmsdppekwfvmbdxsl.supabase.co/storage/v1/object/public/q/' +
-                                quality.id +
-                                '.jpg'
-                            }}"
-                          />
-                        </div>
-
-                        <div>
-                          <div *ngIf="quality.tags">
-                            <div
-                              *ngFor="let a of quality.tags"
-                              style="display: inline; color: green"
-                            >
-                              {{ a }},
-                            </div>
-                          </div>
-
-                          <i style="color: black; font-size: xx-small">
-                            {{ quality.virtue | virtueFinder }}
-                          </i>
-                        </div>
-                      </div>
-                    </div>
-                    <div fxFlex="50" style="margin-left: 5px">
-                      {{ quality.description }}
-                    </div>
-                  </div>
-                </mat-card>
+<div class="container" style="width: 99%">
+  <ng-container *ngTemplateOutlet="header"></ng-container>
+  <div style="padding-top: 40px">
+    <div class="heroes">
+      <div id="parent">
+        <mat-tab-group
+          [(selectedIndex)]="tab2Index"
+          mat-stretch-tabs
+          class="example-stretched-tabs mat-elevation-z4"
+        >
+          <mat-tab label="Virtues">
+            <div [ngClass]="'grid-container-mobile-v'">
+              <div
+                *ngFor="let v of virtueList"
+                (click)="selectVirtue(v)"
+                class="containerbox-v"
+                [ngClass]="v.id"
+              >
+                <div class="testo-sovrapposto-v">
+                  <b>{{ v.name }}</b>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
+          </mat-tab>
+
+          <mat-tab label="Strenghts" *ngIf="selectedVirtue">
+            <app-qualities-list-vertical
+              [qualities]="currentqualitites"
+              [showAll]="true"
+              (notifySelection)="doSomethingQuality($event)"
+            ></app-qualities-list-vertical>
+          </mat-tab>
+        </mat-tab-group>
       </div>
     </div>
   </div>
-  <div fxFlex.gt-sm="40%"></div>
 </div>
+
+<ng-template #header>
+  <div
+    style="
+      float: left;
+      width: 100%;
+      z-index: 0;
+      margin-bottom: 20px;
+      background-color: white;
+      border: solid grey 1px;
+      position: fixed;
+      z-index: 10;
+    "
+  >
+    <div style="border-bottom: 0px solid black">
+      <button mat-button (click)="backClicked()">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+      cards
+    </div>
+  </div>
+</ng-template>

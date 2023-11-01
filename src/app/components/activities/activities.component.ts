@@ -18,9 +18,10 @@ import { SupabaseService } from 'src/app/supabase.service';
 })
 export class ActivitiesComponent implements OnInit {
   @Select(HeroState.getActivities) activities?: Observable<Activity[]>;
+  @Select(HeroState.getActivitySearch) searchX?: Observable<Search>;
 
   searchActivity?: string;
-  search: Search = { search: '', arr: [] };
+  search: Search = { search: '', arr: [], location: '' };
   isMobile: boolean = false;
   indxTab: number = 0;
 
@@ -37,11 +38,12 @@ export class ActivitiesComponent implements OnInit {
       as?.sort((a, b) =>
         b.name.toLowerCase() > a.name.toLowerCase() ? -1 : 1
       );
+      as.forEach((cur) => {
+        cur.qualities?.sort((a, b) => b.count - a.count);
+      });
     });
 
-    console.log('searching');
-    this.store.dispatch(new GetActivitiesOverview(this.search));
-    console.log('done');
+    // this.store.dispatch(new GetActivitiesOverview(this.search));
   }
 
   onSelect(activity: Activity): void {

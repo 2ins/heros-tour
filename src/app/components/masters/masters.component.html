@@ -18,10 +18,21 @@
     </p>
     <br />
     <div style="width: 99%">
+      <mat-grid-list cols="2" rowHeight="200px">
+        <ng-container *ngFor="let master of masters | async">
+          <mat-grid-tile colspan="1">
+            <div style="width: 100%; height: 100%; margin: 5px">
+              <app-master-item [user]="master"></app-master-item>
+            </div>
+          </mat-grid-tile>
+        </ng-container>
+      </mat-grid-list>
+
+      <!-- 
       <div *ngFor="let master of masters | async">
         <app-master-item [user]="master"> </app-master-item>
         <br />
-      </div>
+      </div>-->
     </div>
   </div>
   <div fxFlex.gt-sm="25%">
@@ -33,15 +44,17 @@
 </div>
 
 <div *ngIf="isMobile">
-  <mat-tab-group
+  <div *ngFor="let master of masters | async">
+    <app-master-item [user]="master"> </app-master-item>
+  </div>
+  <!--
+ <mat-tab-group
     mat-stretch-tabs="false"
     mat-align-tabs="start"
     [(selectedIndex)]="indxTab"
   >
     <mat-tab label="Masters">
-      <div *ngFor="let master of masters | async">
-        <app-master-item [user]="master"> </app-master-item>
-      </div>
+      
     </mat-tab>
     <mat-tab label="Search">
       <br />
@@ -54,4 +67,5 @@
       <app-master-insert></app-master-insert>
     </mat-tab>
   </mat-tab-group>
+  -->
 </div>

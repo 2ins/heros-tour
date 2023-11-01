@@ -1,0 +1,46 @@
+<h1 style="text-align: center; padding-top: 10px">
+  {{ title }}
+</h1>
+
+<form class="example-form">
+  <button mat-button mat-dialog-close (click)="backClicked()">
+    <mat-icon>arrow_back</mat-icon>
+  </button>
+  <input
+    #textSearch
+    type="text"
+    placeholder="Search for an Activity"
+    [formControl]="control"
+    [(ngModel)]="searchLoc"
+    (focusout)="unFocusOnSearchControl()"
+    style="width: 70%"
+  />
+</form>
+<div style="margin: 20px">
+  <div
+    *ngFor="let item of filteredStreets | async"
+    style="display: flex; height: 40px"
+  >
+    <div style="width: 90%">
+      <!--<img
+        with="40"
+        height="40"
+        src="{{
+          'https://enrgmsdppekwfvmbdxsl.supabase.co/storage/v1/object/public/avatars/' +
+            item.img_url
+        }}"
+      />-->
+      {{ item.description }}
+    </div>
+    <div style="width: 10%">
+      <mat-checkbox [checked]="item.selected" (change)="update(item)">
+      </mat-checkbox>
+    </div>
+  </div>
+  <div (click)="openDialog()">
+    <mat-icon>add_circle_outline</mat-icon>
+    add a new activity
+  </div>
+</div>
+<button (click)="save()" mat-dialog-close>save</button>
+<!--routerLink="/addMaster"-->

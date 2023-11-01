@@ -1,0 +1,23 @@
+.image-cropper {
+  overflow: hidden;
+  border-radius: 50%;
+  border: solid black 2px;
+  width: 90%;
+  height: 90%;
+  margin-left: 5%;
+}
+
+.full {
+  width: 100%;
+}
+
+.reduced {
+  width: 80%;
+}
+
+.profile-pic {
+  width: 85%;
+  height: 85%;
+  border-radius: 50%;
+  border: 1px solid black;
+}

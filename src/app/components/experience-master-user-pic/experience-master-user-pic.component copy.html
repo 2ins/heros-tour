@@ -1,0 +1,41 @@
+<div>
+  <div id="container" *ngIf="hero != undefined">
+    <div id="infoi">
+      <div
+        class="image-cropper-detail"
+        routerLink="/users/user/{{ hero.profile.id }}"
+        style="cursor: pointer"
+      >
+        <img
+          class="profile-pic"
+          src="{{
+            'https://enrgmsdppekwfvmbdxsl.supabase.co/storage/v1/object/public/avatars/' +
+              hero.profile.avatar_url
+          }}"
+        />
+      </div>
+    </div>
+    <div id="navi">
+      <div
+        class="image-cropper-detail"
+        routerLink="/masters/master/{{ hero.master.id }}"
+        style="cursor: pointer"
+      >
+        <img
+          class="profile-pic"
+          src="{{
+            'https://enrgmsdppekwfvmbdxsl.supabase.co/storage/v1/object/public/avatars/' +
+              hero.master.avatar_url
+          }}"
+        />
+      </div>
+    </div>
+  </div>
+  <div
+    *ngIf="hero != undefined"
+    routerLink="/users/user/{{ hero.profile.id }}"
+    style="cursor: pointer; float: right; margin-top: 5px"
+  >
+    {{ hero.profile.username }}
+  </div>
+</div>

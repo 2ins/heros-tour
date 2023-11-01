@@ -3,10 +3,7 @@ import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { Search } from 'src/app/model/search';
 import { MobileService } from 'src/app/services/mobile.service';
-import {
-  GetMastersOverview,
-  GetMastersOverviewSearch,
-} from '../../actions/master.action';
+import { GetMastersOverviewSearch } from '../../actions/master.action';
 import { Master } from '../../model/master';
 import { HeroState } from '../../states/todo.state';
 import { SupabaseService } from '../../supabase.service';
@@ -31,7 +28,7 @@ export class MastersComponent implements OnInit {
 
   ngOnInit(): void {
     this.isMobile = this.ms.isMobile();
-    this.store.dispatch(new GetMastersOverview());
+    //this.store.dispatch(new GetMastersOverview());
   }
   /*
   onSelect(master: Master): void {

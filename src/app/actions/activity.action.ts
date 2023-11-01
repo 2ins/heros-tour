@@ -7,6 +7,10 @@ export class GetActivitiesOverview {
   static readonly type = '[Activity] GetOverview';
   constructor(public payload: Search) {}
 }
+export class GetAllActivities {
+  static readonly type = '[Activity] GetAllActivities';
+  constructor() {}
+}
 export class SetSelectedActivity {
   static readonly type = '[Activity] SetSelected';
   constructor(public payload: number) {}

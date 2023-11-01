@@ -4,14 +4,14 @@
       <div id="parent">
         <div>
           <div *ngFor="let quality of qualities" class="child">
-            <div style="margin-left: 50px">
+            <div style="margin-left: 20px" (click)="onClick(quality)">
               <div fxLayout="row">
-                <div fxFlex="50">
+                <div fxFlex="40">
                   <div
                     [ngClass]="quality.virtue"
                     class="inline"
                     style="
-                      margin-bottom: 50px;
+                      margin-bottom: 10px;
                       float: right;
                       width: 100%;
                       border-radius: 5%;
@@ -19,15 +19,12 @@
                     "
                   >
                     <div>
-                      <p>
-                        <b style="color: green; font-size: large">{{
-                          quality.name
-                        }}</b>
-                      </p>
+                      <i style="color: black; font-size: xx-small">
+                        {{ quality.virtue | virtueFinder }}
+                      </i>
                     </div>
                     <div style="width: 100%">
                       <img
-                        routerLink="/qualities/quality/{{ quality.id }}"
                         style="
                           cursor: pointer;
                           max-width: 200px;
@@ -44,23 +41,40 @@
                     </div>
 
                     <div>
-                      <div *ngIf="quality.tags">
-                        <div
-                          *ngFor="let a of quality.tags"
-                          style="display: inline; color: green"
-                        >
-                          {{ a }},
-                        </div>
-                      </div>
+                      <!--
 
-                      <i style="color: black; font-size: xx-small">
-                        {{ quality.virtue | virtueFinder }}
-                      </i>
+                     
+                      
+                       -->
+                      <p>
+                        <b style="color: green; font-size: small">{{
+                          quality.name
+                        }}</b>
+                      </p>
                     </div>
                   </div>
                 </div>
-                <div fxFlex="50" style="margin-left: 15px; margin-top: 15px">
-                  {{ quality.desc_xp }}
+                <div fxFlex="60" style="margin-left: 15px; margin-top: 0px">
+                  <div style="font-style: italic; color: gray">
+                    {{ quality.description }}
+                  </div>
+
+                  <br />
+                  <div *ngIf="quality.tags">
+                    <div
+                      *ngFor="let a of quality.tags"
+                      style="display: inline; color: green"
+                    >
+                      {{ a }},
+                    </div>
+                  </div>
+
+                  <div
+                    style="color: blue; font-weight: bold"
+                    (click)="openDetail(quality)"
+                  >
+                    show more
+                  </div>
                 </div>
               </div>
             </div>

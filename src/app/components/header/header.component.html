@@ -1,0 +1,87 @@
+<div
+  style="
+    float: left;
+    width: 100%;
+    z-index: 0;
+    margin-bottom: 20px;
+    background-color: white;
+    border: solid grey 1px;
+    position: fixed;
+    z-index: 10;
+  "
+>
+  <div class="alignleft">
+    <span>
+      <div
+        class="image-cropper"
+        style="float: left; margin-left: 15px; margin-top: 10px; height: 35px"
+      >
+        <img
+          src="{{
+            'https://enrgmsdppekwfvmbdxsl.supabase.co/storage/v1/object/public/avatars/logo2.png'
+          }}"
+          width="100%"
+          class="profile-pic"
+        />
+      </div>
+    </span>
+  </div>
+
+  <div class="alignright">
+    <button mat-button [matMenuTriggerFor]="search">
+      <mat-icon>search</mat-icon>
+    </button>
+
+    <button mat-button [matMenuTriggerFor]="menu">
+      <mat-icon>add_circle_outline</mat-icon>
+    </button>
+  </div>
+</div>
+
+<!-- MENU drop down -->
+<mat-menu #menu="matMenu">
+  <div style="padding-right: 15px">
+    <button
+      mat-menu-item
+      routerLink="/addActivity"
+      style="float: right; margin-right: 10px; margin-bottom: 10px; color: blue"
+    >
+      add new activity
+    </button>
+
+    <button
+      routerLink="/addMaster"
+      mat-menu-item
+      style="float: right; margin-right: 10px; margin-bottom: 10px; color: blue"
+    >
+      add new master
+    </button>
+    <button
+      (click)="openAddExperience()"
+      mat-menu-item
+      style="float: right; margin-right: 10px; margin-bottom: 10px; color: blue"
+    >
+      add new experience
+    </button>
+  </div>
+</mat-menu>
+
+<mat-menu #search="matMenu">
+  <div style="padding-right: 15px">
+    <button
+      mat-menu-item
+      (click)="openDialog()"
+      style="float: right; margin-right: 10px; margin-bottom: 10px; color: blue"
+    >
+      explore
+    </button>
+
+    <button
+      (click)="openSearchMaster()"
+      mat-menu-item
+      style="float: right; margin-right: 10px; margin-bottom: 10px; color: blue"
+    >
+      search a master
+    </button>
+  </div>
+</mat-menu>

@@ -16,12 +16,13 @@ export class LoaderService {
     this.setLoading(true);
   }
   stop() {
+    this.setLoading(false);
     console.log('X1');
     this.totalRequests--;
     if (this.totalRequests == 0) {
       console.log('X2');
       console.log('(this.totalRequests: ', this.totalRequests);
-      this.setLoading(false);
+      //this.setLoading(false);
     }
   }
 

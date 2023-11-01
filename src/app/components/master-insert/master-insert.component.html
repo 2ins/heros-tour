@@ -1,62 +1,86 @@
-<form class="example-form" #masterForm="ngForm">
-  <mat-form-field>
-    <mat-label>Name</mat-label>
-    <input
-      [(ngModel)]="newMaster.name"
-      matInput
-      placeholder="Master"
-      name="name"
-      #name="ngModel"
-      required
-      ngModel
-      minlength="5"
-    />
-  </mat-form-field>
-  <br />
-  <mat-form-field>
-    <mat-label>website</mat-label>
-    <input
-      matInput
-      placeholder="Ex. It makes me feel..."
-      [(ngModel)]="newMaster.website"
-      name="website"
-      #name="ngModel"
-      required
-      pattern="^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$"
-    />
-  </mat-form-field>
-  <br />
-  <div class="custom-file overflow-hidden rounded-pill mb-5">
-    <br />
-    <img *ngIf="imageSrc" [src]="imageSrc" alt="Preview" width="300px" />
+<app-header-simple> <label descript>add a new Master</label></app-header-simple>
 
-    <image-cropper
-      style="max-width: 500px"
-      [imageChangedEvent]="imageChangedEvent"
-      [maintainAspectRatio]="true"
-      [aspectRatio]="1"
-      format="png"
-      (imageCropped)="imageCropped($event)"
-      (imageLoaded)="imageLoaded()"
-      (cropperReady)="cropperReady()"
-      (loadImageFailed)="loadImageFailed()"
-    ></image-cropper>
-    <input type="file" (change)="fileChangeEvent($event)" />
-  </div>
+<div style="padding-top: 40px">
+  <mat-tab-group
+    mat-stretch-tabs
+    class="example-stretched-tabs mat-elevation-z4"
+    selectedIndex="1"
+  >
+    <mat-tab label="Activities">
+      <div style="margin: 40px">
+        <form class="example-form" #masterForm="ngForm">
+          <mat-form-field>
+            <mat-label>Name</mat-label>
+            <input
+              [(ngModel)]="newMaster.name"
+              matInput
+              placeholder="Master"
+              name="name"
+              #name="ngModel"
+              required
+              ngModel
+              minlength="5"
+            />
+          </mat-form-field>
+          <br />
+          <mat-form-field>
+            <mat-label>website</mat-label>
+            <input
+              matInput
+              placeholder="Ex. It makes me feel..."
+              [(ngModel)]="newMaster.website"
+              name="website"
+              #name="ngModel"
+              required
+              pattern="^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$"
+            />
+          </mat-form-field>
+          <br />
+        </form>
+        <mat-chip-list>
+          <mat-chip
+            style="color: blue; border: 1px solid blue"
+            *ngFor="let acti of newMaster.preselectedActivities"
+          >
+            {{ acti.description }}</mat-chip
+          >
+        </mat-chip-list>
+        <br />
+        <br />
+        <button (click)="open('SEARCH')" mat-raised-button color="primary">
+          choose activities
+        </button>
+      </div>
+    </mat-tab>
+    <mat-tab label="Picture">
+      <div class="custom-file overflow-hidden rounded-pill mb-5">
+        <br />
+        <img *ngIf="imageSrc" [src]="imageSrc" alt="Preview" width="300px" />
 
-  <div *ngIf="status" class="spinner" style="font-size: 18px">
-    <div class="head"></div>
-  </div>
+        <image-cropper
+          style="max-width: 500px"
+          [imageChangedEvent]="imageChangedEvent"
+          [maintainAspectRatio]="true"
+          [aspectRatio]="1"
+          format="png"
+          (imageCropped)="imageCropped($event)"
+          (imageLoaded)="imageLoaded()"
+          (cropperReady)="cropperReady()"
+          (loadImageFailed)="loadImageFailed()"
+        ></image-cropper>
+        <input type="file" (change)="fileChangeEvent($event)" />
+      </div>
 
-  <div *ngIf="message" class="alert alert-success" role="alert">
-    {{ message }}
-  </div>
-  <br />
-  <li *ngFor="let acti of activities | async">
-    <mat-checkbox (change)="updateItem(acti)" [checked]="acti.selected">
-      {{ acti.name }}
-    </mat-checkbox>
-  </li>
-  <br />
-  <button (click)="save()" [disabled]="!masterForm.form.valid">save</button>
-</form>
+      <div *ngIf="status" class="spinner" style="font-size: 18px">
+        <div class="head"></div>
+      </div>
+
+      <div *ngIf="message" class="alert alert-success" role="alert">
+        {{ message }}
+      </div>
+      <br />
+
+      <button (click)="save()" [disabled]="!masterForm.form.valid">save</button>
+    </mat-tab>
+  </mat-tab-group>
+</div>

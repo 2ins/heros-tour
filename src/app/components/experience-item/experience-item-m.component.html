@@ -1,0 +1,93 @@
+<mat-card
+  (click)="onSelect(hero)"
+  *ngIf="hero && !isMobile"
+  style="margin-bottom: 5px"
+>
+  <div style="width: 100%; font-style: italic; color: gray">
+    <div style="width: 100%; margin-top: 0px">
+      <div style="float: left">
+        <div>{{ hero.location | locationCompact }}</div>
+      </div>
+
+      <div style="float: right">
+        <span>
+          {{ hero.event_date | date : "MMM, Y" }}
+        </span>
+      </div>
+    </div>
+  </div>
+  <br />
+  <div fxLayout="row" style="margin-top: 5px">
+    <div fxFlex="100" style="margin-left: 10px">
+      <app-qualities-list-horizontal
+        [qualities]="hero.qualities"
+        [hero]="hero"
+      ></app-qualities-list-horizontal>
+    </div>
+  </div>
+  <div style="float: left">
+    <span style="display: flex">
+      <div *ngIf="hero.activities">
+        <label
+          style="color: blue; cursor: pointer"
+          *ngFor="let a of hero.activities"
+          routerLink="/activities/activity/{{ a.id }}"
+          >#{{ a.name }}&nbsp;
+        </label>
+      </div>
+    </span>
+  </div>
+  <br />
+  <div style="font-style: italic; color: gray">
+    {{ hero.name | slice : 0 : 300 }}
+    <b *ngIf="hero.name.length > 300">...continue</b>
+  </div>
+</mat-card>
+
+<mat-card (click)="onSelect(hero)" *ngIf="hero && isMobile">
+  <div style="width: 100%; margin-top: 0px">
+    <div style="float: left">
+      <div>
+        {{ hero.location | locationCompact }}
+      </div>
+    </div>
+    <div style="float: right">
+      <span>
+        {{ hero.event_date | date : "MMM, Y" }}
+      </span>
+    </div>
+  </div>
+  <br />
+
+  <div fxLayout="row" style="margin-top: 5px">
+    <div fxFlex="100" style="margin-left: 10px">
+      <app-qualities-list-horizontal
+        [qualities]="hero.qualities"
+        [hero]="hero"
+      ></app-qualities-list-horizontal>
+    </div>
+  </div>
+  <div>
+    <div>
+      <div style="float: left">
+        <span style="display: flex">
+          <div *ngIf="hero.activities">
+            <i
+              style="color: blue; cursor: pointer"
+              *ngFor="let a of hero.activities"
+              routerLink="/activities/activity/{{ a.id }}"
+              >#{{ a.name }}&nbsp;
+            </i>
+          </div>
+        </span>
+      </div>
+
+      <br />
+
+      <div style="margin: 10px">
+        {{ hero.name | slice : 0 : 200 }}
+        <b *ngIf="hero.name.length > 200">...continue</b>
+      </div>
+    </div>
+  </div>
+</mat-card>

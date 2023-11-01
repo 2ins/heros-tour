@@ -1,5 +1,6 @@
-import { Activity } from './activity';
+import { Activity, ActivityTable } from './activity';
 import { Hero } from './hero';
+import { LocationAggDbItem } from './location';
 import { Quality } from './quality';
 
 export interface Master {
@@ -10,6 +11,7 @@ export interface Master {
   qualities?: Quality[];
   tot_xps?: number;
   heroes?: Hero[];
+  locations?: LocationAggDbItem[];
   activities?: Activity[];
   avatar_url: string;
 }
@@ -20,6 +22,8 @@ export interface MasterTable {
   website: string;
   avatar_url: string;
   arr?: MasterActivityTable[];
+  preselectedActivities?: ActivityTable[];
+  preselectedActivitiesCopy?: ActivityTable[];
 }
 
 export interface MasterActivityTable {

@@ -1,30 +1,33 @@
-<mat-card (click)="onSelect(user)" *ngIf="user">
-  <div fxLayout="row">
-    <div style="margin-right: 10px">
+<mat-card (click)="onSelect(user)" *ngIf="user && !isMobile">
+  <div fxLayout="row" style="height: 150px">
+    <div style="margin-right: 10px; position: relative">
       <div
         routerLink="/users/user/{{ user.id }}"
-        style="cursor: pointer; text-align: center; display: inline-block"
+        style="
+          cursor: pointer;
+          text-align: center;
+          display: inline-block;
+          border: 0px solid black;
+          position: absolute;
+          top: 0%;
+          left: 0%;
+          transform: translate(5%, -30%);
+          padding: 10px;
+        "
       >
-        <div class="image-cropper-xp">
-          <img
-            src="{{
-              'https://enrgmsdppekwfvmbdxsl.supabase.co/storage/v1/object/public/avatars/' +
-                user.avatar_url
-            }}"
-            height="100px"
-            class="profile-pic"
-          />
+        <div style="width: 280px">
+          <app-virtues-pie-combo
+            [qualities]="user.qualities"
+            [imgurl]="user.avatar_url"
+          ></app-virtues-pie-combo>
         </div>
       </div>
       <br /><br />
       <br />
     </div>
-    <div fxFlex="75">
+    <div fxFlex="50"></div>
+    <div fxFlex="50">
       <b>{{ user.username }}</b>
-      <br />
-      <br />
-      activities:
-      <br />
 
       <span class="name">
         <div *ngIf="user.activities">
@@ -42,13 +45,68 @@
   </div>
   <div>
     <div>
-      <b>{{ user.username }}</b> most picked archtipes on a total of
-      <b> {{ user.tot_xps }}</b> experiences:<br /><br />
-
       <app-qualities-list-horizontal
         [qualities]="user.qualities"
         [total]="user.tot_xps"
       ></app-qualities-list-horizontal>
+    </div>
+  </div>
+</mat-card>
+
+<mat-card (click)="onSelect(user)" *ngIf="user && isMobile">
+  <div fxLayout="row" style="height: 150px">
+    <div style="margin-right: 10px; position: relative">
+      <div
+        routerLink="/users/user/{{ user.id }}"
+        style="
+          cursor: pointer;
+          text-align: center;
+          display: inline-block;
+          border: 0px solid black;
+          position: absolute;
+          top: 0%;
+          left: 0%;
+          transform: translate(10%, -30%);
+          padding: 10px;
+        "
+      >
+        <div style="width: 275px">
+          <app-virtues-pie-combo
+            [qualities]="user.qualities"
+            [imgurl]="user.avatar_url"
+          ></app-virtues-pie-combo>
+        </div>
+      </div>
+      <br /><br />
+      <br />
+    </div>
+    <div fxFlex="50"></div>
+  </div>
+  <div fxLayout="row">
+    <div fxFlex="" style="text-align: center">
+      <br />
+      <b>{{ user.username }}</b>
+
+      <span class="name">
+        <div *ngIf="user.activities">
+          <div>
+            <label
+              style="color: blue; cursor: pointer"
+              *ngFor="let a of user.activities"
+              routerLink="/activities/activity/{{ a.id }}"
+              >#{{ a.name }}&nbsp;
+            </label>
+          </div>
+        </div>
+      </span>
+    </div>
+  </div>
+  <div>
+    <div>
+      <app-qualities-list-grid
+        [qualities]="user.qualities"
+        [total]="user.tot_xps"
+      ></app-qualities-list-grid>
     </div>
   </div>
 </mat-card>

@@ -1,4 +1,9 @@
-<div *ngIf="userProfile | async as myUser">
+<app-header-simple [description]="'edit profile'"></app-header-simple>
+
+<div
+  *ngIf="userProfile | async as myUser"
+  style="margin-left: 20px; padding-top: 100px"
+>
   <div>
     username:
     <input

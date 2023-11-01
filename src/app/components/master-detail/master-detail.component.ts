@@ -1,8 +1,9 @@
 //YES STATE
-import { Location } from '@angular/common';
+import { DOCUMENT, Location } from '@angular/common';
 import {
   Component,
   EventEmitter,
+  Inject,
   OnDestroy,
   OnInit,
   Output,
@@ -41,12 +42,11 @@ export class MasterDetailComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private location: Location,
     private ms: MobileService,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    @Inject(DOCUMENT) private document: Document
   ) {
+    this.document.documentElement.scrollTop = 0;
     this.subscription = this.selectedMaster?.subscribe((m) => {
-      //console.log('subscribe');
-      console.log('MASTER SELEZIONATO', m.id);
-      //console.log('MASTER old', this.master);
       this.master = m;
       this.qualities = m.qualities;
 
@@ -63,33 +63,28 @@ export class MasterDetailComponent implements OnInit, OnDestroy {
     const appo = { oggetto: this.master };
     console.log('da passare:', appo);
     this.route.navigateByUrl('/addnew', { state: appo });
-    //this.route.navigateByUrl('/addnew', { state: { id: 100, name: 'Maya' } });
   }
 
   ngOnInit(): void {
+    this.isMobile = this.ms.isMobile();
     this.activatedRoute.paramMap.subscribe((map) => {
       this.masterId = map.get('id');
-      //console.log('masterid?:' + this.masterId);
 
       this.store.dispatch(new SetSelectedMaster(this.masterId));
 
       //const master = this.store.selectSnapshot(HeroState.getSelectedMaster);
       //console.log('Master xx', master);
     });
-
-    /*
-    this.masters?.subscribe((ms) => {
-      if (ms) {
-        if (ms.length == 0) {
-          this.store.dispatch(new GetMasters());
-        }
-      }
-    });
-    */
   }
 
   backClicked() {
     this.location.back();
+
+    if (this.location.back.length === 0) {
+      this.route.navigate(['/home']);
+    } else {
+      this.location.back();
+    }
   }
   edit() {
     const appo = { master: this.master };

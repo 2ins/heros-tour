@@ -29,18 +29,51 @@
 </div>
 
 <div *ngIf="isMobile">
-  <input type="search" [(ngModel)]="searchUser" placeholder="Search heroes" />
-  <br />
-  <br />
-  <button
-    (click)="onSearch()"
-    mat-stroked-button
-    style="margin-right: 10px; margin-bottom: 10px; color: blue"
-  >
-    Search
-  </button>
+  <ng-container *ngTemplateOutlet="header"></ng-container>
 
-  <div *ngFor="let user of users | async">
-    <app-user-item [user]="user"></app-user-item>
+  <div style="padding-top: 40px">
+    <h1 style="text-align: center">Heroes</h1>
+    <br />
+    <div *ngFor="let user of users | async">
+      <app-user-item [user]="user"></app-user-item>
+    </div>
   </div>
 </div>
+
+<ng-template #header>
+  <div
+    style="
+      float: left;
+      width: 100%;
+      z-index: 0;
+      margin-bottom: 20px;
+      background-color: white;
+      border: solid grey 1px;
+      position: fixed;
+      z-index: 10;
+    "
+  >
+    <div style="border-bottom: 0px solid black">
+      <button mat-button (click)="backClicked()">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+      heroes
+      <div style="float: right">
+        <input
+          type="search"
+          [(ngModel)]="searchUser"
+          [placeholder]=""
+          autofocus="false"
+          style="margin-top: 8px"
+        />
+        <button
+          (click)="onSearch()"
+          mat-button
+          style="border: 0px solid black; background-color: white; float: right"
+        >
+          <mat-icon>search</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>

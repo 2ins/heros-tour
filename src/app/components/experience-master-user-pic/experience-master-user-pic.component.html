@@ -1,18 +1,21 @@
 <div>
+  <!-- 
   <div
     *ngIf="hero != undefined"
     routerLink="/masters/master/{{ hero.master.id }}"
-    style="cursor: pointer; text-align: center; display: inline-block"
+    style="
+      cursor: pointer;
+      text-align: center;
+      display: inline-block;
+      border: 1px solid blue;
+    "
   >
-    @{{ hero.master.name }}
+    @{{ hero.master.name }} 
   </div>
+  -->
   <div id="container" *ngIf="hero != undefined">
     <div id="infoi">
-      <div
-        class="image-cropper-detail"
-        routerLink="/users/user/{{ hero.profile.id }}"
-        style="cursor: pointer"
-      >
+      <div class="image-cropper-detail" style="cursor: pointer">
         <img
           #prImg
           class="profile-pic"
@@ -29,11 +32,7 @@
       </div>
     </div>
     <div id="navi">
-      <div
-        class="image-cropper-detail"
-        routerLink="/masters/master/{{ hero.master.id }}"
-        style="cursor: pointer"
-      >
+      <div class="image-cropper-detail_x" style="cursor: pointer">
         <img
           #mstrImg
           class="profile-pic"
@@ -52,9 +51,8 @@
   </div>
   <div
     *ngIf="hero != undefined"
-    routerLink="/users/user/{{ hero.profile.id }}"
     style="cursor: pointer; float: right; margin-top: 5px"
   >
-    {{ hero.profile.username }}
+    <!-- {{ hero.profile.username }} -->
   </div>
 </div>

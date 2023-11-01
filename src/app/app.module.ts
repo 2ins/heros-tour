@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms'; // <-- NgModel lives here
+import { MatDialogModule } from '@angular/material/dialog';
 import { MatTabsModule } from '@angular/material/tabs';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -61,16 +62,23 @@ import { ActivitiesComponent } from './components/activities/activities.componen
 import { ActivityDetailComponent } from './components/activity-detail/activity-detail.component';
 import { ActivityInsertComponent } from './components/activity-insert/activity-insert.component';
 import { ActivityItemComponent } from './components/activity-item/activity-item.component';
+import { ActivityMasterInsertComponent } from './components/activity-master-insert/activity-master-insert.component';
+import { ActivityMasterSearchComponent } from './components/activity-master-search/activity-master-search.component';
+import { ActivitySearchComponent } from './components/activity-search/activity-search.component';
+import { AggLocationsViewComponent } from './components/agg-locations-view/agg-locations-view.component';
 import { AppContainerComponent } from './components/app-container/app-container.component';
 import { ContatInfoComponent } from './components/contat-info/contat-info.component';
 import { ExperienceDetailComponent } from './components/experience-detail/experience-detail.component';
+import { ExperienceInsertOverviewComponent } from './components/experience-insert-overview/experience-insert-overview.component';
 import { ExperienceInsertComponent } from './components/experience-insert/experience-insert.component';
 import { ExperienceItemComponent } from './components/experience-item/experience-item.component';
 import { ExperienceMasterUserPicComponent } from './components/experience-master-user-pic/experience-master-user-pic.component';
 import { ExperiencePicComponent } from './components/experience-pic/experience-pic.component';
 import { ExperiencesComponent } from './components/experiences/experiences.component';
-import { HeroDetailComponent } from './components/hero-detail/hero-detail.component';
-import { HeroesComponent } from './components/heroes/heroes.component';
+import { FooterComponent } from './components/footer/footer.component';
+import { HeaderSimpleComponent } from './components/header-simple/header-simple.component';
+import { HeaderComponent } from './components/header/header.component';
+import { HomeviewComponent } from './components/homeview/homeview.component';
 import { LocationsComponent } from './components/locations/locations.component';
 import { MasterDetailComponent } from './components/master-detail/master-detail.component';
 import { MasterInsertComponent } from './components/master-insert/master-insert.component';
@@ -89,18 +97,24 @@ import { TestinoComponent } from './components/testino/testino.component';
 import { UserDetailComponent } from './components/user-detail/user-detail.component';
 import { UserItemComponent } from './components/user-item/user-item.component';
 import { UsersComponent } from './components/users/users.component';
+import { VirtuesPieComboComponent } from './components/virtues-pie-combo/virtues-pie-combo.component';
 import { VirtuesPieComponent } from './components/virtues-pie/virtues-pie.component';
 import { VirtuesComponent } from './components/virtues/virtues.component';
 import { HoverDirective } from './customdirectives/hover.directive';
 import { SetBackGroundDirective } from './customdirectives/setbackground.directive';
 import { ErrorComponent } from './error/error.component';
 import { PercentageQualityPipe } from './percentage-quality.pipe';
+import { DelimitPipe } from './pipes/delimit.pipe';
+import { DescriptionManagerPipe } from './pipes/description-manager.pipe';
 import { LocationCompactDetailPipe } from './pipes/location-compact-detail.pipe';
 import { LocationCompactPipe } from './pipes/location-compact.pipe';
+import { NameStrenghtFinderPipe } from './pipes/name-strenght-finder.pipe';
+import { VirtueColorFinderByStrenghtIdPipe } from './pipes/virtue-color-finder-by-strenght-id.pipe';
 import { VirtueColorFinderPipe } from './pipes/virtue-color-finder.pipe';
 import { VirtueFinderPipe } from './pipes/virtue-finder.pipe';
 import { ReplacePipe } from './replace-pipe.pipe';
 import { HeroState } from './states/todo.state';
+import { TestOutlineComponent } from './test-outline/test-outline.component';
 
 //import ChartDataLabels from 'chartjs-plugin-datalabels';
 
@@ -130,8 +144,6 @@ Chart.defaults.plugins.tooltip.enabled = false;
 @NgModule({
   declarations: [
     AppComponent,
-    HeroesComponent,
-    HeroDetailComponent,
     AuthComponent,
     QualitiesComponent,
     LocationsComponent,
@@ -174,6 +186,21 @@ Chart.defaults.plugins.tooltip.enabled = false;
     VirtuesComponent,
     TestinoComponent,
     SpinnerComponent,
+    VirtuesPieComboComponent,
+    DelimitPipe,
+    HomeviewComponent,
+    NameStrenghtFinderPipe,
+    VirtueColorFinderByStrenghtIdPipe,
+    DescriptionManagerPipe,
+    HeaderComponent,
+    FooterComponent,
+    HeaderSimpleComponent,
+    ActivityMasterInsertComponent,
+    ExperienceInsertOverviewComponent,
+    AggLocationsViewComponent,
+    ActivitySearchComponent,
+    ActivityMasterSearchComponent,
+    TestOutlineComponent,
   ],
   imports: [
     BrowserModule,
@@ -207,6 +234,13 @@ Chart.defaults.plugins.tooltip.enabled = false;
     HttpClientModule,
     ImageCropperModule,
     MatSnackBarModule,
+    MatDialogModule,
+    MatButtonModule,
+    ReactiveFormsModule,
+    MatAutocompleteModule,
+    BrowserModule,
+    BrowserAnimationsModule,
+    MatTabsModule,
   ],
   providers: [
     //HeroGuardService,

@@ -1,5 +1,5 @@
-import { Location } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { DOCUMENT, Location } from '@angular/common';
+import { Component, Inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
@@ -30,8 +30,11 @@ export class ActivityDetailComponent implements OnInit {
     private route: Router,
     private activatedRoute: ActivatedRoute,
     private location: Location,
-    private ms: MobileService
-  ) {}
+    private ms: MobileService,
+    @Inject(DOCUMENT) private document: Document
+  ) {
+    this.document.documentElement.scrollTop = 0;
+  }
 
   ngOnInit(): void {
     this.isMobile = this.ms.isMobile();

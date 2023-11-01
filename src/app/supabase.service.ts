@@ -179,10 +179,11 @@ export class SupabaseService {
   //NGXS
 
   //search heroes with parameters
-  getHeroesSearch(ss: string, lista: number[]) {
-    console.log('im calling func_search_experiences');
-    return this.supabase.rpc('func_search_experiences', {
+  getHeroesSearch(ss: string, lista: number[], loc: string) {
+    console.log('im calling func_search_experiences_loc');
+    return this.supabase.rpc('func_search_experiences_loc', {
       arr: lista,
+      loc: loc,
       search: ss,
     });
   }
@@ -253,6 +254,12 @@ export class SupabaseService {
     //return this.supabase.from('heroes').insert(hero);
   }
 
+  getAddExperienceTransaction(hero: HeroTable) {
+    return this.supabase.rpc('upsert_hero_and_qualities', {
+      hero_data: hero,
+    });
+  }
+
   //
 
   //
@@ -282,9 +289,11 @@ export class SupabaseService {
   }
 
   getMasterOverviewSearch(searchMaster: Search) {
-    return this.supabase.rpc('func_search_masters', {
+    console.log('searchMaster', searchMaster);
+    return this.supabase.rpc('func_search_masters_loc', {
       search: searchMaster.search,
       arr: searchMaster.arr,
+      loc: searchMaster.location,
     });
   }
 
@@ -337,9 +346,10 @@ export class SupabaseService {
 
   //ACTIVITIES
   getActivitiesOverview(searchActivity: Search) {
-    return this.supabase.rpc('func_search_activities', {
+    return this.supabase.rpc('func_search_activities_loc', {
       search: searchActivity.search,
       arr: searchActivity.arr,
+      loc: searchActivity.location,
     });
   }
 
@@ -370,5 +380,23 @@ export class SupabaseService {
 
   addActivity(act: ActivityTable) {
     return this.supabase.from('activities').upsert(act);
+  }
+
+  getAllLocations() {
+    return this.supabase.rpc('getlocationall');
+  }
+  getAggLocations() {
+    return this.supabase.rpc('getagglocation');
+  }
+  getAggLocationsCombo() {
+    return this.supabase.rpc('getaggcombolocation');
+  }
+  getAllActivities() {
+    return this.supabase.from('activities').select('*');
+  }
+  getLocationsByMaster(idMaster: number) {
+    return this.supabase.rpc('func_find_locations_by_master', {
+      masterid: idMaster,
+    });
   }
 }

@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 import { ChartjsComponent } from '@ctrl/ngx-chartjs';
 import { Store } from '@ngxs/store';
 import { ChartData, ChartOptions } from 'chart.js';
+import { Align, Anchor, Color, Position } from 'src/app/config';
 import { Quality } from 'src/app/model/quality';
 import { SupabaseService } from 'src/app/supabase.service';
 @Component({
@@ -103,6 +104,40 @@ export class VirtuesPieComponent implements OnInit, OnChanges {
           '#c9f29b4d',
           '#ff94704d',
           '#d5b8ff4d',
+          /*
+          '#FFFF00',
+          '#0000FF',
+          '#FF0000',
+          '#00FF00',
+          '#FF00FF',
+          '#00FFFF',
+          */
+        ],
+      },
+    ],
+  } as ChartData;
+
+  datasource2 = {
+    labels: [
+      'Wisdom',
+
+      'Courage',
+      'Humanity',
+      'Justice',
+      'Temperance',
+      'Trascendence',
+    ],
+    datasets: [
+      {
+        label: 'Dataset 1',
+        data: [5, 4, 3, 2, 1, 6],
+        backgroundColor: [
+          '#FFFF00',
+          '#0000FF',
+          '#FF0000',
+          '#00FF00',
+          '#FF00FF',
+          '#00FFFF',
         ],
       },
     ],
@@ -111,11 +146,21 @@ export class VirtuesPieComponent implements OnInit, OnChanges {
   options = {
     responsive: true,
     aspectRatio: 1.5,
+    borderColor: 'black',
+    borderWidth: 1,
 
     scales: {
       r: {
         grid: {
           lineWidth: 0.4,
+          display: false,
+          circular: true,
+        },
+
+        angleLines: {
+          display: true,
+          color: 'green', // Cambia il colore delle linee radiali
+          circular: true,
         },
         display: true,
         ticks: {
@@ -192,6 +237,36 @@ export class VirtuesPieComponent implements OnInit, OnChanges {
           //50 * (1 - value / max + (max - value));
 
           return value;
+        },
+      },
+    },
+  } as ChartOptions;
+
+  options2 = {
+    layout: { padding: 70 },
+    responsive: true,
+    aspectRatio: 1.0,
+
+    plugins: {
+      legend: {
+        display: false,
+        position: Position.BOTTOM,
+        align: Align.START,
+        labels: {
+          color: Color.GRAY,
+          usePointStyle: true,
+        },
+      },
+      datalabels: {
+        borderRadius: 2,
+        align: Align.END,
+        color: Color.GRAY,
+        anchor: Anchor.END,
+        offset: 5,
+        formatter: function (value, context) {
+          const labels: String[] = context.chart.data.labels as String[];
+          return labels[context.dataIndex];
+          //return labels[context.dataIndex] + ` ${value}`;
         },
       },
     },

@@ -1,0 +1,149 @@
+<div *ngIf="master as x">
+  <div *ngIf="!isMobile">
+    <div>
+      <div fxFlex.gt-sm="70%">
+        <ng-container *ngTemplateOutlet="detailXp"></ng-container>
+      </div>
+
+      <div fxFlex.gt-sm="40%">
+        <ng-container *ngTemplateOutlet="prospect"></ng-container>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="isMobile">
+    <div>
+      <ng-container *ngTemplateOutlet="detailXp"></ng-container>
+      <ng-container *ngTemplateOutlet="prospect"></ng-container>
+    </div>
+  </div>
+
+  <div *ngIf="x.heroes && x.heroes.length > 0">
+    <br />
+    <div>
+      <h2>Strenghts</h2>
+
+      <app-qualities-list-grid
+        [qualities]="x.qualities"
+        [total]="x.tot_xps"
+      ></app-qualities-list-grid>
+      <hr />
+    </div>
+
+    <h2 style="text-align: left">Virtues</h2>
+    <div style="display: flex; justify-content: center; align-items: center">
+      <div style="width: 70%; border: 0px solid black; justify-content: center">
+        <app-virtues-pie
+          [qualities]="x.qualities"
+          [imgurl]="x.avatar_url"
+        ></app-virtues-pie>
+      </div>
+    </div>
+    <hr />
+    <br />
+    <div style="width: 100%; text-align: left">
+      <br />
+      <h2 style="text-align: left; margin-left: 25px">Experiences</h2>
+      <div class="heroes">
+        <div *ngFor="let hero of x.heroes">
+          <app-experience-item
+            [hero]="hero"
+            [reverse]="true"
+          ></app-experience-item>
+          <br />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #prospect>
+    <div style="margin-left: 10px">
+      <br /><br />
+      Activities:
+
+      <div style="text-align: left; justify-content: left">
+        <label
+          style="color: blue; cursor: pointer"
+          *ngFor="let a of x.activities"
+          routerLink="/activities/activity/{{ a.id }}"
+          >• {{ a.description }}&nbsp;
+        </label>
+      </div>
+      <br />
+      <div style="text-align: left">
+        experiences: <b>{{ x.tot_xps }}</b>
+      </div>
+    </div>
+    <br />
+
+    <hr />
+  </ng-template>
+  <ng-template #detailXp>
+    <div>
+      <button mat-button>
+        <mat-icon>arrow_back</mat-icon></button
+      ><br />
+      <div style="border: 1px solid black">
+        {{ x.name }}<br />
+        {{ x.website }}
+        <mat-icon class="circle-icon-actions">more_horizon</mat-icon>
+        <br />
+      </div>
+      <div style="width: 100%" class="inline">
+        <div style="display: flex; justify-content: center">
+          <div class="image-main">
+            <img
+              src="{{
+                'https://enrgmsdppekwfvmbdxsl.supabase.co/storage/v1/object/public/avatars/' +
+                  master.avatar_url
+              }}"
+              class="profile-pic"
+            />
+          </div>
+        </div>
+
+        <button
+          mat-button
+          [matMenuTriggerFor]="menu"
+          style="float: right; margin-right: 10px; margin-bottom: 10px"
+        >
+          <mat-icon class="circle-icon-actions">more_horizon</mat-icon>
+        </button>
+      </div>
+
+      <div>
+        <div style="width: 100%; margin: 10px">
+          <div style="float: left">
+            <h1 style="text-align: left">
+              {{ x.name }}
+            </h1>
+            <a href="//{{ x.website }}" target="_blank">{{ x.website }}</a>
+          </div>
+          <br />
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</div>
+
+<!-- MENU drop down -->
+<mat-menu #menu="matMenu">
+  <div style="padding-right: 15px">
+    <button
+      (click)="edit()"
+      mat-menu-item
+      style="margin-right: 10px; margin-bottom: 10px; color: blue"
+    >
+      <mat-icon class="circle-icon-actions-item">edit</mat-icon>
+      edit
+    </button>
+    <button
+      (click)="addXp()"
+      mat-menu-item
+      style="margin-right: 10px; margin-bottom: 10px; color: blue"
+    >
+      <mat-icon class="circle-icon-actions-item">add</mat-icon>
+      add new experience
+    </button>
+  </div>
+</mat-menu>

@@ -1,0 +1,8 @@
+.isDialogClass {
+  position: absolute;
+  top: 0px;
+}
+
+.isNotDialogClass {
+  position: fixed;
+}

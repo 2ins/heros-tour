@@ -1,13 +1,8 @@
 import { Hero, HeroTable } from '../model/hero';
 import { Search } from '../model/search';
 
-export class AddHero {
-  static readonly type = '[Hero] Add';
-  constructor(public payload: Hero) {}
-}
-
-export class AddHero2 {
-  static readonly type = '[Hero] Add2';
+export class AddExperienceTransaction {
+  static readonly type = '[Hero] AddExperienceTransaction';
   constructor(public payload: HeroTable) {}
 }
 
@@ -28,11 +23,6 @@ export class DeleteHero {
 export class SetSelectedHero {
   static readonly type = '[Hero] Set';
   constructor(public payload: Hero) {}
-}
-
-export class AddNewHero {
-  static readonly type = '[Hero] Add';
-  constructor() {}
 }
 
 export class SearchHeroes {

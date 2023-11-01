@@ -14,6 +14,7 @@ export class HeroGuardService implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): boolean {
+    return true;
     if (false) {
       return true;
     } else {

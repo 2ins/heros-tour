@@ -1,52 +1,126 @@
-<div style="padding-left: 15px">
-  <input
-    type="search"
-    [(ngModel)]="search"
-    [placeholder]="placeHolder"
-  /><br /><br />
-  <button
-    (click)="sendNotification()"
-    mat-button
-    mat-stroked-button
-    style="margin-right: 10px; margin-bottom: 10px; color: blue"
-  >
-    Search
-  </button>
-  <br /><br />
+<mat-dialog-content style="max-height: 100%; padding: 0px">
+  <ng-container *ngTemplateOutlet="composite"></ng-container>
 
-  <div>
-    <ul>
-      <div *ngFor="let el of hashMap.keys()">
-        <br />
-        <p [ngClass]="el">
-          <b>
-            {{ el | virtueFinder }}
-          </b>
-        </p>
-
-        <hr />
-        <li *ngFor="let quality of hashMap.get(el)?.values()">
-          <mat-checkbox
-            (change)="updateItem(quality)"
-            [checked]="quality.selected"
-          >
-            {{ quality.name }}
-            <!--
-            <span *ngIf="quality.tags">
-              (<i *ngFor="let t of quality.tags">{{ t }},</i>)
-            </span>
-            -->
-          </mat-checkbox>
-        </li>
+  <ng-template #composite>
+    <div class="container">
+      <div class="icon-left">
+        <div mat-dialog-close>
+          <mat-icon class="circle-icon, icon-back">arrow_back</mat-icon>
+        </div>
       </div>
-    </ul>
-  </div>
-  <br />
-  <button
-    (click)="sendNotification()"
-    mat-stroked-button
-    style="float: left; margin-right: 10px; margin-bottom: 10px; color: blue"
-  >
-    Search
-  </button>
-</div>
+      <div>
+        <input
+          type="search"
+          class="input-text"
+          [(ngModel)]="search"
+          [placeholder]="'by name'"
+          autofocus="false"
+        /><br />
+
+        <form class="example-form">
+          <input
+            type="text"
+            placeholder="Search for a street"
+            [formControl]="control"
+            [matAutocomplete]="auto"
+            [(ngModel)]="searchLoc"
+          />
+          <mat-autocomplete #auto="matAutocomplete">
+            <mat-option
+              *ngFor="let street of filteredStreets | async"
+              [value]="street"
+            >
+              {{ street }}
+            </mat-option>
+          </mat-autocomplete>
+        </form>
+
+        <br />
+      </div>
+
+      <div class="icon-right">
+        <div (click)="sendNotification()" mat-dialog-close>
+          <mat-icon class="circle-icon">search</mat-icon>
+        </div>
+      </div>
+    </div>
+
+    <div style="padding-left: 15px">
+      <br /><br />
+
+      <div class="flex-container" *ngIf="true">
+        <div
+          class="flex-item"
+          *ngFor="let el of hashMap.keys()"
+          style="
+            border: 0px solid green;
+            margin: 5px;
+            padding: 5px;
+            width: 45%;
+            border-radius: 10%;
+          "
+        >
+          <div
+            style="
+              width: 100%;
+              border: 0px solid black;
+              text-align: left;
+              border-radius: 10%;
+            "
+            [ngClass]="el"
+          >
+            <b style="width: 100%; border: 0px solid black">
+              {{ el | virtueFinder }}
+            </b>
+          </div>
+
+          <div *ngFor="let quality of hashMap.get(el)?.values()">
+            <mat-checkbox
+              (change)="updateItem(quality)"
+              [checked]="quality.selected"
+            >
+              {{ quality.name }}
+            </mat-checkbox>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="false">
+        <ul>
+          <div *ngFor="let el of hashMap.keys()">
+            <br />
+            <p [ngClass]="el">
+              <b>
+                {{ el | virtueFinder }}
+              </b>
+            </p>
+
+            <hr />
+            <li *ngFor="let quality of hashMap.get(el)?.values()">
+              <mat-checkbox
+                (change)="updateItem(quality)"
+                [checked]="quality.selected"
+              >
+                {{ quality.name }}
+              </mat-checkbox>
+            </li>
+          </div>
+        </ul>
+      </div>
+      <br />
+      <button
+        (click)="sendNotification()"
+        mat-stroked-button
+        mat-dialog-close
+        style="
+          float: left;
+          margin-right: 10px;
+          margin-bottom: 10px;
+          color: blue;
+        "
+      >
+        Search
+      </button>
+    </div>
+  </ng-template>
+</mat-dialog-content>

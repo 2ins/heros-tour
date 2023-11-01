@@ -1,0 +1,39 @@
+<div
+  style="
+    position: relative;
+    width: 100%;
+
+    border: 0px solid black;
+    margin: 0 auto;
+  "
+>
+  <div
+    style="
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      border: 0px solid black;
+      margin-top: 3px;
+    "
+  >
+    <div>
+      <img
+        class="profile-pic"
+        src="https://enrgmsdppekwfvmbdxsl.supabase.co/storage/v1/object/public/avatars/{{
+          imgurl
+        }}"
+      />
+    </div>
+  </div>
+
+  <ngx-chartjs
+    #ref
+    [options]="options2"
+    [data]="datasource"
+    type="pie"
+    style="text-align: center; margin: auto; border: 0px solid black"
+    [ngClass]="type"
+  >
+  </ngx-chartjs>
+</div>

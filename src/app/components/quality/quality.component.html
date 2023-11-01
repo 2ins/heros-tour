@@ -1,5 +1,9 @@
 <div fxLayout="row" *ngIf="quality">
-  <div fxFlex.gt-sm="60%" style="padding: 10px">
+  <ng-container *ngTemplateOutlet="header"></ng-container>
+  <div
+    fxFlex.gt-sm="60%"
+    style="padding: 10px; padding-top: 40px; margin: 10px"
+  >
     <div
       class="inline"
       style="
@@ -86,4 +90,25 @@
       <br />
     </div>
   </div>
+  <ng-template #header>
+    <div
+      style="
+        float: left;
+        width: 100%;
+        z-index: 0;
+        margin-bottom: 20px;
+        background-color: white;
+        border: solid grey 1px;
+        position: fixed;
+        z-index: 10;
+      "
+    >
+      <div style="border-bottom: 0px solid black">
+        <button mat-button (click)="backClicked()">
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+        strenght: <b>{{ quality.name }}</b>
+      </div>
+    </div>
+  </ng-template>
 </div>

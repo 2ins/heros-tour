@@ -1,0 +1,102 @@
+div.inline {
+  text-align: center;
+}
+div.inlineTag {
+  text-align: left;
+  color: blue;
+}
+.image-main {
+  width: 90%;
+  border-radius: 15%;
+  overflow: hidden;
+
+  border: solid black 1px;
+
+  padding: 0px;
+  margin-top: 10px;
+}
+.image-cropper-xp {
+  width: 75px;
+  height: 75px;
+  overflow: hidden;
+  border-radius: 50%;
+}
+.profile-pic {
+  display: inline;
+  margin: 0 auto;
+  width: 100%;
+}
+.profile-pic-height {
+  height: 100%;
+}
+.profile-pic-width {
+  width: 100%;
+}
+
+/* HORIZONTAL SCROLL */
+.scroll-container {
+  overflow: auto;
+  white-space: nowrap;
+
+  background: transparent;
+  height: 100%;
+  border-radius: 15px;
+}
+
+.gridscroll {
+  display: inline-block;
+}
+
+.gridscroll div {
+  display: inline-block;
+}
+
+.gridscroll img {
+  margin-right: 0px;
+  border-radius: 10%;
+}
+
+h2 {
+  text-align: left;
+  margin-left: 25px;
+}
+
+.two-columns {
+  display: flex;
+  width: 100%;
+}
+
+.column1 {
+  flex: 1;
+  border: 0px solid gray;
+  padding: 10px;
+  margin: 5px;
+  width: 50%;
+}
+.column2 {
+  flex: 1;
+  border: 0px solid gray;
+  padding: 10px;
+  margin: 5px;
+  width: 50%;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 0.1px dotted gray;
+}
+
+.icon-left,
+.icon-right {
+  flex: 0 0 auto;
+  margin: 0 5px; /* Spazio tra icone e input */
+  border: 0px solid black;
+}
+.title {
+  font-size: x-large;
+  float: left;
+  border: 0px solid black;
+  width: 100%;
+}

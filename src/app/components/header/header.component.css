@@ -1,0 +1,20 @@
+.alignleft {
+  float: left;
+}
+.alignright {
+  float: right;
+}
+
+.class1 {
+  padding: 0 10% 0 10%;
+}
+
+.image-cropper {
+  width: 100px;
+  overflow: hidden;
+}
+
+.profile-pic {
+  display: inline;
+  margin: 0 auto;
+}

@@ -1,4 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Router } from '@angular/router';
 import { Quality } from 'src/app/model/quality';
 import { MobileService } from 'src/app/services/mobile.service';
 
@@ -10,47 +11,63 @@ import { MobileService } from 'src/app/services/mobile.service';
 export class QualitiesListGridComponent implements OnInit {
   @Input()
   qualities?: Quality[] = [];
-  qualitiesView?: Quality[] = [];
 
   @Input()
   total?: number;
 
-  toView: number = 8;
-  showMore: boolean = false;
+  @Input()
+  showMore?: Boolean;
+
+  @Input()
+  showAll?: Boolean = false;
+
+  toView: number = 5;
+
   showEnabled: boolean = false;
   isMobile: boolean = false;
 
-  constructor(private mobileSerive: MobileService) {
+  constructor(private mobileSerive: MobileService, private route: Router) {
     this.isMobile = mobileSerive.isMobile();
+
+    this.showEnabled = false;
   }
 
   ngOnInit(): void {
-    this.showMore = false;
-    this.qualitiesView = this.qualities;
+    if (this.qualities && this.qualities?.length > this.toView) {
+      this.showEnabled = true;
+    }
+
     if (this.isMobile) {
-      this.toView = 4;
+      if (!this.showAll) {
+        this.toView = 3;
+      } else {
+        this.toView = 24;
+      }
     }
     if (this.qualities) {
       if (this.qualities?.length > this.toView) {
-        this.qualities = this.qualities?.slice(0, this.toView);
         this.showEnabled = true;
       } else {
-        this.qualities = this.qualities;
         this.showEnabled = false;
       }
     }
   }
 
-  ngBeforeViewInit() {
-    this.qualitiesView = this.qualities;
-  }
-
   showChange(): void {
     this.showMore = !this.showMore;
-    if (this.showMore == true) {
-      this.qualities = this.qualitiesView;
+  }
+
+  @Output() notifySelection: EventEmitter<any> = new EventEmitter();
+  onClick(q: Quality): void {
+    if (this.showAll == true) {
+      this.notifySelection.emit(q);
     } else {
-      this.qualities = this.qualitiesView?.slice(0, this.toView);
+      this.go(q);
     }
+  }
+
+  go(q: Quality) {
+    var routerLink = '/qualities/quality/' + q.id;
+    this.route.navigateByUrl(routerLink);
   }
 }

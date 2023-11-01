@@ -1,0 +1,47 @@
+.grid-container-mobile {
+  display: grid;
+  grid-template-columns: 33% 33% 33%;
+  /* Imposta l'altezza delle righe (sostituire con il valore desiderato) */
+  grid-auto-rows: 100px;
+  /* Imposta l'altezza delle colonne uguale all'altezza delle righe */
+  align-content: start;
+  grid-row-gap: 5px;
+}
+
+.containerbox {
+  display: flex; /* Utilizza il modello di layout flexbox */
+  justify-content: center; /* Centra orizzontalmente il contenuto */
+  align-items: center; /* Centra verticalmente il contenuto */
+  position: relative;
+  width: 95%;
+  border: 1px solid black;
+  border-radius: 5%;
+  /* Imposta l'altezza al 100% della viewport height (altezza della finestra del browser) */
+}
+
+.sfondo-immagine {
+  position: absolute; /* Posizionamento assoluto per l'immagine */
+  top: 0;
+  left: 0;
+  width: 100%; /* Adatta l'immagine all'intero contenitore */
+  height: 100%;
+  object-fit: cover; /* Per adattare l'immagine all'intero spazio disponibile */
+}
+
+.testo-sovrapposto {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Per centrare il testo */
+  background: rgba(0, 0, 0, 0.3);
+  color: #fff;
+  padding: 5px;
+  text-align: center;
+  width: 100%; /* In modo che lo sfondo sia largo quanto l'immagine */
+  height: 100%;
+  box-sizing: border-box; /* Includi il padding nel calcolo della larghezza */
+  display: flex; /* Utilizza il modello di layout flexbox */
+  justify-content: center; /* Centra orizzontalmente il contenuto */
+  align-items: center; /* Centra verticalmente il contenuto */
+  font-size: larger;
+}

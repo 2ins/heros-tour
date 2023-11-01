@@ -1,5 +1,5 @@
-import { Location } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { DOCUMENT, Location } from '@angular/common';
+import { Component, Inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
@@ -28,12 +28,15 @@ export class QualityComponent implements OnInit {
     private store: Store,
     private route: Router,
     private location: Location,
-    public mobileService: MobileService
-  ) {}
+    public mobileService: MobileService,
+    @Inject(DOCUMENT) private document: Document
+  ) {
+    this.isMobile = this.mobileService.isMobile();
+    this.document.documentElement.scrollTop = 0;
+  }
   @Select(HeroState.getQualityList) qualities?: Observable<Quality[]>;
 
   ngOnInit(): void {
-    this.isMobile = this.mobileService.isMobile();
     this.activatedRoute.paramMap.subscribe((map) => {
       this.qualityId = map.get('id');
 

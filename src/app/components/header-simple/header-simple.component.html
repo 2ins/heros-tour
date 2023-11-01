@@ -1,0 +1,26 @@
+<div
+  style="
+    float: left;
+    width: 100%;
+    z-index: 0;
+    margin-bottom: 20px;
+    background-color: white;
+    border: solid grey 1px;
+    position: fixed;
+    z-index: 10;
+    white-space: nowrap; /* Impedisce il wrapping del testo */
+    overflow: hidden; /* Nasconde il testo che supera il contenitore */
+  "
+  [ngClass]="{
+    isDialogClass: isDialog,
+    isNotDialogClass: !isDialog
+  }"
+>
+  <div style="border-bottom: 0px solid black; height: 35px">
+    <button mat-button (click)="backClicked()" mat-dialog-close>
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <ng-content select="[descript]"></ng-content>
+    <ng-content select="[buttonList]"></ng-content>
+  </div>
+</div>

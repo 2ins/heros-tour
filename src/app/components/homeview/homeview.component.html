@@ -1,0 +1,68 @@
+<app-header></app-header>
+<div style="padding-top: 50px">
+  <div *ngIf="sea as x">
+    <div style="margin: 5px">
+      <mat-chip-list>
+        <mat-chip
+          style="color: black; border: 1px solid black"
+          *ngFor="let a of x.arr"
+          (removed)="remove(a)"
+          [ngClass]="a | virtueColorFinderByStrenghtId"
+        >
+          {{ a | nameStrenghtFinder }}
+          <button matChipRemove [attr.aria-label]="'remove ' + a">
+            <mat-icon style="color: black">cancel</mat-icon>
+          </button>
+        </mat-chip>
+        <mat-chip
+          *ngIf="x.location != ''"
+          style="color: black; border: 2px solid green"
+          (removed)="removeLocation()"
+        >
+          {{ x.location }}
+          <button matChipRemove [attr.aria-label]="'remove ' + x.location">
+            <mat-icon style="color: black">cancel</mat-icon>
+          </button>
+        </mat-chip>
+      </mat-chip-list>
+    </div>
+
+    <div
+      style="margin: 5px"
+      class="container"
+      (click)="openDialog()"
+      *ngIf="x.search != '' || x.arr.length > 0 || x.location != ''"
+      autofocus="true"
+    >
+      <input
+        #textElem
+        type="search"
+        class="input-text"
+        [(ngModel)]="x.search"
+        autofocus="false"
+      />
+      <div class="icon-right" (click)="openDialog()">
+        <!-- Icona a destra -->
+        <div>
+          <mat-icon class="circle-icon">search</mat-icon>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <mat-tab-group
+    mat-stretch-tabs
+    class="example-stretched-tabs mat-elevation-z4"
+    selectedIndex="1"
+  >
+    <mat-tab label="Activities ({{ (activities | async)?.length }})">
+      <app-activities></app-activities>
+    </mat-tab>
+    <mat-tab label="Masters ({{ (masters | async)?.length }})">
+      <app-masters></app-masters>
+    </mat-tab>
+    <mat-tab label="Experiences ({{ (heroes | async)?.length }})">
+      <app-experiences></app-experiences>
+    </mat-tab>
+  </mat-tab-group>
+</div>

@@ -23,6 +23,10 @@ export class MasterItemComponent implements OnInit {
 
   ngOnInit(): void {}
 
+  get imageUrl(): string {
+    return `url('https://enrgmsdppekwfvmbdxsl.supabase.co/storage/v1/object/public/avatars/${this.user?.avatar_url}')`;
+  }
+
   onSelect(u: Master): void {
     this.router.navigate(['/masters/master/', u.id]);
   }

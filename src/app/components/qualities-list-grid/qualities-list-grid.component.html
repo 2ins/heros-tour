@@ -1,6 +1,6 @@
 <div [ngClass]="!isMobile ? 'grid-container' : 'grid-container-mobile'">
   <div
-    *ngFor="let quality of qualities"
+    *ngFor="let quality of qualities; let i = index"
     style="
       width: 95%;
       margin-left: auto;
@@ -8,54 +8,66 @@
       text-align: center;
     "
   >
-    <div
-      class="grid-item"
-      style="border: solid gray 1px; padding: 0; border-radius: 5%"
-      [ngClass]="quality.virtue"
-    >
-      <p style="text-align: center">
-        <i style="color: black; font-size: xx-small">
-          {{ quality.virtue | virtueFinder }}
-        </i>
-      </p>
-      <img
-        style="
-          border-radius: 3%;
-          width: 98%;
-          display: block;
-          margin-left: auto;
-          margin-right: auto;
-          margin-top: 5px;
-          cursor: pointer;
-        "
-        routerLink="/qualities/quality/{{ quality.id }}"
-        src="{{
-          'https://enrgmsdppekwfvmbdxsl.supabase.co/storage/v1/object/public/q/' +
-            quality.id +
-            '.jpg'
-        }}"
-      />
-
+    <div *ngIf="i < toView || showMore">
       <div
-        style="height: 35px; text-align: center; display: table; width: 100%"
+        class="grid-item"
+        style="border: solid gray 1px; padding: 0; border-radius: 5%"
+        [ngClass]="quality.virtue"
       >
-        <div style="display: table-cell; vertical-align: middle">
-          <b style="color: green">{{ quality.name }} </b>
-          <br />
+        <p style="text-align: center">
+          <i style="color: black; font-size: xx-small">
+            {{ quality.virtue | virtueFinder }}
+          </i>
+        </p>
+        <div class="image-container" (click)="onClick(quality)">
+          <img
+            style="
+              border-radius: 3%;
+              width: 98%;
+              display: block;
+              margin-left: auto;
+              margin-right: auto;
+              margin-top: 5px;
+              cursor: pointer;
+            "
+            src="{{
+              'https://enrgmsdppekwfvmbdxsl.supabase.co/storage/v1/object/public/q/' +
+                quality.id +
+                '.jpg'
+            }}"
+          />
 
-          <p *ngIf="quality.count != undefined && total != undefined"></p>
-          <p *ngIf="quality.count != undefined && total != undefined">
+          <div
+            *ngIf="quality.count != undefined && total != undefined"
+            class="text-overlay"
+          >
             {{ quality.count }}
-          </p>
+          </div>
+        </div>
+
+        <div
+          style="height: 35px; text-align: center; display: table; width: 100%"
+        >
+          <div
+            style="
+              display: table-cell;
+              vertical-align: middle;
+              font-size: small;
+            "
+          >
+            <b style="color: green">{{ quality.name }}</b>
+
+            <br />
+          </div>
         </div>
       </div>
+      <i>
+        {{ quality.desc_xp }}
+      </i>
     </div>
-    <i>
-      {{ quality.desc_xp }}
-    </i>
   </div>
 </div>
-<div *ngIf="showEnabled" style="text-align: center">
+<div *ngIf="qualities && qualities.length > toView" style="text-align: center">
   <div *ngIf="showMore">
     <b style="color: blue; cursor: pointer" (click)="showChange()">Show less</b>
   </div>

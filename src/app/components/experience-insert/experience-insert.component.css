@@ -10,7 +10,7 @@ div.inlineTag {
   color: blue;
 }
 div.widthMobile {
-  width: 98%;
+  width: 80%;
 }
 
 ul {
@@ -56,4 +56,20 @@ li {
 /* columns */
 .three-columns-grid > * {
   padding: 1rem;
+}
+
+.flex-container {
+  display: flex;
+  flex-wrap: wrap; /* Permette il passaggio a una nuova riga quando non c'è spazio */
+}
+
+.flex-item {
+  border: 1px solid gray;
+  padding: 10px;
+  margin: 5px;
+  flex: 1; /* Fa in modo che le div occupino tutto lo spazio disponibile orizzontalmente */
+  max-width: calc(
+    50% - 10px
+  ); /* Limita la larghezza massima a un terzo della larghezza del contenitore */
+  box-sizing: border-box; /* Includi padding e bordo nella larghezza */
 }

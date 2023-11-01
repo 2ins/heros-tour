@@ -21,7 +21,7 @@ export class ExperiencesComponent implements OnInit {
   @Select(HeroState.getSelectedHero) selectedHero?: Observable<Hero>;
 
   myHero?: Hero;
-  searchc: Search = { search: '', arr: [] };
+  searchc: Search = { search: '', arr: [], location: '' };
   search: string = '';
   isMobile: boolean = false;
   indxTab: number = 0;
@@ -53,7 +53,7 @@ export class ExperiencesComponent implements OnInit {
     });
 
     console.log('searching');
-    this.store.dispatch(new SearchHeroes(this.searchc));
+    //this.store.dispatch(new SearchHeroes(this.searchc));
     console.log('done');
   }
   updateItem(q: Quality): void {

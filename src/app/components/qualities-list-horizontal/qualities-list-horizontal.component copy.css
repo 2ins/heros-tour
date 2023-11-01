@@ -1,0 +1,39 @@
+/* HORIZONTAL SCROLL */
+.scroll-container {
+  overflow: auto;
+  white-space: nowrap;
+  background: transparent;
+  height: 100%;
+  border-radius: 15px;
+  height: 200;
+}
+
+.gridscroll {
+  display: inline-block;
+}
+
+.gridscroll div {
+  display: inline-block;
+}
+
+.gridscroll img {
+  margin-right: 0px;
+  border-radius: 10%;
+}
+
+.grad1 {
+  background-image: linear-gradient(
+    to right,
+    rgba(255, 255, 0, 1),
+    rgba(255, 0, 0, 0)
+  );
+  z-index: 10;
+}
+
+#infoi {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}

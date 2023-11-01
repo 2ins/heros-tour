@@ -1,9 +1,13 @@
 import { Location } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
-import { Store } from '@ngxs/store';
+import { MatDialog } from '@angular/material/dialog';
+import { Select, Store } from '@ngxs/store';
 import { AuthSession } from '@supabase/supabase-js';
+import { Observable } from 'rxjs';
 import { SetUserProfile } from 'src/app/actions/profiles.action';
+import { Search } from 'src/app/model/search';
 import { MobileService } from 'src/app/services/mobile.service';
+import { HeroState } from 'src/app/states/todo.state';
 import { SupabaseService } from '../../supabase.service';
 
 @Component({
@@ -12,6 +16,7 @@ import { SupabaseService } from '../../supabase.service';
   styleUrls: ['./app-container.component.css'],
 })
 export class AppContainerComponent implements OnInit {
+  @Select(HeroState.getActivitySearch) searchX?: Observable<Search>;
   @Input()
   session!: AuthSession;
 
@@ -22,7 +27,8 @@ export class AppContainerComponent implements OnInit {
     private supabase: SupabaseService,
     private store: Store,
     public mobileService: MobileService,
-    private location: Location
+    private location: Location,
+    public dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -35,6 +41,9 @@ export class AppContainerComponent implements OnInit {
     }
     this.isMobile = this.mobileService.isMobile();
     this.isTablet = this.mobileService.isTablet();
+    this.searchX?.subscribe((x) => {
+      console.log('search: ', x.search);
+    });
   }
 
   onLogOut(): void {

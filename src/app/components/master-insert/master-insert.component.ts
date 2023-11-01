@@ -1,18 +1,20 @@
+import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { Select, Store } from '@ngxs/store';
 import { ImageCroppedEvent } from 'ngx-image-cropper';
 import { Observable, map } from 'rxjs';
-import { GetActivitiesOverview } from 'src/app/actions/activity.action';
-import { AddMaster } from 'src/app/actions/master.action';
-import { Activity } from 'src/app/model/activity';
+import { AddMaster, SetAddedMaster } from 'src/app/actions/master.action';
+import { ActivityTable } from 'src/app/model/activity';
 import { MasterActivityTable, MasterTable } from 'src/app/model/master';
-import { Search } from 'src/app/model/search';
 import { LoaderService } from 'src/app/services/loader.service';
 import { HeroState } from 'src/app/states/todo.state';
 import { SupabaseService } from 'src/app/supabase.service';
+import { ActivityMasterInsertComponent } from '../activity-master-insert/activity-master-insert.component';
+import { ActivityMasterSearchComponent } from '../activity-master-search/activity-master-search.component';
 import { PopupComponent } from '../popup/popup.component';
 
 @Component({
@@ -21,7 +23,9 @@ import { PopupComponent } from '../popup/popup.component';
   styleUrls: ['./master-insert.component.css'],
 })
 export class MasterInsertComponent implements OnInit {
-  @Select(HeroState.getActivities) activities?: Observable<Activity[]>;
+  @Select(HeroState.getAllActivities) activities?: Observable<ActivityTable[]>;
+  //@Select(HeroState.getSelectedMaster) selectedMaster?: Observable<Master>;
+  @Select(HeroState.getAddedMaster) addedMaster?: Observable<MasterTable>;
 
   message?: string;
   status?: boolean;
@@ -43,48 +47,35 @@ export class MasterInsertComponent implements OnInit {
     private router: Router,
     private sanitizer: DomSanitizer,
     private _snackBar: MatSnackBar,
-    private loadingService: LoaderService
+    private loadingService: LoaderService,
+    private location: Location,
+    public dialog: MatDialog
   ) {
     console.log('constructor');
   }
 
   ngOnInit(): void {
-    var preselectedActivities: Activity[] = [];
-
     var master = history.state.master;
 
     if (master) {
       console.log('master selected to edit', master);
-      preselectedActivities = master.activities;
+      //this.preselectedActivities = master.activities;
       this.newMaster = {
         id: master.id,
         name: master.name,
         avatar_url: master.avatar_url,
         website: master.website,
+        preselectedActivities: master.activities,
       };
       this.imageSrc =
         'https://enrgmsdppekwfvmbdxsl.supabase.co/storage/v1/object/public/avatars/' +
         master.avatar_url;
+
+      this.store.dispatch(new SetAddedMaster(this.newMaster));
     }
 
-    console.log('preselectedActivities', preselectedActivities);
-
-    var search: Search = { search: '', arr: [] };
-    this.store.dispatch(new GetActivitiesOverview(search));
-    this.activities?.subscribe((as) => {
-      if (as && as.length != 0) {
-        as.forEach((e) => {
-          e.selected = false;
-          preselectedActivities.forEach((pr) => {
-            console.log(pr.id, e.id);
-            if (pr.id == e.id) {
-              console.log('yes');
-              e.selected = true;
-            }
-          });
-        });
-      } else {
-      }
+    this.addedMaster?.subscribe((e) => {
+      console.log('aggiornamento: ', e);
     });
   }
 
@@ -94,9 +85,34 @@ export class MasterInsertComponent implements OnInit {
       this.uploadFile();
     }
   }
-  updateItem(a: Activity): void {
-    a.selected = !a.selected;
-    console.log('selected: ', a);
+  updateItem(a: ActivityTable): void {
+    var toDelete = this.newMaster.preselectedActivities?.find(
+      (e) => e.id == a.id
+    );
+    console.log('toDelet', toDelete);
+    if (toDelete) {
+      const index = this.newMaster.preselectedActivities?.indexOf(toDelete, 0);
+      console.log('index', index);
+      if (index != undefined) {
+        console.log('index,', index);
+        if (index > -1) {
+          this.newMaster.preselectedActivities?.splice(index, 1);
+        }
+        console.log(
+          'this.preselectedActivities',
+          this.newMaster.preselectedActivities
+        );
+      }
+    }
+  }
+
+  backClicked() {
+    this.location.back();
+  }
+
+  open(type: string) {
+    //this.router.navigateByUrl('/addActivity');
+    this.openDialog(type);
   }
 
   //
@@ -175,10 +191,12 @@ export class MasterInsertComponent implements OnInit {
     if (this.activities) {
       this.activities
         .pipe(
-          map((array: Activity[]) => {
-            array.forEach((item: Activity) => {
+          map((array: ActivityTable[]) => {
+            array.forEach((item: ActivityTable) => {
               if (item.selected) {
-                arr.push(item.id);
+                if (item.id) {
+                  arr.push(item.id);
+                }
               }
             });
           })
@@ -202,12 +220,46 @@ export class MasterInsertComponent implements OnInit {
     this.newMaster.arr = appo;
     this.store.dispatch(new AddMaster(this.newMaster)).subscribe(() => {
       this.openSnackBar();
+      var id = this.store.selectSnapshot(HeroState.getAddedMaster)?.id;
+      console.log('id..........', id);
+      if (id) {
+        this.router.navigateByUrl('/masters/master/' + id);
+      }
     });
   }
 
   openSnackBar() {
     this._snackBar.openFromComponent(PopupComponent, {
       duration: 2 * 1000,
+    });
+  }
+
+  openDialog(type: string) {
+    //this.textElem?.nativeElement.blur();
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.autoFocus = false;
+    dialogConfig.width = '100%';
+    dialogConfig.height = '100%';
+    dialogConfig.panelClass = '{padding-top:0px;}';
+    dialogConfig.maxHeight = '100vh';
+    dialogConfig.maxWidth = '100vw';
+
+    var dialogRef;
+    this.store.dispatch(new SetAddedMaster(this.newMaster));
+    if (type == 'INSERT') {
+      dialogRef = this.dialog.open(ActivityMasterInsertComponent, dialogConfig);
+    } else {
+      dialogRef = this.dialog.open(ActivityMasterSearchComponent, dialogConfig);
+    }
+
+    //dialogRef.componentInstance.placeHolder = 'Search activities';
+
+    dialogRef.afterClosed().subscribe(() => {
+      // unsubscribe onAdd
+    });
+
+    dialogRef.afterClosed().subscribe((result: any) => {
+      console.log(`Dialog result: ${result}`);
     });
   }
 

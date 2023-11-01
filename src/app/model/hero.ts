@@ -27,6 +27,7 @@ export interface HeroTable {
   geom?: Geom;
   arr?: HeroQualitiesTable[];
   event_date?: Date;
+  formatoData?: string;
   location?: string;
 }
 

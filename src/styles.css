@@ -31,3 +31,56 @@ body {
 .mat-icon-size {
   transform: scale(0.6);
 }
+
+.circle-icon-actions {
+  background-color: lightgray; /* Colore dello sfondo del cerchio */
+  border: 0px solid black;
+  border-radius: 50%; /* Rendi il bordo circolare */
+}
+.circle-icon-actions-button {
+  /* Colore dello sfondo del cerchio */
+  background-color: white;
+  color: blue;
+  border: 1px solid white;
+  border-radius: 50%; /* Rendi il bordo circolare */
+}
+.circle-icon-actions-item {
+  /* Colore dello sfondo del cerchio */
+  background-color: white;
+  color: blue;
+  border: 1px solid white;
+  border-radius: 50%; /* Rendi il bordo circolare */
+}
+
+/*
+mat-tab
+*/
+.mat-tab-label,
+.mat-tab-link {
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+}
+::ng-deep .mat-tab-header-pagination {
+  display: none !important;
+}
+
+::ng-deep .mat-tab-header {
+  overflow-x: scroll !important;
+}
+
+::ng-deep .mat-tab-label-container {
+  overflow: visible !important;
+}
+
+::ng-deep .mat-tab-header::-webkit-scrollbar {
+  display: none;
+}
+
+.custom-panel-class {
+  padding-top: 0px;
+  max-width: "100vw";
+  max-height: "100vh";
+  height: "100%";
+  width: "100%";
+}

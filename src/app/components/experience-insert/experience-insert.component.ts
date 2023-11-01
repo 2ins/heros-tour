@@ -1,23 +1,21 @@
 import { Location } from '@angular/common';
 import {
+  AfterViewInit,
   Component,
   ElementRef,
   NgZone,
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { AddHero2 } from 'src/app/actions/hero.action';
-import { GetMastersOverview } from 'src/app/actions/master.action';
+import { AddExperienceTransaction } from 'src/app/actions/hero.action';
 import { GetQualities } from 'src/app/actions/quality.action';
 import { Geom } from 'src/app/model/geom';
 import { Hero, HeroQualitiesTable, HeroTable } from 'src/app/model/hero';
 import { Master } from 'src/app/model/master';
-import { Quality } from 'src/app/model/quality';
+import { Quality, VIRTUES_LIST } from 'src/app/model/quality';
 import { MobileService } from 'src/app/services/mobile.service';
 import { HeroState } from 'src/app/states/todo.state';
 import { MyProfile, SupabaseService } from 'src/app/supabase.service';
@@ -27,31 +25,52 @@ import { MyProfile, SupabaseService } from 'src/app/supabase.service';
   templateUrl: './experience-insert.component.html',
   styleUrls: ['./experience-insert.component.css'],
 })
-export class ExperienceInsertComponent implements OnInit {
+export class ExperienceInsertComponent implements OnInit, AfterViewInit {
   @Select(HeroState.getQualityList) qualities?: Observable<Quality[]>;
-
   @Select(HeroState.getUserProfile) profile?: Observable<MyProfile>;
-
   @Select(HeroState.getNewHeroTable) newHeroTable?: Observable<HeroTable>;
 
-  comment: string = '';
+  //VALORI ESPERIENZA DB
+  //il master selezionato arriva come parametro in due modi diversi.
+  //TODO: verifica se e' meglio usarlo a livello di stato
   selectedMaster?: Master;
-  searchMaster?: string;
-  myControl = new FormControl('');
 
+  //utenza di riferimento: ok che e' stato caricato da stato
   myProfile?: MyProfile;
+
+  //nome della esperienza.
   textareaValue?: string;
-  isMobile: boolean = false;
-  isTablet: boolean = false;
+
+  //data esperienza
   event_date: Date = new Date();
+
+  //location esperienza
   location: string = '';
 
-  isUpdate: boolean = false;
+  //id esperienza
   id?: number;
+
+  //geometria esperienza
   geom?: Geom;
 
+  //controlli
+  isUpdate: boolean = false;
+  //gestione dispositivo
+  isMobile: boolean = false;
+  isTablet: boolean = false;
+  //utilities
+  hashMap = new Map<string, Quality[]>();
+  virtuesList = VIRTUES_LIST;
+  //Qualita dopo sottoscrizione
+  theQualities?: Quality[];
+
+  //utilities di location html
   @ViewChild('search')
   public searchElementRef!: ElementRef;
+
+  //utilities per gestire il focus
+  @ViewChild('hidden')
+  public hidden!: ElementRef;
 
   constructor(
     private readonly supabase: SupabaseService,
@@ -60,13 +79,19 @@ export class ExperienceInsertComponent implements OnInit {
     public mobileService: MobileService,
     private activRoute: ActivatedRoute,
     private ngZone: NgZone,
-    private lctn: Location
+    private lctn: Location,
+    private el: ElementRef,
+    private loc: Location
   ) {}
 
   ngOnInit(): void {
+    this.hidden?.nativeElement.focus();
+
     var experience: Hero = history.state.experience;
+    console.log('EXPERIENCE', experience);
     var preselectedQs: Quality[] = [];
     if (experience) {
+      //SONO IN AGGIORNAMENTO
       this.isUpdate = true;
       console.log('experience selected to edit', experience);
       this.selectedMaster = experience.master;
@@ -78,32 +103,21 @@ export class ExperienceInsertComponent implements OnInit {
       if (experience.location) this.location = experience.location;
       console.log('preselectedQs', preselectedQs);
     } else if (history.state.oggetto) {
+      //SONO IN NUOVO INSERIMENTO
       this.selectedMaster = history.state.oggetto;
+      console.log('OGGETTO', this.selectedMaster);
     }
 
     this.isMobile = this.mobileService.isMobile();
     this.isTablet = this.mobileService.isTablet();
-    this.store.dispatch(new GetMastersOverview());
 
     this.qualities?.subscribe((qs) => {
-      if (qs && qs.length != 0) {
-        qs.forEach((e) => {
-          e.selected = false;
-          //sono in aggiornamento
-          if (this.isUpdate) {
-            preselectedQs.forEach((pr) => {
-              console.log(pr.id, e.id);
-              if (pr.id == e.id) {
-                console.log('yes');
-                e.selected = true;
-                e.desc_xp = pr.desc_xp;
-              }
-            });
-          }
-        });
-      } else {
-        this.store.dispatch(new GetQualities());
-      }
+      //assegna alla variabile
+      this.theQualities = qs;
+      //hashmap di utility. serve per gestire il raggruppamento nella view
+      this.generateMap();
+      //valorizza le qualita con selected a true a partire da preselectedQs
+      this.managePreselected(this.theQualities, preselectedQs);
     });
 
     this.profile?.subscribe((p) => {
@@ -124,42 +138,19 @@ export class ExperienceInsertComponent implements OnInit {
   }
 
   save(): void {
+    console.log('theQualities', this.theQualities);
     var newHero = this.getNewHero();
-    this.store.dispatch(new AddHero2(newHero)).subscribe(() => {
-      console.log('BEFORE LAST');
-
-      this.sleep(1500).then(() => {
-        this.newHeroTable?.subscribe((auxHero) => {
-          this.router.navigateByUrl('/experiences/experience/' + auxHero.id);
-        });
+    console.log('NEW HERO', newHero);
+    console.log('NEW HERO.ARR', newHero.arr);
+    this.store.dispatch(new AddExperienceTransaction(newHero)).subscribe(() => {
+      this.newHeroTable?.subscribe((e) => {
+        this.router.navigateByUrl('/experiences/experience/' + e.id);
       });
     });
   }
 
-  sleep(ms: number) {
-    return new Promise((resolve) => setTimeout(resolve, ms));
-  }
-  //utilities
-  getArr(): Quality[] {
-    var arr: Quality[] = [];
-    if (this.qualities) {
-      this.qualities
-        .pipe(
-          map((array: Quality[]) => {
-            array.forEach((item: Quality) => {
-              if (item.selected) {
-                arr.push(item);
-              }
-            });
-          })
-        )
-        .subscribe();
-    }
-    return arr;
-  }
-
   getNewHero(): HeroTable {
-    var arr = this.getArr();
+    var selectedQs = this.theQualities?.filter((a) => a.selected == true);
 
     var m = 0;
     if (this.selectedMaster) {
@@ -175,8 +166,10 @@ export class ExperienceInsertComponent implements OnInit {
     }
 
     var event_date = undefined as unknown as Date;
+    var formatoData: string = '';
     if (this.event_date) {
-      event_date = this.event_date;
+      event_date = new Date(this.event_date);
+      formatoData = event_date.toISOString().split('T')[0];
     }
 
     var lat = 0;
@@ -184,7 +177,7 @@ export class ExperienceInsertComponent implements OnInit {
 
     //add hero_qualities to the heroTable
     var appo: HeroQualitiesTable[] = [];
-    arr.forEach(async (a) => {
+    selectedQs?.forEach((a) => {
       var hq: HeroQualitiesTable = {
         quality_id: a.id,
         desc_xp: a.desc_xp,
@@ -192,21 +185,25 @@ export class ExperienceInsertComponent implements OnInit {
       appo.push(hq);
     });
 
+    const copiedArray = [...appo];
+    console.log('APPO', appo);
+
     var newHero: HeroTable = {
+      id: this.id,
       name: nameXP,
       profile_id: pid,
       master_id: m,
-      arr: appo,
+      arr: copiedArray,
       geom: this.geom,
       event_date: event_date,
       location: this.location,
+      formatoData: formatoData,
     };
 
-    if (this.isUpdate) {
-      newHero.id = this.id;
-    }
-
-    return newHero;
+    console.log('newHero parsed', JSON.parse(JSON.stringify(newHero)));
+    var copy = JSON.parse(JSON.stringify(newHero));
+    console.log('copy ', copy);
+    return copy;
   }
 
   ngAfterViewInit(): void {
@@ -252,5 +249,54 @@ export class ExperienceInsertComponent implements OnInit {
         }
       });
     });
+  }
+  backClicked() {
+    this.loc.back();
+  }
+
+  confirmationBack() {
+    if (
+      confirm(
+        'Are you sure to go back ?\n' +
+          'Once back, if you want to add an experience you will have to make it again'
+      )
+    ) {
+      this.backClicked();
+    }
+  }
+
+  //utilities
+
+  generateMap(): void {
+    this.hashMap = new Map([]);
+    if (this.theQualities != undefined) {
+      this.theQualities.forEach((el: Quality) => {
+        if (!this.hashMap.get(el.virtue)) {
+          this.hashMap.set(el.virtue, []);
+        }
+        this.hashMap.get(el.virtue)?.push(el);
+      });
+    }
+  }
+
+  private managePreselected(qs: Quality[], preselectedQs: Quality[]) {
+    if (this.theQualities && qs.length != 0) {
+      this.theQualities.forEach((e) => {
+        e.selected = false;
+        //sono in aggiornamento
+        if (this.isUpdate) {
+          preselectedQs.forEach((pr) => {
+            console.log(pr.id, e.id);
+            if (pr.id == e.id) {
+              console.log('yes');
+              e.selected = true;
+              e.desc_xp = pr.desc_xp;
+            }
+          });
+        }
+      });
+    } else {
+      this.store.dispatch(new GetQualities());
+    }
   }
 }

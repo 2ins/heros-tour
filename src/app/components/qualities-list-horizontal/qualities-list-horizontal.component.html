@@ -36,43 +36,6 @@
     <div *ngFor="let quality of qualities; let i = index">
       <div class="inline">
         <div
-          *ngIf="i == 0 && hero"
-          style="
-            border: 1px solid gray;
-            border-radius: 15px;
-            margin: 5px;
-            padding: 5px;
-            width: 130px;
-            height: 200px;
-            background-color: white;
-            color: blue;
-          "
-        >
-          <div style="display: flex">
-            <div class="___image-cropper-arch">
-              <div
-                style="
-                  cursor: pointer;
-                  padding: 2px;
-                  width: 125px;
-                  height: 168px;
-                  border: 0px solid black;
-                "
-              >
-                <app-experience-master-user-pic
-                  [hero]="hero"
-                ></app-experience-master-user-pic>
-              </div>
-            </div>
-          </div>
-
-          <div>
-            <div>
-              {{ quality.count }}
-            </div>
-          </div>
-        </div>
-        <div
           [ngClass]="quality.virtue"
           style="
             border: 1px solid gray;

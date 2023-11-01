@@ -1,93 +1,80 @@
 <mat-card
   (click)="onSelect(hero)"
-  *ngIf="hero && !isMobile"
-  style="margin-bottom: 5px"
+  *ngIf="hero"
+  style="margin: 5px; padding: 5px"
 >
-  <div style="width: 100%; font-style: italic; color: gray">
-    <div style="width: 100%; margin-top: 0px">
-      <div style="float: left">
-        <div>{{ hero.location | locationCompact }}</div>
+  <div fxLayout="row">
+    <div style="display: flex">
+      <div class="___image-cropper-arch">
+        <div
+          style="
+            cursor: pointer;
+            padding: 2px;
+            width: 80px;
+            height: 90px;
+            border: 0px solid black;
+          "
+        >
+          <app-experience-master-user-pic
+            [hero]="hero"
+          ></app-experience-master-user-pic>
+        </div>
       </div>
+    </div>
 
-      <div style="float: right">
-        <span>
-          {{ hero.event_date | date : "MMM, Y" }}
-        </span>
+    <div style="margin-left: 15px; width: 100%; padding-bottom: 5px">
+      <div style="text-align: left; color: black">
+        {{ hero.profile.username }}
+        <b style="text-align: left; color: black"> @{{ hero.master.name }} </b>
       </div>
-    </div>
-  </div>
-  <br />
-  <div fxLayout="row" style="margin-top: 5px">
-    <div fxFlex="100" style="margin-left: 10px">
-      <app-qualities-list-horizontal
-        [qualities]="hero.qualities"
-        [hero]="hero"
-      ></app-qualities-list-horizontal>
-    </div>
-  </div>
-  <div style="float: left">
-    <span style="display: flex">
-      <div *ngIf="hero.activities">
-        <label
-          style="color: blue; cursor: pointer"
-          *ngFor="let a of hero.activities"
-          routerLink="/activities/activity/{{ a.id }}"
-          >#{{ a.name }}&nbsp;
-        </label>
+      <div style="width: 100%; font-style: italic; color: gray">
+        <div style="width: 100%; margin-top: 0px">
+          <div style="float: left">
+            <span>
+              {{ hero.location | locationCompact }} -
+              {{ hero.event_date | date : "MMM, Y" }}
+            </span>
+          </div>
+        </div>
       </div>
-    </span>
-  </div>
-  <br />
-  <div style="font-style: italic; color: gray">
-    {{ hero.name | slice : 0 : 300 }}
-    <b *ngIf="hero.name.length > 300">...continue</b>
-  </div>
-</mat-card>
+      <br />
 
-<mat-card (click)="onSelect(hero)" *ngIf="hero && isMobile">
-  <div style="width: 100%; margin-top: 0px">
-    <div style="float: left">
-      <div>
-        {{ hero.location | locationCompact }}
-      </div>
-    </div>
-    <div style="float: right">
-      <span>
-        {{ hero.event_date | date : "MMM, Y" }}
-      </span>
-    </div>
-  </div>
-  <br />
-
-  <div fxLayout="row" style="margin-top: 5px">
-    <div fxFlex="100" style="margin-left: 10px">
-      <app-qualities-list-horizontal
-        [qualities]="hero.qualities"
-        [hero]="hero"
-      ></app-qualities-list-horizontal>
-    </div>
-  </div>
-  <div>
-    <div>
       <div style="float: left">
         <span style="display: flex">
           <div *ngIf="hero.activities">
-            <i
+            <label
               style="color: blue; cursor: pointer"
               *ngFor="let a of hero.activities"
-              routerLink="/activities/activity/{{ a.id }}"
               >#{{ a.name }}&nbsp;
-            </i>
+            </label>
           </div>
         </span>
       </div>
-
       <br />
+      <!--
 
-      <div style="margin: 10px">
-        {{ hero.name | slice : 0 : 200 }}
-        <b *ngIf="hero.name.length > 200">...continue</b>
+      -->
+      <div>
+        <div
+          style="color: black; cursor: pointer; display: inline"
+          *ngFor="let quality of hero.qualities; let i = index"
+        >
+          <div class="contenitore">
+            <div class="cerchio" [ngClass]="quality.virtue"></div>
+            {{ quality.name }}
+          </div>
+        </div>
       </div>
     </div>
+  </div>
+  <!--
+        
+      -->
+
+  <div
+    style="font-style: italic; color: gray; margin-top: 5px; margin-left: 5px"
+  >
+    {{ hero | descriptionManager | slice : 0 : 300 }}
+    <b *ngIf="(hero | descriptionManager).length > 300">...continue</b>
   </div>
 </mat-card>

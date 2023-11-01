@@ -1,41 +1,64 @@
-<mat-card (click)="onSelect(activity)" *ngIf="activity" style="margin: 10px">
-  <div style="width: 100%">
-    <div style="width: 100%; margin-top: 0px">
-      <div
-        routerLink="/activities/activity/{{ activity.id }}"
-        style="cursor: pointer; text-align: left; float: left"
-      >
-        <div style="color: blue">
-          <b>{{ activity.description }}</b>
-          <div>#{{ activity.name }}</div>
+<mat-card
+  (click)="onSelect(activity)"
+  *ngIf="activity"
+  style="border: 0px solid black; margin: 5px; padding: 5px"
+>
+  <mat-card-content
+    routerLink="/activities/activity/{{ activity.id }}"
+    style="cursor: pointer; text-align: center"
+  >
+    <div>
+      <div style="text-align: left">
+        <b>{{ activity.description }} </b>
+      </div>
+
+      <div fxLayout="row" style="width: 100%">
+        <div class="two-columns">
+          <div class="column1">
+            <!-- Contenuto della prima colonna -->
+
+            <img
+              src="{{
+                'https://enrgmsdppekwfvmbdxsl.supabase.co/storage/v1/object/public/avatars/' +
+                  activity.img_url
+              }}"
+              class="profile-pic"
+              width="100%"
+              style="border-radius: 5%"
+            />
+          </div>
+          <div class="column2">
+            <!-- Contenuto della seconda colonna -->
+
+            <div style="width: 100%">
+              <app-virtues-pie
+                [qualities]="activity.qualities"
+              ></app-virtues-pie>
+            </div>
+          </div>
         </div>
       </div>
+    </div>
 
+    <div
+      style="
+        text-align: left;
+        font-size: xx-small;
+        height: 20px;
+        white-space: nowrap;
+        margin-right: 10px;
+      "
+    >
       <div
-        style="
-          float: right;
-          color: gray;
-          font-size: xx-small;
-          font-style: italic;
-        "
+        style="color: black; cursor: pointer; display: inline"
+        *ngFor="let quality of activity.qualities; let i = index"
+        routerLink="/qualities/quality/{{ quality.id }}"
       >
-        <div>experiences: {{ activity.xps_count }}</div>
-        <span>
-          masters:
-          {{ activity.master_count }}
-        </span>
+        <div class="contenitore" *ngIf="i < 3">
+          <div class="cerchio" [ngClass]="quality.virtue"></div>
+          {{ quality.name }} ({{ quality.count }})
+        </div>
       </div>
     </div>
-  </div>
-  <br />
-  <br />
-
-  <div>
-    <div>
-      <app-qualities-list-horizontal
-        [qualities]="activity.qualities"
-        [total]="activity.xps_count"
-      ></app-qualities-list-horizontal>
-    </div>
-  </div>
+  </mat-card-content>
 </mat-card>

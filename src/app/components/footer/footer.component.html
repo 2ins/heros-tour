@@ -1,0 +1,40 @@
+<div
+  style="
+    width: 100%;
+    background-color: white;
+    border: solid grey 1px;
+    position: fixed;
+    bottom: 0;
+    z-index: 10;
+    display: flex;
+    height: 50px;
+    justify-content: space-between;
+  "
+>
+  <div class="icon-elem">
+    <button [routerLinkActive]="'active'" [routerLink]="'/home'">
+      <mat-icon>home</mat-icon>
+    </button>
+  </div>
+
+  <div class="icon-elem">
+    <button (click)="openPersonalUserPage()">
+      <mat-icon>account_circle</mat-icon>
+    </button>
+  </div>
+  <div class="icon-elem">
+    <button [routerLinkActive]="'active'" [routerLink]="'/locations'">
+      <img class="icon" src="assets/world.png" style="width: 22px" />
+    </button>
+  </div>
+  <div class="icon-elem">
+    <button [routerLinkActive]="'active'" [routerLink]="'/users'">
+      <mat-icon>people</mat-icon>
+    </button>
+  </div>
+  <div class="icon-elem">
+    <button [routerLinkActive]="'active'" [routerLink]="'/qualities'">
+      <img class="icon" src="assets/card1234.png" />
+    </button>
+  </div>
+</div>

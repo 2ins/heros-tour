@@ -32,3 +32,8 @@ div.inlineTag {
   margin: 0 auto;
   width: 100%;
 }
+
+h2 {
+  text-align: left;
+  margin-left: 25px;
+}

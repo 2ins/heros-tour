@@ -1,15 +1,8 @@
 .image-cropper {
-  width: 250px;
-  height: 250px;
   overflow: hidden;
   border-radius: 50%;
 }
-.image-cropper-xp {
-  width: 75px;
-  height: 75px;
-  overflow: hidden;
-  border-radius: 50%;
-}
+
 .profile-pic {
   display: inline;
   margin: 0 auto;
@@ -49,4 +42,41 @@ div.inlineTag {
 .gridscroll img {
   margin-right: 0px;
   border-radius: 10%;
+}
+
+.cerchio {
+  width: 7px;
+  height: 7px;
+  border-radius: 35%;
+  background-color: #000; /* Imposta il colore di sfondo del cerchio */
+  color: white;
+  margin: 5px;
+  border: 1px solid black;
+  display: inline-block; /* Imposta il cerchio come elemento inline-block */
+  vertical-align: middle; /* Allinea il cerchio verticalmente al centro del contenuto */
+}
+
+.contenitore {
+  font-size: x-small;
+  border: 0px solid black;
+  margin-right: 5px; /* Aggiunge margine a destra per separare gli elementi */
+  display: inline-flex; /* Utilizza flexbox per posizionare gli elementi sulla stessa linea */
+}
+.WI {
+  background: rgba(255, 252, 127);
+}
+.CO {
+  background: rgba(3, 138, 255);
+}
+.HU {
+  background: rgba(254, 121, 104);
+}
+.JU {
+  background: rgba(201, 242, 155);
+}
+.TE {
+  background: rgba(255, 148, 112);
+}
+.TR {
+  background: rgba(213, 184, 255);
 }

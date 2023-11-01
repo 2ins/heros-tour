@@ -5,12 +5,11 @@ import { tap } from 'rxjs/operators';
 import {
   AddActivity,
   GetActivitiesOverview,
+  GetAllActivities,
   SetSelectedActivity,
 } from '../actions/activity.action';
 import {
-  AddHero,
-  AddHero2,
-  AddNewHero,
+  AddExperienceTransaction,
   DeleteHero,
   GetHeroById,
   GetHeroes,
@@ -19,9 +18,16 @@ import {
   UpdateHero,
 } from '../actions/hero.action';
 import {
+  GetAggLocations,
+  GetAggLocationsCombo,
+  GetLocations,
+} from '../actions/locations.action';
+import {
   AddMaster,
+  GetAllMastersList,
   GetMastersOverview,
   GetMastersOverviewSearch,
+  SetAddedMaster,
   SetSelectedMaster,
 } from '../actions/master.action';
 import {
@@ -31,10 +37,17 @@ import {
   SetUserProfile,
 } from '../actions/profiles.action';
 import { GetQualities } from '../actions/quality.action';
-import { Activity } from '../model/activity';
-import { Hero, HeroQualitiesTable, HeroTable } from '../model/hero';
-import { Master, MasterActivityTable } from '../model/master';
+import { SetActivitySearch } from '../actions/search.action';
+import { Activity, ActivityTable } from '../model/activity';
+import { Hero, HeroTable } from '../model/hero';
+import {
+  LocationAggComboDbItem,
+  LocationAggDbItem,
+  LocationDbItem,
+} from '../model/location';
+import { Master, MasterActivityTable, MasterTable } from '../model/master';
 import { Quality } from '../model/quality';
+import { Search } from '../model/search';
 import { LoaderService } from '../services/loader.service';
 import { MyProfile, SupabaseService } from '../supabase.service';
 
@@ -42,15 +55,23 @@ export class HeroStateModel {
   heroes: Hero[] = [];
   selectedHero?: Hero;
   selectedMaster?: Master;
+
   qualities: Quality[] = [];
   masters: Master[] = [];
+  allMasters: Master[] = [];
   profiles: MyProfile[] = [];
   selectedProfile?: MyProfile;
   activities: Activity[] = [];
-  allActivities: Activity[] = [];
+  allActivities: ActivityTable[] = [];
   selectedActivity?: Activity;
   userProfile?: MyProfile;
   newHeroTable?: HeroTable;
+  activitySearch?: Search;
+  heroSearch?: String;
+  locations: LocationDbItem[] = [];
+  aggLocations: LocationAggDbItem[] = [];
+  aggComboLocations: LocationAggComboDbItem[] = [];
+  addedMaster?: MasterTable;
 }
 
 @State<HeroStateModel>({
@@ -67,6 +88,14 @@ export class HeroStateModel {
     allActivities: [],
     selectedActivity: undefined,
     userProfile: undefined,
+    activitySearch: undefined,
+    heroSearch: undefined,
+    locations: [],
+    aggLocations: [],
+    aggComboLocations: [],
+    addedMaster: undefined,
+    allMasters: [],
+    newHeroTable: undefined,
   },
 })
 @Injectable()
@@ -94,6 +123,10 @@ export class HeroState {
   @Selector()
   static getMasterList(state: HeroStateModel) {
     return state.masters;
+  }
+  @Selector()
+  static getAllMasterList(state: HeroStateModel) {
+    return state.allMasters;
   }
 
   @Selector()
@@ -133,6 +166,27 @@ export class HeroState {
     return state.newHeroTable;
   }
 
+  @Selector()
+  static getActivitySearch(state: HeroStateModel) {
+    return state.activitySearch;
+  }
+  @Selector()
+  static getAllLocations(state: HeroStateModel) {
+    return state.locations;
+  }
+  @Selector()
+  static getAggLocations(state: HeroStateModel) {
+    return state.aggLocations;
+  }
+  @Selector()
+  static getAggComboLocations(state: HeroStateModel) {
+    return state.aggComboLocations;
+  }
+  @Selector()
+  static getAddedMaster(state: HeroStateModel) {
+    return state.addedMaster;
+  }
+
   @Action(GetHeroes)
   getAllHeroes({ getState, setState }: StateContext<HeroStateModel>) {
     console.log('GetHeroes');
@@ -157,143 +211,27 @@ export class HeroState {
     );
   }
 
-  @Action(AddHero)
-  addHero(
+  @Action(AddExperienceTransaction)
+  AddExperienceTransaction(
     { getState, patchState, setState }: StateContext<HeroStateModel>,
-    { payload }: AddHero
+    { payload }: AddExperienceTransaction
   ) {
     this.loadingService.start();
-    const insert = this.supabase.getAddHero(payload);
-    return from(insert.select('*')).pipe(
+
+    var upsert = this.supabase.getAddExperienceTransaction(payload);
+    const state = getState();
+    return from(upsert.select('*')).pipe(
       tap(({ data: result, error, status }) => {
         this.loadingService.stop();
-        const state = getState();
-        if (result) {
-          const newHero = result[0] as Hero;
-          patchState({
-            heroes: [...state.heroes, newHero],
-            selectedHero: newHero,
-          });
-        }
-      })
-    );
-  }
-
-  /*
-  @Action(AddHero2)
-  addHero2(
-    { getState, patchState, setState }: StateContext<HeroStateModel>,
-    { payload }: AddHero2
-  ) {
-    var pippo = payload.arr;
-    payload.arr = undefined;
-    var insert;
-    console.log('START BIZ', pippo);
-
-    if (!payload.id) {
-      insert = this.supabase.getAddHeroTable(payload);
-    } else {
-      insert = this.supabase.getUpdateHeroTable(payload);
-    }
-    insert.select('id').then(({ data }) => {
-      console.log('data', data);
-      this.appoXXX(data, payload, pippo);
-    });
-  }
-
-  appoXXX(result: any, payload: HeroTable, pippo: any) {
-    var newIdHero;
-    if (result) {
-      newIdHero = result[0].id;
-      console.log();
-      if (payload.id) {
-        console.log('HO UN ID', payload.id);
-        const d = this.supabase
-          .deleteHeroQuality(payload.id)
-          .then(({ data }) => {
-            console.log('HO CANCELLATO');
-            if (pippo) {
-              console.log('INSERISCO LE QS', pippo);
-              this.insertExperienceQualities(pippo, payload.id);
-            }
-          });
-      } else {
-        console.log('NON HO UN ID', payload.id);
-        if (pippo) {
-          this.insertExperienceQualities(pippo, newIdHero);
-        }
-      }
-    }
-    return;
-  }
-  */
-
-  @Action(AddHero2)
-  addHero2(
-    { getState, patchState, setState }: StateContext<HeroStateModel>,
-    { payload }: AddHero2
-  ) {
-    this.loadingService.start();
-    var pippo = payload.arr;
-    payload.arr = undefined;
-    var insert;
-    console.log('START BIZ', pippo);
-
-    if (!payload.id) {
-      insert = this.supabase.getAddHeroTable(payload);
-    } else {
-      insert = this.supabase.getUpdateHeroTable(payload);
-    }
-    return from(insert.select('id')).pipe(
-      tap(({ data: result, error, status }) => {
-        this.loadingService.stop();
-        var newIdHero;
-        if (result) {
-          newIdHero = result[0].id;
-          if (payload.id) {
-            console.log('HO UN ID', payload.id);
-            const d = this.supabase
-              .deleteHeroQuality(payload.id)
-              .then(({ data }) => {
-                console.log('HO CANCELLATO');
-                if (pippo) {
-                  console.log('INSERISCO LE QS', pippo);
-                  this.insertExperienceQualities(pippo, payload.id);
-                }
-              });
-          } else {
-            console.log('NON HO UN ID', payload.id);
-            if (pippo) {
-              this.insertExperienceQualities(pippo, newIdHero);
-              payload.id = newIdHero;
-            }
-          }
-          const state = getState();
-          setState({
-            ...state,
-            newHeroTable: payload,
-          });
-        }
-        console.log('ENDO OF BIZ', pippo);
-      })
-    );
-  }
-
-  insertExperienceQualities(pippo: HeroQualitiesTable[], newIdHero: any) {
-    var httpCalls: any = [];
-    this.loadingService.start();
-    pippo.forEach((hq) => {
-      hq.hero_id = newIdHero;
-      httpCalls.push(from(this.supabase.insertHeroQuality(hq)));
-    });
-    forkJoin(httpCalls).subscribe((response: any) => {
-      this.loadingService.stop();
-      response.forEach((r: any) => {
-        r.data.map(function (obj: any) {
-          console.log('id', obj);
+        console.log('AddExperienceTransaction ', result);
+        var id: number = result as unknown as number;
+        payload.id = id;
+        setState({
+          ...state,
+          newHeroTable: payload,
         });
-      });
-    });
+      })
+    );
   }
 
   @Action(SetSelectedHero)
@@ -306,15 +244,6 @@ export class HeroState {
     setState({
       ...state,
       selectedHero: payload,
-    });
-  }
-
-  @Action(AddNewHero)
-  addNewHero({ getState, setState }: StateContext<HeroStateModel>) {
-    const state = getState();
-    setState({
-      ...state,
-      selectedHero: {} as Hero,
     });
   }
 
@@ -372,8 +301,11 @@ export class HeroState {
     { search }: SearchHeroes
   ) {
     this.loadingService.start();
-    console.log('aoooo');
-    const query = this.supabase.getHeroesSearch(search.search, search.arr);
+    const query = this.supabase.getHeroesSearch(
+      search.search,
+      search.arr,
+      search.location
+    );
     return from(query).pipe(
       tap(({ data: result, error, status }) => {
         this.loadingService.stop();
@@ -387,6 +319,7 @@ export class HeroState {
           ...state,
           heroes: mapped as unknown as Hero[],
           selectedHero: undefined,
+          heroSearch: search.search,
         });
       })
     );
@@ -454,6 +387,25 @@ export class HeroState {
       })
     );
   }
+  @Action(GetAllMastersList)
+  getAllMastersList({ getState, setState }: StateContext<HeroStateModel>) {
+    this.loadingService.start();
+    const query = this.supabase.getMasterOverview();
+
+    return from(query).pipe(
+      tap(({ data: result, error, status }) => {
+        this.loadingService.stop();
+        const state = getState();
+        var mapped = result?.map(function (obj) {
+          return obj.j;
+        });
+        setState({
+          ...state,
+          allMasters: mapped as Master[],
+        });
+      })
+    );
+  }
 
   @Action(GetMastersOverviewSearch)
   getMastersOverviewSearch(
@@ -486,21 +438,27 @@ export class HeroState {
     var idMaster: number = payload;
     const queryMaster = this.supabase.getMasterById(idMaster);
     const queryExperiences = this.supabase.getMasterHeroes(idMaster);
-    return forkJoin([from(queryMaster), from(queryExperiences)]).subscribe(
-      (response: any) => {
-        this.loadingService.stop();
-        var selMast = response[0].data[0] as Master;
-        var mapped = response[1].data.map(function (obj: any) {
-          return obj.j;
-        });
-        selMast.heroes = mapped;
-        const state = getState();
-        setState({
-          ...state,
-          selectedMaster: selMast,
-        });
-      }
-    );
+    const queryLocations = this.supabase.getLocationsByMaster(idMaster);
+    return forkJoin([
+      from(queryMaster),
+      from(queryExperiences),
+      from(queryLocations),
+    ]).subscribe((response: any) => {
+      this.loadingService.stop();
+      var selMast = response[0].data[0] as Master;
+      var mapped = response[1].data.map(function (obj: any) {
+        return obj.j;
+      });
+      console.log('response[2]', response[2]);
+      var locations = response[2].data as LocationAggDbItem[];
+      selMast.heroes = mapped;
+      selMast.locations = locations;
+      const state = getState();
+      setState({
+        ...state,
+        selectedMaster: selMast,
+      });
+    });
   }
 
   @Action(AddMaster)
@@ -511,6 +469,7 @@ export class HeroState {
     this.loadingService.start();
     var pippo = payload.arr;
     payload.arr = undefined;
+    payload.preselectedActivities = undefined;
     const insert = this.supabase.addMaster(payload);
     //va in inserimento o aggiornamento
     return from(insert.select('*')).pipe(
@@ -518,6 +477,7 @@ export class HeroState {
         this.loadingService.stop();
         const state = getState();
         if (result) {
+          const addedMaster = result[0];
           const newId = result[0].id;
           var httpCalls: any = [];
           //se ho gia un id dal payload allora sono in aggiornamento
@@ -539,9 +499,25 @@ export class HeroState {
               this.insertMasterActivities(pippo, httpCalls, newId);
             }
           }
+
+          setState({
+            ...state,
+            addedMaster: addedMaster,
+          });
         }
       })
     );
+  }
+
+  @Action(SetAddedMaster)
+  SetAddedMaster(
+    { getState, patchState, setState }: StateContext<HeroStateModel>,
+    { payload }: SetAddedMaster
+  ) {
+    setState({
+      ...getState(),
+      addedMaster: payload,
+    });
   }
 
   insertMasterActivities(
@@ -575,6 +551,20 @@ export class HeroState {
         const state = getState();
         if (result) {
           const newId = result[0].id;
+          payload.id = newId;
+          var added = state.addedMaster;
+          console.log('added', added);
+          if (added) {
+            if (!added.preselectedActivities) {
+              added.preselectedActivities = [];
+            }
+            var addedM = state.addedMaster;
+            added.preselectedActivities.push(payload);
+            setState({
+              ...getState(),
+              addedMaster: addedM,
+            });
+          }
         }
       })
     );
@@ -720,6 +710,90 @@ export class HeroState {
         setState({
           ...state,
           userProfile: payload,
+        });
+      })
+    );
+  }
+
+  @Action(SetActivitySearch)
+  SetActivitySearch(
+    { getState, setState }: StateContext<HeroStateModel>,
+    { payload }: SetActivitySearch
+  ) {
+    const state = getState();
+    setState({
+      ...state,
+      activitySearch: payload,
+    });
+  }
+
+  @Action(GetLocations)
+  getLocations({ getState, setState }: StateContext<HeroStateModel>) {
+    this.loadingService.start();
+
+    const query = this.supabase.getAllLocations();
+
+    return from(query).pipe(
+      tap(({ data: result, error, status }) => {
+        this.loadingService.stop();
+        const state = getState();
+        setState({
+          ...state,
+          locations: result as LocationDbItem[],
+        });
+      })
+    );
+  }
+
+  @Action(GetAggLocations)
+  GetAggLocations({ getState, setState }: StateContext<HeroStateModel>) {
+    this.loadingService.start();
+
+    const query = this.supabase.getAggLocations();
+
+    return from(query).pipe(
+      tap(({ data: result, error, status }) => {
+        this.loadingService.stop();
+        const state = getState();
+        setState({
+          ...state,
+          aggLocations: result as LocationAggDbItem[],
+        });
+      })
+    );
+  }
+
+  @Action(GetAggLocationsCombo)
+  GetAggLocationsCombo({ getState, setState }: StateContext<HeroStateModel>) {
+    this.loadingService.start();
+
+    const query = this.supabase.getAggLocationsCombo();
+
+    return from(query).pipe(
+      tap(({ data: result, error, status }) => {
+        this.loadingService.stop();
+        const state = getState();
+        setState({
+          ...state,
+          aggComboLocations: result as LocationAggComboDbItem[],
+        });
+      })
+    );
+  }
+
+  @Action(GetAllActivities)
+  GetAllActivities({ getState, setState }: StateContext<HeroStateModel>) {
+    this.loadingService.start();
+    console.log('GetAllActivities');
+    const query = this.supabase.getAllActivities();
+
+    return from(query).pipe(
+      tap(({ data: result, error, status }) => {
+        this.loadingService.stop();
+        const state = getState();
+        setState({
+          ...state,
+          allActivities: result as ActivityTable[],
         });
       })
     );

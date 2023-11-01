@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Search Results</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+      }
+      .search-bar {
+        display: flex;
+        justify-content: center;
+        padding: 10px;
+      }
+      .search-input {
+        width: 80%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+      .tabs {
+        display: flex;
+        justify-content: space-around;
+        list-style-type: none;
+        padding: 10px 0;
+        background-color: #f8f8f8;
+      }
+      .tabs li {
+        padding: 10px 20px;
+        cursor: pointer;
+      }
+      .hotel-item {
+        padding: 10px 0;
+        border-bottom: 1px solid #eee;
+      }
+      .hotel-item img {
+        width: 100px;
+        height: 100px;
+        float: left;
+        margin-right: 10px;
+      }
+      .hotel-info {
+        overflow: hidden;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="search-bar">
+      <input
+        type="text"
+        class="search-input"
+        placeholder="samurai sushi spoleto"
+        value="samurai sushi spoleto"
+      />
+    </div>
+    <ul class="tabs">
+      <li>All results</li>
+      <li>Hotels</li>
+      <li>Vacation Rentals</li>
+      <li>Restaurant</li>
+    </ul>
+    <div class="results">
+      <div class="hotel-item">
+        <img src="path/to/image1.jpg" alt="Palazzo Leti Residenza D'Epoca" />
+        <div class="hotel-info">
+          <h3>Palazzo Leti Residenza D'Epoca</h3>
+          <p>374 reviews</p>
+          <p>Via Degli Eremiti 10, Spoleto</p>
+        </div>
+      </div>
+      <!-- Replicate the above structure for other hotel items -->
+    </div>
+  </body>
+</html>

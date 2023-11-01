@@ -1,4 +1,6 @@
+import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { GetUsers, SetSelectedUser } from 'src/app/actions/profiles.action';
@@ -14,16 +16,19 @@ import { MyProfile, SupabaseService } from 'src/app/supabase.service';
 export class UsersComponent implements OnInit {
   @Select(HeroState.getUsers) users?: Observable<MyProfile[]>;
 
-  searchUser?: string;
+  searchUser: string = '';
   isMobile: boolean = false;
 
   constructor(
     private readonly supabase: SupabaseService,
     private store: Store,
-    private ms: MobileService
+    private ms: MobileService,
+    private location: Location,
+    private route: Router
   ) {}
 
   ngOnInit(): void {
+    this.store.dispatch(new GetUsers(''));
     this.isMobile = this.ms.isMobile();
     this.users?.subscribe((us) => {
       if (us) {
@@ -52,6 +57,15 @@ export class UsersComponent implements OnInit {
     if (this.searchUser) this.store.dispatch(new GetUsers(this.searchUser));
     else {
       this.store.dispatch(new GetUsers(''));
+    }
+  }
+  backClicked() {
+    this.location.back();
+
+    if (this.location.back.length === 0) {
+      this.route.navigate(['/home']);
+    } else {
+      this.location.back();
     }
   }
 }

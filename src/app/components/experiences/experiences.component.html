@@ -20,23 +20,7 @@
 </div>
 
 <div *ngIf="isMobile">
-  <mat-tab-group
-    mat-stretch-tabs="false"
-    mat-align-tabs="start"
-    [(selectedIndex)]="indxTab"
-  >
-    <mat-tab label="Experiences">
-      <div *ngFor="let hero of heroes | async">
-        <br />
-        <app-experience-item [hero]="hero"></app-experience-item>
-      </div>
-    </mat-tab>
-    <mat-tab label="Search">
-      <br />
-      <app-search-composite
-        (notifyParent)="getNotification($event)"
-        placeHolder="Search experiences"
-      ></app-search-composite>
-    </mat-tab>
-  </mat-tab-group>
+  <div *ngFor="let hero of heroes | async">
+    <app-experience-item [hero]="hero"></app-experience-item>
+  </div>
 </div>

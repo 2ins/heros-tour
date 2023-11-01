@@ -1,3 +1,4 @@
+<ng-container *ngTemplateOutlet="header"></ng-container>
 <div style="padding-top: 50px">
   <div *ngIf="selectedMaster">
     <div fxLayout="row">
@@ -54,6 +55,8 @@
     </div>
   </div>
 
+  <input type="hidden" #hidden />
+
   <textarea
     placeholder="Experience description"
     [(ngModel)]="textareaValue"
@@ -89,7 +92,7 @@
     />
   </div>
   <br />
-
+  <!--
   <div>
     <ul>
       <li *ngFor="let quality of qualities | async">
@@ -102,22 +105,68 @@
       </li>
     </ul>
   </div>
+ -->
+
+  <div class="flex-container">
+    <div
+      class="flex-item"
+      *ngFor="let el of hashMap.keys()"
+      style="
+        border: 0px solid green;
+        margin: 5px;
+        padding: 5px;
+        width: 45%;
+        border-radius: 10%;
+      "
+    >
+      <div
+        style="
+          width: 100%;
+          border: 0px solid black;
+          text-align: left;
+          border-radius: 10%;
+        "
+        [ngClass]="el"
+      >
+        <b style="width: 100%; border: 0px solid black">
+          {{ el | virtueFinder }}
+        </b>
+      </div>
+
+      <div *ngFor="let quality of hashMap.get(el)?.values()">
+        <mat-checkbox
+          (change)="updateItem(quality)"
+          [checked]="quality.selected"
+        >
+          {{ quality.name }}
+        </mat-checkbox>
+      </div>
+    </div>
+  </div>
 
   <br />
 
   <div *ngIf="isMobile">
-    <div *ngFor="let quality of qualities | async">
+    <div
+      *ngFor="let quality of qualities | async"
+      style="display: flex; justify-content: center; align-items: center"
+    >
       <div
         *ngIf="quality.selected == true"
         class="widthMobile"
         style="
           border: solid gray 1px;
           padding: 5px;
-          margin: 1px;
+          margin: 10px;
           border-radius: 5%;
-          float: left;
         "
+        [ngClass]="quality.virtue"
       >
+        <div style="text-align: center">
+          <p>
+            <b style="color: green; font-size: large">{{ quality.name }}</b>
+          </p>
+        </div>
         <img
           style="border-radius: 3%"
           width="99%"
@@ -128,9 +177,9 @@
           }}"
         />
         <div style="color: green; margin-left: 30">
-          <b>{{ quality.name }} </b>
+          <b>{{ quality.name }} </b>is:
 
-          <div style="color: gray; border-radius: 5%; background-color: bisque">
+          <div style="color: gray; border-radius: 5%">
             {{ quality.description }}
           </div>
           <br />
@@ -139,7 +188,12 @@
 
             <textarea
               placeholder="Describe how {{ quality.name }} has been good"
-              style="width: 95%; border: 1px solid gray; margin-left: 5px"
+              style="
+                width: 95%;
+                border: 1px solid gray;
+                margin-left: 5px;
+                background-color: white;
+              "
               matInput
               cdkTextareaAutosize
               #autosize="cdkTextareaAutosize"
@@ -169,6 +223,7 @@
             border-radius: 5%;
             float: left;
           "
+          [ngClass]="quality.virtue"
         >
           <img
             style="border-radius: 3%"
@@ -210,4 +265,25 @@
       </div>
     </div>
   </div>
+  <ng-template #header>
+    <div
+      style="
+        float: left;
+        width: 100%;
+        z-index: 0;
+        margin-bottom: 20px;
+        background-color: white;
+        border: solid grey 1px;
+        position: fixed;
+        z-index: 10;
+      "
+    >
+      <div style="border-bottom: 0px solid black">
+        <button mat-button (click)="confirmationBack()">
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+        @<b>{{ selectedMaster?.name }}</b>
+      </div>
+    </div>
+  </ng-template>
 </div>

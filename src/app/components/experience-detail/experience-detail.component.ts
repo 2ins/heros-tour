@@ -1,8 +1,9 @@
-import { Location } from '@angular/common';
+import { DOCUMENT, Location } from '@angular/common';
 import {
   Component,
   ElementRef,
   EventEmitter,
+  Inject,
   OnInit,
   Output,
   ViewChild,
@@ -17,6 +18,7 @@ import {
 } from 'src/app/actions/hero.action';
 import { Hero } from 'src/app/model/hero';
 import { MobileService } from 'src/app/services/mobile.service';
+import { NavigationHistoryService } from 'src/app/services/navigation-history-service.service';
 import { HeroState } from 'src/app/states/todo.state';
 import { MyProfile } from 'src/app/supabase.service';
 
@@ -45,9 +47,12 @@ export class ExperienceDetailComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private route: Router,
     private ms: MobileService,
-    private location: Location
+    private location: Location,
+    @Inject(DOCUMENT) private document: Document,
+    private navigationHistoryService: NavigationHistoryService
   ) {
     this.dt = new Date();
+    this.document.documentElement.scrollTop = 0;
   }
 
   ngOnInit(): void {
@@ -118,5 +123,30 @@ export class ExperienceDetailComponent implements OnInit {
 
   sleep(ms: number) {
     return new Promise((resolve) => setTimeout(resolve, ms));
+  }
+
+  backClicked() {
+    const history = this.navigationHistoryService.getHistory();
+    var historyLenght = history.length;
+    console.log(history);
+    console.log(historyLenght);
+
+    console.log('2', history[historyLenght - 2]);
+
+    var i = 2;
+    while (i < historyLenght) {
+      console.log('i', i);
+      var url = history[historyLenght - i];
+      if (url.includes('/addnew') || url.includes('experiences')) {
+        console.log('includd');
+        i++;
+      } else {
+        console.log('iz', url);
+        this.route.navigateByUrl(url);
+        break;
+      }
+    }
+    console.log('az', '/masters/master/' + this.hero?.master_id);
+    this.route.navigateByUrl('/masters/master/' + this.hero?.master_id);
   }
 }

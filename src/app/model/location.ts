@@ -9,3 +9,26 @@ export interface Location {
   country?: string;
   continent?: string;
 }
+
+export interface LocationDbItem {
+  frammento: string;
+  count: number;
+}
+
+export interface LocationAggDbItem {
+  stato: string;
+  level_1: string;
+  xps: number[];
+}
+
+export interface LocationAggComboDbItem {
+  stato: string;
+  total: number;
+  children: LocationAggComboJson[];
+}
+
+export interface LocationAggComboJson {
+  level_1: string;
+  xps: number[];
+  tot: number;
+}
