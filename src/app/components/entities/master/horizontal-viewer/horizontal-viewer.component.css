@@ -1,0 +1,24 @@
+/* HORIZONTAL SCROLL */
+.scroll-container {
+  overflow: auto;
+  white-space: nowrap;
+  background: transparent;
+}
+
+.gridscroll div {
+  display: inline-block;
+  text-align: left;
+}
+
+.xxx {
+  border: 1px solid gray;
+  border-radius: 15px;
+  margin: 5px;
+  padding: 5px;
+  text-align: center;
+  width: 200px;
+  background-color: #28282b;
+}
+.testodentro {
+  white-space: normal;
+}

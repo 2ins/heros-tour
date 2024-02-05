@@ -1,0 +1,66 @@
+<div class="container" style="width: 99%">
+  <div>
+    <div class="heroes">
+      <div id="parent">
+        <div>
+          <div *ngFor="let quality of qualities" class="child">
+            <div style="margin: 20px" (click)="onClick(quality)">
+              <div
+                class="inline"
+                style="
+                  border: solid gray 1px;
+                  padding: 0;
+                  width: 100%;
+                  border-radius: 5%;
+                  text-align: center;
+                  margin: 10px;
+                "
+                [ngClass]="quality.virtue"
+              >
+                <h1 style="color: green">{{ quality.name }}</h1>
+                <div style="margin-bottom: 10px">
+                  <div *ngIf="quality != undefined">
+                    <div
+                      *ngFor="let a of quality.tags"
+                      style="display: inline; color: green"
+                    >
+                      {{ a }},
+                    </div>
+                  </div>
+                </div>
+                <p style="text-align: center">
+                  <i style="color: black; font-size: xx-small">
+                    {{ quality.virtue | virtueFinder }}
+                  </i>
+                </p>
+
+                <div class="widthMobile">
+                  <img
+                    width="100%"
+                    src="{{
+            'https://enrgmsdppekwfvmbdxsl.supabase.co/storage/v1/object/public/q/' +
+              quality.id +
+              '.jpg'
+          }}"
+                  />
+                </div>
+
+                <!--
+ <br />
+                <p>{{ quality.description }}</p>
+                -->
+
+                <div class="footercard">
+                  <div class="leftlink" (click)="openDetail(quality)">
+                    show more
+                  </div>
+                  <div class="rightLink">explore</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

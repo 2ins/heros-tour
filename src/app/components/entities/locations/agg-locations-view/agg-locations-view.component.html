@@ -1,0 +1,50 @@
+<h1 style="text-align: center">Let's go explorings</h1>
+
+<mat-tab-group
+  mat-stretch-tabs
+  class="example-stretched-tabs mat-elevation-z4"
+  [(selectedIndex)]="demo1TabIndex"
+>
+  <mat-tab label="Countries">
+    <div [ngClass]="'grid-container-mobile'">
+      <div
+        class="containerbox"
+        *ngFor="let loc of locationsCombo | async; let i = index"
+        (click)="select(loc)"
+      >
+        <!---->
+        <img
+          src="{{
+            'https://enrgmsdppekwfvmbdxsl.supabase.co/storage/v1/object/public/locations/' +
+              (loc.stato | lowercase | parseLocation) +
+              '_p.jpeg'
+          }} "
+          class="sfondo-immagine"
+        />
+        <div class="testo-sovrapposto">
+          {{ loc.stato }}
+        </div>
+      </div>
+    </div>
+  </mat-tab>
+
+  <mat-tab label="places" *ngIf="selected">
+    <div>
+      <div style="margin: 10px">
+        <div (click)="doSomethingCountry(selected)" style="margin-bottom: 10px">
+          <label style="font-size: large"> All {{ selected.stato }}</label>
+          <label style="color: gray"> ({{ selected.total }})</label>
+        </div>
+        <hr />
+        <div
+          *ngFor="let item of selected.children"
+          (click)="doSomething(item)"
+          style="margin: 10px"
+        >
+          <label style="font-size: medium">{{ item.level_1 }}</label>
+          <label style="color: gray"> ({{ item.tot }})</label>
+        </div>
+      </div>
+    </div>
+  </mat-tab>
+</mat-tab-group>

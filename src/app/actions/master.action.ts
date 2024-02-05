@@ -28,6 +28,10 @@ export class AddMaster {
   static readonly type = '[Master] Add';
   constructor(public payload: MasterTable) {}
 }
+export class AddMasterTransaction {
+  static readonly type = '[Master] AddMasterTransaction';
+  constructor(public payload: MasterTable) {}
+}
 
 export class SetAddedMaster {
   static readonly type = '[Master] SetAddedMaster';

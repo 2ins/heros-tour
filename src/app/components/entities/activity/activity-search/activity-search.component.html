@@ -1,0 +1,127 @@
+<div *ngIf="!isSearchOnly">
+  <h1 style="text-align: center; padding-top: 10px">
+    Select one or more ativities
+  </h1>
+
+  <form class="example-form">
+    <button mat-button mat-dialog-close (click)="backClicked()">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <input
+      #textSearch
+      type="text"
+      placeholder="Search for an Activity"
+      [formControl]="control"
+      [(ngModel)]="searchLoc"
+      (focusout)="unFocusOnSearchControl()"
+      style="width: 70%"
+    />
+  </form>
+
+  <div style="margin: 20px; padding-bottom: 40px">
+    <div
+      *ngFor="let item of filteredStreets | async"
+      style="display: flex; height: 40px"
+    >
+      <div style="width: 90%">
+        <!--<img
+        with="40"
+        height="40"
+        src="{{
+          'https://enrgmsdppekwfvmbdxsl.supabase.co/storage/v1/object/public/avatars/' +
+            item.img_url
+        }}"
+      />-->
+        {{ item.description }}
+      </div>
+      <div style="width: 10%">
+        <mat-checkbox [checked]="item.selected" (change)="update(item)">
+        </mat-checkbox>
+      </div>
+    </div>
+    <div (click)="openDialog()">
+      <mat-icon>add_circle_outline</mat-icon>
+      add a new activity
+    </div>
+  </div>
+
+  <div
+    style="
+      width: 100%;
+      background-color: white;
+      border: solid grey 1px;
+      position: fixed;
+      bottom: 0;
+      z-index: 10;
+      display: flex;
+      height: 50px;
+      justify-content: space-between;
+      align-items: center;
+    "
+  >
+    <div
+      mat-dialog-close
+      (click)="backClicked()"
+      style="
+        margin: 5px;
+        align-items: center;
+        justify-content: center;
+        text-decoration: underline;
+      "
+    >
+      Cancel
+    </div>
+
+    <button
+      [disabled]="activityButtonDisabled"
+      (click)="save()"
+      mat-dialog-close
+      mat-raised-button
+      color="primary"
+      style="margin: 5px"
+    >
+      save
+    </button>
+  </div>
+</div>
+
+<div *ngIf="isSearchOnly">
+  <h1 style="text-align: center; padding-top: 10px">Search for an Activity</h1>
+
+  <form class="example-form">
+    <button mat-button mat-dialog-close (click)="backClicked()">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <input
+      #textSearch
+      type="text"
+      placeholder="Search for an Activity"
+      [formControl]="control"
+      [matAutocomplete]="auto"
+      [(ngModel)]="searchLoc"
+      (focusout)="unFocusOnSearchControl()"
+      style="width: 70%"
+    />
+    <mat-autocomplete
+      #auto="matAutocomplete"
+      (optionSelected)="unFocusOnSearchControl()"
+    >
+      <mat-option
+        mat-dialog-close
+        *ngFor="let item of filteredStreets | async"
+        [value]="item.name"
+        style="height: 80px"
+        (click)="goToActivityPage(item)"
+      >
+        <img
+          with="80"
+          height="80"
+          src="{{
+            'https://enrgmsdppekwfvmbdxsl.supabase.co/storage/v1/object/public/avatars/' +
+              item.img_url
+          }}"
+        />{{ item.name }}
+      </mat-option>
+    </mat-autocomplete>
+  </form>
+</div>

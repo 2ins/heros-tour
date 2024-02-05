@@ -1,0 +1,94 @@
+<mat-card *ngIf="hero" style="margin: 5px; padding: 5px" class="cardcustom">
+  <div (click)="onSelect(hero)">
+    <div fxLayout="row">
+      <div style="display: flex">
+        <div class="___image-cropper-arch">
+          <div
+            style="
+              cursor: pointer;
+              padding: 2px;
+              width: 80px;
+              height: 90px;
+              border: 0px solid black;
+            "
+          >
+            <app-experience-master-user-pic
+              *ngIf="!isMasterDetail"
+              [hero]="hero"
+            ></app-experience-master-user-pic>
+            <img
+              *ngIf="isMasterDetail"
+              class="profile-pic"
+              src="{{
+                'https://enrgmsdppekwfvmbdxsl.supabase.co/storage/v1/object/public/avatars/' +
+                  hero.profile.avatar_url
+              }}"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-left: 15px; width: 100%; padding-bottom: 5px">
+        <div>
+          <div style="text-align: left" *ngIf="!hero.json">
+            {{ hero.profile.username }}
+            <b style="text-align: left"> @{{ hero.master.name }} </b>
+          </div>
+          <div style="text-align: left" *ngIf="hero.json">
+            {{ hero.profile.username }} reported an article on
+            <b style="text-align: left">
+              {{ hero.master.name }}
+            </b>
+          </div>
+        </div>
+
+        <div style="width: 100%; font-style: italic; color: gray">
+          <div style="width: 100%; margin-top: 0px">
+            <div style="float: left">
+              <span>
+                {{ hero.location | locationCompact }} -
+                {{ hero.event_date | date : "MMM, Y" }}
+              </span>
+            </div>
+          </div>
+        </div>
+        <br />
+
+        <div style="float: left" *ngIf="!isMasterDetail">
+          <span style="display: flex">
+            <div *ngIf="hero.activities">
+              <label
+                style="color: lightblue; cursor: pointer"
+                *ngFor="let a of hero.activities"
+                >• {{ a.description }}&nbsp;
+              </label>
+            </div>
+          </span>
+          <br />
+        </div>
+
+        <!--
+
+      --></div>
+    </div>
+
+    <div
+      *ngIf="!hero.value"
+      style="font-style: italic; margin-top: 5px; margin-left: 5px"
+    >
+      {{ hero | descriptionManager | slice : 0 : 300 }}
+      <b *ngIf="(hero | descriptionManager).length > 300">...continue</b>
+      <div style="border-top: 1px solid gray; margin-top: 5px">
+        <div
+          style="cursor: pointer; display: inline"
+          *ngFor="let quality of hero.qualities; let i = index"
+        >
+          <div class="contenitore">
+            <div class="cerchio" [ngClass]="quality.virtue"></div>
+            {{ quality.name }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</mat-card>

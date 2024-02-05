@@ -1,0 +1,62 @@
+I want a json object with two fields which are: "header" and "footer".
+
+'header' includes the following list of fields:
+author name,
+the link to the author's web address,
+master name,
+article link
+article summary.
+date of experience,
+place of experience,
+duration of the experience,
+the name of the main activity the experience is talked about in the article.
+
+the content of the file you need to generate must be in English.
+
+Now I'll give you the example of the header object.
+Please note that this is just an example output and its content needs to be recalculated:
+
+"header": {
+"author_name": "Markus Fox",
+"author_link": "https://www.youtube.com/@TheStrengthClassroom",
+"master_name": "Geshe Lodoe Tsukpi",
+"article_link": "https://whatitalkaboutwhenitalkaboutcrystals.wordpress.com/2016/12/30/triten-norbutse-bonpo-monastery",
+"summary": "The article details the author's experiences at the Triten Norbutse Bonpo Monastery, exploring practices like Guru Yoga, Dzogchen, and various meditation techniques.",
+"date": "December, 2019",
+"place": "Kathmandu, Nepal",
+"duration": "6 months",
+"activity_name": "Buddhist Meditation and Dzogchen Practices"
+}
+
+----
+footer:
+
+
+footer will have an "Energies" json object inside it.
+"Energies": contains 4 elements that identify the various aspects of the human sphere. corporeal sphere (Body), emotional sentimental sphere (Heart), mental sphere (Mind), sexual sphere (Sexual). for each of these 4 give a value from 0 to 10 to indicate the impact of the experience on the author.
+Put 0 if there are no direct references or implications that indicate an impact of the experience on the sexual (Sex), mental (Mind), emotional (Heart), or bodily (Body) sphere of the author.
+
+here is the json example. Please note that this is just an example output:
+"footer":{
+    "Energies": [
+{
+"Body": 8,
+"Description": "L'esperienza ha portato a un miglioramento significativo della flessibilità fisica e del comfort nelle posture di seduta."
+},
+{
+"Heart": 7,
+"Description": ""
+},
+{
+"Mind": 9,
+"Description": ""
+},
+{
+"Sexual": 0,
+"Description": ""
+}
+]
+
+}
+
+

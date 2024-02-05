@@ -1,0 +1,88 @@
+<div class="container" style="width: 99%">
+  <div>
+    <div class="heroes">
+      <div id="parent">
+        <div>
+          <div *ngFor="let quality of qualities" class="child">
+            <div style="margin-left: 20px" (click)="onClick(quality)">
+              <div fxLayout="row">
+                <div fxFlex="40">
+                  <div
+                    [ngClass]="quality.virtue"
+                    class="inline"
+                    style="
+                      margin-bottom: 10px;
+                      float: right;
+                      width: 100%;
+                      border-radius: 5%;
+                      border: solid black 1px;
+                    "
+                  >
+                    <div>
+                      <i style="color: black; font-size: xx-small">
+                        {{ quality.virtue | virtueFinder }}
+                      </i>
+                    </div>
+                    <div style="width: 100%">
+                      <img
+                        style="
+                          cursor: pointer;
+                          max-width: 200px;
+                          border-radius: 5%;
+                          width: 95%;
+                          text-align: center;
+                        "
+                        src="{{
+                          'https://enrgmsdppekwfvmbdxsl.supabase.co/storage/v1/object/public/q/' +
+                            quality.id +
+                            '.jpg'
+                        }}"
+                      />
+                    </div>
+
+                    <div>
+                      <!--
+
+                     
+                      
+                       -->
+                      <p>
+                        <b style="color: green; font-size: small">{{
+                          quality.name
+                        }}</b>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div fxFlex="60" style="margin-left: 15px; margin-top: 0px">
+                  <!--
+
+                 
+                  <div style="font-style: italic; color: gray">
+                    {{ quality.description }}
+                  </div>
+ -->
+                  <br />
+                  <ul *ngIf="quality.tags">
+                    <b> {{ quality.name }} </b>
+                    includes:
+                    <li *ngFor="let a of quality.tags" style="color: green">
+                      {{ a }}
+                    </li>
+                  </ul>
+
+                  <div
+                    style="color: blue; font-weight: bold; padding-left: 35px"
+                    (click)="openDetail(quality)"
+                  >
+                    show more
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

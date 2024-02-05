@@ -1,0 +1,128 @@
+
+
+basando la tua risposta solo sulle informazioni fornite nell'articolo Estrai le qualità’ che ha sviluppato l’autore nell'esperienza descritta nell'articolo
+
+
+una tabella che include cinque colonne: "Quality", "Description", "Seligman_Strengths", "Citations", "Deductions" e "Alternative_Main_Strenghts". "Alternative_Deductions"
+Ogni riga della tabella rappresenta
+una qualità menzionata nell'articolo,
+con una descrizione associata,
+le forze di Seligman correlate,
+citazioni pertinenti dall'articolo, (le citazioni sono copincollate, le stesse dell'articolo, elenca tutte le citazioni possibili, e possono essere piu di una, per ogni citazione descrivi il contesto, facendo una breve sintesi di quanto successo fino ad ora che aiuta a capire il contesto della citazione ),
+una deduzione che spiega la scelta delle forze di Seligman associate a quella qualità.
+infine per ogni qualita' una lista di forze principali alternative a quelle di seligman se noti che quelle di seligman non sono sufficenti per coprire ogni parte essenziale della qualita.
+(Alternative_Main_Strenghts non possono contenere Seligman_Strengths. dentro Seligman_Strengths ci vanno le forze di seligman che descrivono il piu possibile la qualita dell'esperienza. se pensi che altre forze generiche non presenti fra quelle di seligman siano utili a specificare ancor meglio la qualita allora inserisci dentro Alternative_Main_Strenghts le forze che ritieni piu opportune.)
+e una deduzione, Alternative_Deductions, che spiega la scelta delle forze alternative che chiamiamo associate a quella qualità.
+
+insersici piu qualita' possibili nella tabella.
+inserici piu citazioni possibili nella tabella. non minimizzare il conenuto della citazione. cerca di prendere piu testo possibile. la citazione deve essere originale.
+
+Di seguito elenco delle 24 qualita di Seligman:
+Creativity
+Curiosity
+Open-mindedness
+Love of Learning
+Perspective
+Bravery
+Persistence
+Integrity
+Vitality
+Love
+Kindness
+Social Intelligence
+Citizenship
+Fairness
+Leadership
+Forgiveness and Mercy
+Humility
+Prudence
+Self-regulation
+Appreciation of Beauty
+Gratitude
+Hope
+Humor
+Spirituality
+
+scrivi tutto in inglese . le citazioni originali e descrittive.
+
+dato il contenuto della tabella adesso fornisci un oggetto json. ecco un esempio di output: "table": [
+{
+"Quality": "Flexibility",
+"Description": "Improved physical flexibility and comfort in sitting postures.",
+"Seligman_Strengths": ["Vitality"],
+"Citations": [
+{
+"citation": "I’m more flexible and can sit on the floor much more comfortably.",
+"context": "Author's reflection on physical changes after the monastery experience."
+}
+],
+"Deductions": "Physical vitality and well-being improved, evidenced by enhanced flexibility.",
+"Alternative_Main_Strenghts": ["Physical Wellness"],
+"Alternative_Deductions": "Improvement in physical health and wellness."
+},
+{
+"Quality": "Self-Regulation",
+"Description": "Ability to control physiological responses, such as hiccups.",
+"Seligman_Strengths": ["Self-regulation"],
+"Citations": [
+{
+"citation": "I can get rid of hiccups at will.",
+"context": "Mentioning a new-found control over bodily functions."
+}
+],
+"Deductions": "Demonstrates increased control over autonomic bodily functions.",
+"Alternative_Main_Strenghts": ["Bodily Awareness"],
+"Alternative_Deductions": "Heightened awareness and control of physical body responses."
+},
+{
+"Quality": "Mindfulness",
+"Description": "Enhanced awareness of mind-body connections and sensations.",
+"Seligman_Strengths": ["Open-mindedness", "Perspective"],
+"Citations": [
+{
+"citation": "I had seemingly unlocked the ability to be aware of a flow of sensations that moved in patterns around the body.",
+"context": "Describing newfound sensory awareness and its correlation with mental states."
+}
+],
+"Deductions": "Improved mindfulness, open-mindedness towards new experiences and perspectives on mind-body interaction.",
+"Alternative_Main_Strenghts": ["Sensory Awareness"],
+"Alternative_Deductions": "Increased sensitivity to and awareness of internal bodily sensations."
+}
+],
+
+importante:
+non importare nel prospetto finale informazioni che non provengono dall'articolo.
+nel prospetto ci saranno solo informazioni presenti nell'articolo
+non scrivere il contenuto del file in italiano. scrivi il contenuto del file solo in lingua inglese.
+metti piu qualita' possibili all'interno della table
+per ogni qualita metti piu citazioni possibili
+metti tutte le qualita. non omettere le qualita nel
+
+Crea un oggetto json Energies:
+energies: contiene 4 elementi che identificano i vari aspetti della sfera umana. sfera corporea(Body), sfera sentimentale emozionale(Heart), sfera mentale(Mind), sfera sessuale (Sexual). per ognuna di queste 4 dai un valore da 0 a 10 per indicare l'impatto dell'esperienza sull'autore.
+Metti 0 se non ci sono riferimenti diretti o implicazioni che indichino un impatto dell'esperienza sulla sfera sessuale(Sex), mentale (Mind), emozionale(Heart), o corporea(Body) dell'autore.
+
+ecco l'esempio di json. Nota bene che e' solo un esempio di output:
+
+"Energies": [
+{
+"Body": 8,
+"Description": "L'esperienza ha portato a un miglioramento significativo della flessibilità fisica e del comfort nelle posture di seduta."
+},
+{
+"Heart": 7,
+"Description": ""
+},
+{
+"Mind": 9,
+"Description": ""
+},
+{
+"Sexual": 0,
+"Description": ""
+}
+],
+
+
+Fornisci solamente json.
+

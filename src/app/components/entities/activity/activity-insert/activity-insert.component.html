@@ -1,0 +1,54 @@
+<app-header-simple [isDialog]="isDialog">
+  <label descript>add a new Activity</label>
+</app-header-simple>
+
+<div style="padding-top: 40px; margin-left: 20px">
+  <form class="example-form" #masterForm="ngForm">
+    <mat-form-field>
+      <mat-label>hashtag#</mat-label>
+      <input
+        [(ngModel)]="newActivity.name"
+        matInput
+        placeholder="Activity hashtag"
+        name="name"
+        #name="ngModel"
+        required
+        ngModel
+        minlength="5"
+      />
+    </mat-form-field>
+    <br />
+    <mat-form-field>
+      <mat-label>description</mat-label>
+      <input
+        matInput
+        placeholder="Vinyasa Yoga"
+        [(ngModel)]="newActivity.description"
+        name="website"
+        #name="ngModel"
+        required
+      />
+    </mat-form-field>
+    <br />
+    <img *ngIf="imageSrc" [src]="imageSrc" alt="Preview" width="300px" />
+
+    <br />
+    <div
+      [ngClass]="{
+        'div-container-uploadimg': !imageSrc
+      }"
+      (click)="handleOpenDialog()"
+    >
+      <mat-icon>add_photo_alternate</mat-icon>
+      upload an image
+    </div>
+
+    <button
+      (click)="save()"
+      [disabled]="!masterForm.form.valid"
+      mat-dialog-close
+    >
+      save
+    </button>
+  </form>
+</div>

@@ -192,6 +192,10 @@ export class SupabaseService {
   getHeroes() {
     return this.supabase.rpc('jtest_geom');
   }
+  //search heroes no parameters
+  getHeroesByQuality(q: String) {
+    return this.supabase.rpc('getexperiencesbyquality', { quality: q });
+  }
 
   //add new experience. idProfile already present
   //SUPABASE: addGeometry to add in tabel hero the geo loc corrdinates
@@ -255,7 +259,7 @@ export class SupabaseService {
   }
 
   getAddExperienceTransaction(hero: HeroTable) {
-    return this.supabase.rpc('upsert_hero_and_qualities', {
+    return this.supabase.rpc('upsert_hero_and_qualities_dev', {
       hero_data: hero,
     });
   }
@@ -308,8 +312,12 @@ export class SupabaseService {
       .eq('id', idMaster);
   }
   addMaster(master: MasterTable) {
-    const idProfile = this._session?.user.id;
     return this.supabase.from('masters').upsert(master);
+  }
+  addMasterTransaction(master: MasterTable) {
+    return this.supabase.rpc('upsert_master_and_activities', {
+      master_data: master,
+    });
   }
   addMasterActivity(ma: MasterActivityTable) {
     const idProfile = this._session?.user.id;
@@ -395,7 +403,7 @@ export class SupabaseService {
     return this.supabase.from('activities').select('*');
   }
   getLocationsByMaster(idMaster: number) {
-    return this.supabase.rpc('func_find_locations_by_master', {
+    return this.supabase.rpc('func_find_locations_geom_by_master', {
       masterid: idMaster,
     });
   }

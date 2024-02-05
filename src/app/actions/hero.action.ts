@@ -10,6 +10,11 @@ export class GetHeroes {
   static readonly type = '[Hero] Get';
 }
 
+export class GetHeroesByQuality {
+  static readonly type = '[Hero] GetByQuality';
+  constructor(public payload: String) {}
+}
+
 export class UpdateHero {
   static readonly type = '[Hero] Update';
   constructor(public payload: Hero) {}

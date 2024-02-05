@@ -1,0 +1,3 @@
+basing your answer only on the information provided in the article
+Extract the qualities that the author developed in the experience described in the article.
+provide the content as a table with two columns. name quality and description

@@ -22,7 +22,10 @@ export class FooterComponent implements OnInit {
   ngOnInit(): void {}
 
   openPersonalUserPage(): void {
-    if (this.idUser) {
+    console.log('diocane');
+    console.log(this.supabase._session?.user.id);
+    if (this.supabase._session?.user.id) {
+      this.idUser = this.supabase._session?.user.id;
       this.store.dispatch(new SetSelectedUser(this.idUser));
       this.router.navigate(['/users/user/', this.idUser]);
     }

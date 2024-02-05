@@ -1,0 +1,18 @@
+<input [(ngModel)]="prompt" type="text" />
+
+<button (click)="call()">send to gpt</button>
+<table>
+  <thead>
+    <tr>
+      <th>Quality</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let row of rows">
+      <td>{{ row.Quality }}</td>
+      <td>{{ row.Description }}</td>
+    </tr>
+  </tbody>
+</table>
+<button (click)="call2()">resend to gpt</button>

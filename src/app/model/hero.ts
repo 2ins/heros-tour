@@ -1,5 +1,6 @@
 import { MyProfile } from '../supabase.service';
 import { Activity } from './activity';
+import { Article, TableItem } from './article';
 import { Geom } from './geom';
 import { Master } from './master';
 import { Quality } from './quality';
@@ -17,6 +18,8 @@ export interface Hero {
   master_id: number;
   activities: Activity[];
   location?: string;
+  json?: Article;
+  value?: TableItem;
 }
 
 export interface HeroTable {
@@ -29,6 +32,7 @@ export interface HeroTable {
   event_date?: Date;
   formatoData?: string;
   location?: string;
+  json?: Article;
 }
 
 export interface HeroQualitiesTable {
@@ -36,3 +40,5 @@ export interface HeroQualitiesTable {
   quality_id: number;
   desc_xp?: string;
 }
+
+export type ActivityFrequency = { [activityName: string]: number };

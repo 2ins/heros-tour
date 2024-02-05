@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { ExperienceInsertOverviewComponent } from '../experience-insert-overview/experience-insert-overview.component';
+import { ActivitySearchComponent } from '../entities/activity/activity-search/activity-search.component';
+import { ExperienceInsertOverviewComponent } from '../entities/experience/experience-insert-overview/experience-insert-overview.component';
 import { SearchCompositeComponent } from '../search-composite/search-composite.component';
 
 @Component({
@@ -47,6 +48,14 @@ export class HeaderComponent implements OnInit {
     this.dialogConfig.data = { type: 'addxp' };
     const dialogRef = this.dialog.open(
       ExperienceInsertOverviewComponent,
+      this.dialogConfig
+    );
+  }
+
+  openSearchActivity() {
+    this.dialogConfig.data = { type: 'search' };
+    const dialogRef = this.dialog.open(
+      ActivitySearchComponent,
       this.dialogConfig
     );
   }

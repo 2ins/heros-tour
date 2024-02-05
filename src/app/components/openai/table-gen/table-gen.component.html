@@ -1,0 +1,15 @@
+<button (click)="click()">update table</button>
+<table>
+  <thead>
+    <tr>
+      <th>Nome Qualità</th>
+      <th>Descrizione</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let row of tableRows">
+      <td>{{ row.Quality }}</td>
+      <td>{{ row.Description }}</td>
+    </tr>
+  </tbody>
+</table>

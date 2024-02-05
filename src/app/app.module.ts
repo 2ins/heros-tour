@@ -1,29 +1,27 @@
-import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms'; // <-- NgModel lives here
-import { MatDialogModule } from '@angular/material/dialog';
-import { MatTabsModule } from '@angular/material/tabs';
-import { BrowserModule } from '@angular/platform-browser';
-
-import { ReactiveFormsModule } from '@angular/forms';
-import { MatCardModule } from '@angular/material/card';
-import { MatDividerModule } from '@angular/material/divider';
-import { MatGridListModule } from '@angular/material/grid-list';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-
 import { TextFieldModule } from '@angular/cdk/text-field';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'; // <-- NgModel lives here
 import { GoogleMapsModule } from '@angular/google-maps';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatGridListModule } from '@angular/material/grid-list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSelectModule } from '@angular/material/select';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatTabsModule } from '@angular/material/tabs';
+import { BrowserModule } from '@angular/platform-browser';
 import {
   BrowserAnimationsModule,
   NoopAnimationsModule,
@@ -52,69 +50,85 @@ import {
 
 import { LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatTableModule } from '@angular/material/table';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { ImageCropperModule } from 'node_modules/ngx-image-cropper';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthComponent } from './auth/auth.component';
-import { ActivitiesComponent } from './components/activities/activities.component';
-import { ActivityDetailComponent } from './components/activity-detail/activity-detail.component';
-import { ActivityInsertComponent } from './components/activity-insert/activity-insert.component';
-import { ActivityItemComponent } from './components/activity-item/activity-item.component';
-import { ActivityMasterInsertComponent } from './components/activity-master-insert/activity-master-insert.component';
-import { ActivityMasterSearchComponent } from './components/activity-master-search/activity-master-search.component';
-import { ActivitySearchComponent } from './components/activity-search/activity-search.component';
-import { AggLocationsViewComponent } from './components/agg-locations-view/agg-locations-view.component';
 import { AppContainerComponent } from './components/app-container/app-container.component';
-import { ContatInfoComponent } from './components/contat-info/contat-info.component';
-import { ExperienceDetailComponent } from './components/experience-detail/experience-detail.component';
-import { ExperienceInsertOverviewComponent } from './components/experience-insert-overview/experience-insert-overview.component';
-import { ExperienceInsertComponent } from './components/experience-insert/experience-insert.component';
-import { ExperienceItemComponent } from './components/experience-item/experience-item.component';
-import { ExperienceMasterUserPicComponent } from './components/experience-master-user-pic/experience-master-user-pic.component';
-import { ExperiencePicComponent } from './components/experience-pic/experience-pic.component';
-import { ExperiencesComponent } from './components/experiences/experiences.component';
+import { ActivitiesComponent } from './components/entities/activity/activities/activities.component';
+import { ActivityDetailComponent } from './components/entities/activity/activity-detail/activity-detail.component';
+import { ActivityInsertComponent } from './components/entities/activity/activity-insert/activity-insert.component';
+import { ActivityItemComponent } from './components/entities/activity/activity-item/activity-item.component';
+import { ActivityMasterInsertComponent } from './components/entities/activity/activity-master-insert/activity-master-insert.component';
+import { ActivityMasterSearchComponent } from './components/entities/activity/activity-master-search/activity-master-search.component';
+import { ActivitySearchComponent } from './components/entities/activity/activity-search/activity-search.component';
+import { ExperienceArticleComponent } from './components/entities/experience/experience-article/experience-article.component';
+import { ExperienceDetailComponent } from './components/entities/experience/experience-detail/experience-detail.component';
+import { ExperienceInsertOverviewComponent } from './components/entities/experience/experience-insert-overview/experience-insert-overview.component';
+import { ExperienceInsertComponent } from './components/entities/experience/experience-insert/experience-insert.component';
+import { ExperienceItemComponent } from './components/entities/experience/experience-item/experience-item.component';
+import { ExperienceMasterUserPicComponent } from './components/entities/experience/experience-master-user-pic/experience-master-user-pic.component';
+import { ExperiencePicComponent } from './components/entities/experience/experience-pic/experience-pic.component';
+import { ExperiencesByQualityComponent } from './components/entities/experience/experiences-by-quality/experiences-by-quality.component';
+import { ExperiencesComponent } from './components/entities/experience/experiences/experiences.component';
+import { AggLocationsViewComponent } from './components/entities/locations/agg-locations-view/agg-locations-view.component';
+import { LocationMasterItemComponent } from './components/entities/locations/location-master-item/location-master-item.component';
+import { HorizontalViewerComponent } from './components/entities/master/horizontal-viewer/horizontal-viewer.component';
+import { MasterDetailComponent } from './components/entities/master/master-detail/master-detail.component';
+import { MasterInsertComponent } from './components/entities/master/master-insert/master-insert.component';
+import { MasterItemComponent } from './components/entities/master/master-item/master-item.component';
+import { MastersComponent } from './components/entities/master/masters/masters.component';
+import { QualitiesListGridComponent } from './components/entities/quality/qualities-list-grid/qualities-list-grid.component';
+import { QualitiesListHorizontalComponent } from './components/entities/quality/qualities-list-horizontal/qualities-list-horizontal.component';
+import { QualitiesListVerticalBigComponent } from './components/entities/quality/qualities-list-vertical-big/qualities-list-vertical-big.component';
+import { QualitiesListVerticalComponent } from './components/entities/quality/qualities-list-vertical/qualities-list-vertical.component';
+import { QualitiesComponent } from './components/entities/quality/qualities/qualities.component';
+import { QualityComponent } from './components/entities/quality/quality/quality.component';
+import { UserDetailComponent } from './components/entities/user/user-detail/user-detail.component';
+import { UserItemComponent } from './components/entities/user/user-item/user-item.component';
+import { UsersComponent } from './components/entities/user/users/users.component';
+import { VirtuesPieComboComponent } from './components/entities/virtue/virtues-pie-combo/virtues-pie-combo.component';
+import { VirtuesPieComponent } from './components/entities/virtue/virtues-pie/virtues-pie.component';
+import { VirtuesComponent } from './components/entities/virtue/virtues/virtues.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { HeaderSimpleComponent } from './components/header-simple/header-simple.component';
 import { HeaderComponent } from './components/header/header.component';
+import { HomeSearchComponent } from './components/home-search/home-search.component';
 import { HomeviewComponent } from './components/homeview/homeview.component';
+import { ImageCropperUtilComponent } from './components/image-cropper-util/image-cropper-util.component';
 import { LocationsComponent } from './components/locations/locations.component';
-import { MasterDetailComponent } from './components/master-detail/master-detail.component';
-import { MasterInsertComponent } from './components/master-insert/master-insert.component';
-import { MasterItemComponent } from './components/master-item/master-item.component';
-import { MastersComponent } from './components/masters/masters.component';
 import { MenuListComponent } from './components/menu-list/menu-list.component';
+import { MongoArticleDetailComponent } from './components/mongo/mongo-article-detail/mongo-article-detail.component';
+import { MongoTestComponent } from './components/mongo/mongo-test/mongo-test.component';
+import { ChatInterfaceComponent } from './components/openai/chat-interface/chat-interface.component';
+import { TableGenComponent } from './components/openai/table-gen/table-gen.component';
 import { ProfilemanagerComponent } from './components/profilemanager/profilemanager.component';
-import { QualitiesListGridComponent } from './components/qualities-list-grid/qualities-list-grid.component';
-import { QualitiesListHorizontalComponent } from './components/qualities-list-horizontal/qualities-list-horizontal.component';
-import { QualitiesListVerticalComponent } from './components/qualities-list-vertical/qualities-list-vertical.component';
-import { QualitiesComponent } from './components/qualities/qualities.component';
-import { QualityComponent } from './components/quality/quality.component';
 import { SearchCompositeComponent } from './components/search-composite/search-composite.component';
 import { SpinnerComponent } from './components/spinner/spinner.component';
 import { TestinoComponent } from './components/testino/testino.component';
-import { UserDetailComponent } from './components/user-detail/user-detail.component';
-import { UserItemComponent } from './components/user-item/user-item.component';
-import { UsersComponent } from './components/users/users.component';
-import { VirtuesPieComboComponent } from './components/virtues-pie-combo/virtues-pie-combo.component';
-import { VirtuesPieComponent } from './components/virtues-pie/virtues-pie.component';
-import { VirtuesComponent } from './components/virtues/virtues.component';
 import { HoverDirective } from './customdirectives/hover.directive';
 import { SetBackGroundDirective } from './customdirectives/setbackground.directive';
 import { ErrorComponent } from './error/error.component';
 import { PercentageQualityPipe } from './percentage-quality.pipe';
 import { DelimitPipe } from './pipes/delimit.pipe';
 import { DescriptionManagerPipe } from './pipes/description-manager.pipe';
+import { FilterByVirtuePipe } from './pipes/filter-by-virtue-pipe.pipe';
 import { LocationCompactDetailPipe } from './pipes/location-compact-detail.pipe';
 import { LocationCompactPipe } from './pipes/location-compact.pipe';
 import { NameStrenghtFinderPipe } from './pipes/name-strenght-finder.pipe';
+import { ParseLocationPipe } from './pipes/parse-location.pipe';
 import { VirtueColorFinderByStrenghtIdPipe } from './pipes/virtue-color-finder-by-strenght-id.pipe';
 import { VirtueColorFinderPipe } from './pipes/virtue-color-finder.pipe';
 import { VirtueFinderPipe } from './pipes/virtue-finder.pipe';
 import { ReplacePipe } from './replace-pipe.pipe';
 import { HeroState } from './states/todo.state';
 import { TestOutlineComponent } from './test-outline/test-outline.component';
+import { QualitiesAccordionListComponent } from './components/entities/quality/qualities-accordion-list/qualities-accordion-list.component';
+import { MultipleLocationsMapComponent } from './components/entities/maps/multiple-locations-map/multiple-locations-map.component';
 
 //import ChartDataLabels from 'chartjs-plugin-datalabels';
 
@@ -149,7 +163,6 @@ Chart.defaults.plugins.tooltip.enabled = false;
     LocationsComponent,
     ErrorComponent,
     QualityComponent,
-    ContatInfoComponent,
     SetBackGroundDirective,
     HoverDirective,
     AppContainerComponent,
@@ -201,6 +214,21 @@ Chart.defaults.plugins.tooltip.enabled = false;
     ActivitySearchComponent,
     ActivityMasterSearchComponent,
     TestOutlineComponent,
+    QualitiesListVerticalBigComponent,
+    LocationMasterItemComponent,
+    ImageCropperUtilComponent,
+    ParseLocationPipe,
+    ExperienceArticleComponent,
+    MongoTestComponent,
+    MongoArticleDetailComponent,
+    ChatInterfaceComponent,
+    TableGenComponent,
+    ExperiencesByQualityComponent,
+    HomeSearchComponent,
+    HorizontalViewerComponent,
+    FilterByVirtuePipe,
+    QualitiesAccordionListComponent,
+    MultipleLocationsMapComponent,
   ],
   imports: [
     BrowserModule,
@@ -241,6 +269,10 @@ Chart.defaults.plugins.tooltip.enabled = false;
     BrowserModule,
     BrowserAnimationsModule,
     MatTabsModule,
+    MatSidenavModule,
+    MatExpansionModule,
+    MatTableModule,
+    MatProgressBarModule,
   ],
   providers: [
     //HeroGuardService,

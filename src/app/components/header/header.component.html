@@ -42,13 +42,13 @@
 <mat-menu #menu="matMenu">
   <div style="padding-right: 15px">
     <button
+      (click)="openAddExperience()"
       mat-menu-item
-      routerLink="/addActivity"
       style="float: right; margin-right: 10px; margin-bottom: 10px; color: blue"
     >
-      add new activity
+      add new experience
     </button>
-
+    <hr />
     <button
       routerLink="/addMaster"
       mat-menu-item
@@ -57,11 +57,11 @@
       add new master
     </button>
     <button
-      (click)="openAddExperience()"
       mat-menu-item
+      routerLink="/addActivity"
       style="float: right; margin-right: 10px; margin-bottom: 10px; color: blue"
     >
-      add new experience
+      add new activity
     </button>
   </div>
 </mat-menu>
@@ -73,15 +73,23 @@
       (click)="openDialog()"
       style="float: right; margin-right: 10px; margin-bottom: 10px; color: blue"
     >
-      explore
+      explore by cards and locations
     </button>
-
+    <hr />
     <button
       (click)="openSearchMaster()"
       mat-menu-item
       style="float: right; margin-right: 10px; margin-bottom: 10px; color: blue"
     >
-      search a master
+      search master
+    </button>
+
+    <button
+      (click)="openSearchActivity()"
+      mat-menu-item
+      style="float: right; margin-right: 10px; margin-bottom: 10px; color: blue"
+    >
+      search activity
     </button>
   </div>
 </mat-menu>

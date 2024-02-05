@@ -14,39 +14,26 @@
     />
   </div>
   <br />
-  <img
-    src="{{
-      'https://enrgmsdppekwfvmbdxsl.supabase.co/storage/v1/object/public/avatars/' +
-        myUser.avatar_url
-    }}"
-    alt="Avatar"
-    class="avatar image"
-    style="width: 300px"
-  />
+  <br />
+  <img *ngIf="imageSrc" [src]="imageSrc" alt="Preview" width="300px" />
 
-  <div class="custom-file overflow-hidden rounded-pill mb-5">
-    <br />
-    <input type="file" (change)="fileChangeEvent($event)" />
+  <br />
+  <div
+    [ngClass]="{
+      'div-container-uploadimg': !imageSrc
+    }"
+    (click)="handleOpenDialog()"
+  >
+    <mat-icon>add_photo_alternate</mat-icon>
+    upload an image
   </div>
-
+  <!--
   <div *ngIf="message" class="alert alert-success" role="alert">
     {{ message }}
   </div>
-
+  -->
   <br />
   <div>
     <button (click)="saveProfile()">Update Profile</button>
   </div>
-
-  <image-cropper
-    style="max-width: 500px"
-    [imageChangedEvent]="imageChangedEvent"
-    [maintainAspectRatio]="true"
-    [aspectRatio]="1"
-    format="png"
-    (imageCropped)="imageCropped($event)"
-    (imageLoaded)="imageLoaded()"
-    (cropperReady)="cropperReady()"
-    (loadImageFailed)="loadImageFailed()"
-  ></image-cropper>
 </div>

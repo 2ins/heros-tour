@@ -1,0 +1,26 @@
+.image-cropper {
+  width: 300px;
+  height: 300px;
+  overflow: hidden;
+  border-radius: 50%;
+  border: solid black 1px;
+}
+
+.WI {
+  background: #fffc7f;
+}
+.CO {
+  background: #038aff;
+}
+.HU {
+  background: #fe7968;
+}
+.JU {
+  background: #c9f29b;
+}
+.TE {
+  background: #ff9470;
+}
+.TR {
+  background: #d5b8ff;
+}

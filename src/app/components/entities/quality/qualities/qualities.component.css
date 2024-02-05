@@ -1,0 +1,54 @@
+#innerbox {
+  width: 250px; /* or whatever width you want. */
+  max-width: 250px; /* or whatever width you want. */
+  display: inline-block;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+}
+
+div.inline {
+  float: left;
+
+  text-align: center;
+  border-radius: 5%;
+}
+.clearBoth {
+  clear: both;
+}
+
+.grid-container-mobile-v {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 45% 45%;
+  align-content: start;
+  justify-content: center; /* Aggiunto per centrare le colonne */
+}
+.containerbox-v {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  padding-top: 100%;
+  overflow: hidden;
+  border: 3px solid white;
+
+  border-radius: 15%;
+}
+
+.testo-sovrapposto-v {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0);
+  color: black;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+}

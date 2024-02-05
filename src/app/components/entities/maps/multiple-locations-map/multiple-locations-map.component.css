@@ -1,0 +1,6 @@
+.google-map {
+  width: 100%;
+  height: calc(
+    50vw
+  ); /* Calcola l'altezza come il 50% della larghezza della viewport */
+}

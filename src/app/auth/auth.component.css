@@ -1,0 +1,14 @@
+.form-widget .form-row {
+  display: flex;
+  align-items: center; /* Allinea verticalmente i campi */
+  justify-content: space-between; /* Distribuisce lo spazio tra gli elementi */
+}
+
+.form-widget .inputField {
+  flex-grow: 1; /* Occupa lo spazio disponibile */
+  margin-right: 10px; /* Distanza tra l'input e il bottone */
+}
+
+.form-widget .button {
+  white-space: nowrap; /* Evita a testo di andare a capo */
+}

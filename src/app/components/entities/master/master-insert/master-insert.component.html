@@ -1,0 +1,78 @@
+<app-header-simple> <label descript>add a new Master</label></app-header-simple>
+
+<div style="padding-top: 40px; margin-bottom: 40px">
+  <div style="margin: 40px">
+    <form class="example-form" #masterForm="ngForm">
+      <mat-form-field>
+        <mat-label>Name</mat-label>
+        <input
+          [(ngModel)]="newMaster.name"
+          matInput
+          placeholder="Master"
+          name="name"
+          #name="ngModel"
+          required
+          ngModel
+          minlength="5"
+        />
+      </mat-form-field>
+      <br />
+      <mat-form-field>
+        <mat-label>website</mat-label>
+        <input
+          matInput
+          placeholder="Ex. It makes me feel..."
+          [(ngModel)]="newMaster.website"
+          name="website"
+          #name="ngModel"
+          required
+          pattern="^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$"
+        />
+      </mat-form-field>
+      <br />
+    </form>
+    <mat-chip-list>
+      <mat-chip
+        style="color: blue; border: 1px solid blue"
+        *ngFor="let acti of newMaster.preselectedActivities"
+      >
+        {{ acti.description }}</mat-chip
+      >
+    </mat-chip-list>
+    <br />
+    <br />
+    <button (click)="open('SEARCH')" mat-raised-button color="primary">
+      choose activities
+    </button>
+  </div>
+
+  <div
+    class="custom-file overflow-hidden rounded-pill mb-5 horizontal-center-container"
+  >
+    <img *ngIf="imageSrc" [src]="imageSrc" alt="Preview" width="300px" />
+
+    <div
+      [ngClass]="{
+        'div-container-uploadimg': !imageSrc
+      }"
+      (click)="handleOpenDialog()"
+    >
+      <mat-icon>add_photo_alternate</mat-icon>
+      upload an image
+    </div>
+    <div *ngIf="message" class="alert alert-success" role="alert">
+      {{ message }}
+    </div>
+
+    <br />
+    <button
+      (click)="save()"
+      style="margin: 10px"
+      [disabled]="!masterForm.form.valid"
+      mat-raised-button
+      color="primary"
+    >
+      Save Master
+    </button>
+  </div>
+</div>

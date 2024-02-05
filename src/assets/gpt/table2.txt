@@ -1,0 +1,59 @@
+basing your answer only on the information provided in the article
+Extract the qualities that the author developed in the experience described in the article.
+
+creates a table that includes five columns: 
+"Quality", "Description", "Seligman_Strengths", "Citations", "Deductions", "Alternative_Main_Strenghts". "Alternative_Deductions"
+Each row of the table represents
+a quality mentioned in the article,
+with an associated description,
+the correlated Seligman forces,
+relevant quotes from the article, (the quotes are copied, the same as the article, list all the possible quotes, and there can be more than one, for each quote describe the context, giving a brief summary of what has happened so far which helps to understand the context of the quote),
+a deduction that explains Seligman's choice of forces associated with that quality.
+finally for each quality a list of main forces alternative to those of Seligman if you notice that those of Seligman are not sufficient to cover every essential part of the quality.
+(Alternative_Main_Strengths cannot contain Seligman_Strengths. Inside Seligman_Strengths there are the Seligman forces that describe the quality of the experience as much as possible. If you think that other generic forces not present among those of Seligman are useful to specify the quality even better then insert Alternative_Main_Strenghts inside the forces you deem most appropriate.)
+and a deduction, Alternative_Deductions, which explains the choice of alternative forces we call associated with that quality.
+
+insert as many qualities as possible into the table.
+insert as many citations as possible into the table. do not minimize the content of the quote. try to take in as much text as possible. the quote must be original.
+
+Below is a list of Seligman's 24 qualities:
+Creativity
+Curiosity
+Open-mindedness
+Love of Learning
+Perspective
+Bravery
+Persistence
+Integrity
+Vitality
+Love
+Kindness
+Social Intelligence
+Citizenship
+Fairness
+Leadership
+Forgiveness and Mercy
+Humility
+Prudence
+Self-regulation
+Appreciation of Beauty
+Gratitude
+Hope
+Humour
+Spirituality
+
+write everything in English. original and descriptive quotes.
+
+
+important:
+do not import information that does not come from the article into the final statement.
+in the prospectus there will only be information present in the article
+do not write the contents of the file in Italian. write the contents of the file only in English.
+put all the qualities in the table
+for each quality put as many citations as possible
+put all the qualities. do not omit qualities in the table
+
+
+here is the table format:
+| Quality | Description | Seligman\_Strengths | Citations | Deductions | Alternative\_Main\_Strenghts | Alternative\_Deductions |
+| --- | --- | --- | --- | --- | --- | --- |

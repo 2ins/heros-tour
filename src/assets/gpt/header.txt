@@ -1,0 +1,28 @@
+dato il seguente articolo
+
+generare un oggetto json che si chiama 'header' che include il seguente elenco di campi:
+nome autore,
+il link ad un indirzzo web dell'autore,
+nome master,
+link articolo
+riassunto articolo.
+data dell'esperienza,
+luogo dell'esperienza,
+durata dell'esperienza,
+il nome della principale attivita di cui si parla dell'esperienza nell'articolo.
+
+il contenuto del file che devi generare deve essere in lingua inglese.
+
+Ora ti fornisco l'esempio dell'oggetto json.
+Nota bene che e' solo un esempio di output e il suo contenuto deve essere ricalcolato
+"header": {
+"author_name": "Markus Fox",
+"author_link": "https://www.youtube.com/@TheStrengthClassroom",
+"master_name": "Geshe Lodoe Tsukpi",
+"article_link": "https://whatitalkaboutwhenitalkaboutcrystals.wordpress.com/2016/12/30/triten-norbutse-bonpo-monastery",
+"summary": "The article details the author's experiences at the Triten Norbutse Bonpo Monastery, exploring practices like Guru Yoga, Dzogchen, and various meditation techniques.",
+"date": "Not Specified",
+"place": "Kathmandu, Nepal",
+"duration": "6 months",
+"activity_name": "Buddhist Meditation and Dzogchen Practices"
+}

@@ -1,0 +1,45 @@
+<app-header></app-header>
+<div class="colonnine">
+  <img
+    src="{{
+      'https://enrgmsdppekwfvmbdxsl.supabase.co/storage/v1/object/public/avatars/logo2.png'
+    }}"
+    width="100%"
+    class="profile-pic"
+  />
+  <br />
+  <br />
+  <h2 class="appfooter">
+    InnerNautic stimulates inner awareness and facilitates the discovery of the
+    world through sharing experiences in the community.
+  </h2>
+  <br />
+
+  <div class="appcontent">
+    <div class="column small">
+      <button
+        [routerLinkActive]="'active'"
+        [routerLink]="'/qualities'"
+        class="buttonx"
+      >
+        <img src="assets/tarots.jpg" />
+      </button>
+      explore by card
+    </div>
+
+    <div class="column small">
+      <button
+        [routerLinkActive]="'active'"
+        [routerLink]="'/locations'"
+        class="buttonx"
+      >
+        <img src="assets/pngworld.jpg" />
+      </button>
+      explore by location
+    </div>
+  </div>
+  <br />
+  <br />
+
+  <app-auth *ngIf="!authenticated"></app-auth>
+</div>

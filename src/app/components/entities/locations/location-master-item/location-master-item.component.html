@@ -1,0 +1,30 @@
+<div style="margin-left: 10px; margin-top: 5px">
+  <div *ngFor="let loc of locations; let i = index">
+    <span *ngIf="showAll || i < 3">
+      <mat-icon class="mat-icon-size">location_on</mat-icon>
+      {{ loc.stato }}, {{ loc.level_1 }} ({{ loc.xps }})
+    </span>
+  </div>
+
+  <div
+    *ngIf="locations && locations.length > 3"
+    style="
+      text-align: center;
+      margin: 15px;
+      background-color: #28282b;
+      border-radius: 15px;
+      padding: 7px;
+    "
+  >
+    <div *ngIf="showAll">
+      <div style="color: white; cursor: pointer" (click)="toggleShowAll()">
+        Show less locations
+      </div>
+    </div>
+    <div *ngIf="!showAll">
+      <div style="color: white; cursor: pointer" (click)="toggleShowAll()">
+        Show more locations
+      </div>
+    </div>
+  </div>
+</div>

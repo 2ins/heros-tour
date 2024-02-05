@@ -4,7 +4,7 @@ import { Quality } from './quality';
 export interface Activity {
   id: number;
   name: string;
-  description?: string;
+  description: string;
   img_url?: string;
   count?: number;
   qualities?: Quality[];

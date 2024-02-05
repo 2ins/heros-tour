@@ -1,0 +1,108 @@
+<div style="margin: 10px">
+  <h1>{{ quality }}</h1>
+
+  <h2>Strenghts</h2>
+  <ul *ngIf="strengthsCount">
+    <li *ngFor="let entry of objectEntries(strengthsCount)">
+      {{ entry[1].strength }}: {{ entry[1].count }}
+    </li>
+  </ul>
+  <h2>Activities</h2>
+  <ul *ngIf="activitiesCount">
+    <li *ngFor="let entry of objectEntries(activitiesCount)">
+      {{ entry[1].name }}: {{ entry[1].count }}
+    </li>
+  </ul>
+  <h2>Total Experiences: {{ theExps?.length }}</h2>
+</div>
+
+<div>
+  <div>
+    <mat-accordion [multi]="false">
+      <mat-expansion-panel *ngFor="let hero of heroes | async">
+        <mat-expansion-panel-header class="custom-expansion-panel-header">
+          <mat-panel-title>
+            <div>
+              {{ hero.value?.Description }}
+            </div>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <div *ngFor="let cit of hero.value?.Citations">
+          <b>context:</b><br />{{ cit.context }} <bR /><bR /> <b>citation:</b
+          ><br />"<i>{{ cit.citation }}</i
+          >"
+        </div>
+        <br />
+
+        cards linked:
+
+        <ul>
+          <li *ngFor="let sel of hero.value?.Seligman_Strengths">
+            {{ sel }}
+          </li>
+        </ul>
+        <div fxLayout="row" (click)="open(hero)">
+          <div style="display: flex">
+            <div class="___image-cropper-arch">
+              <div
+                style="
+                  cursor: pointer;
+                  padding: 2px;
+                  width: 80px;
+                  height: 90px;
+                  border: 0px solid black;
+                "
+              >
+                <app-experience-master-user-pic
+                  [hero]="hero"
+                ></app-experience-master-user-pic>
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-left: 15px; width: 100%; padding-bottom: 5px">
+            <div>
+              <div style="text-align: left; color: black" *ngIf="!hero.json">
+                {{ hero.profile.username }}
+                <b style="text-align: left; color: black">
+                  @{{ hero.master.name }}
+                </b>
+              </div>
+              <div style="text-align: left; color: black" *ngIf="hero.json">
+                {{ hero.profile.username }} reported an article on
+                <b style="text-align: left; color: black">
+                  {{ hero.master.name }}
+                </b>
+              </div>
+            </div>
+
+            <div style="width: 100%; font-style: italic; color: gray">
+              <div style="width: 100%; margin-top: 0px">
+                <div style="float: left">
+                  <span>
+                    {{ hero.location | locationCompact }} -
+                    {{ hero.event_date | date : "MMM, Y" }}
+                  </span>
+                </div>
+              </div>
+            </div>
+            <br />
+
+            <div style="float: left">
+              <span style="display: flex">
+                <div *ngIf="hero.activities">
+                  <label
+                    style="color: blue; cursor: pointer"
+                    *ngFor="let a of hero.activities"
+                    >• {{ a.description }}&nbsp;
+                  </label>
+                </div>
+              </span>
+            </div>
+          </div>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+</div>

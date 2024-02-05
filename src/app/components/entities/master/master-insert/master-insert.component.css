@@ -1,0 +1,19 @@
+.div-container {
+  display: flex;
+  flex-direction: column; /* Imposta la direzione principale come colonna, quindi gli elementi sono disposti verticalmente */
+  align-items: center; /* Centra gli elementi orizzontalmente */
+  justify-content: center; /* Centra gli elementi verticalmente */
+  height: 300px; /* o qualsiasi altro valore */
+
+  background-color: lightgray;
+  margin: 20px;
+
+  height: 200px;
+  width: 90%;
+}
+.horizontal-center-container {
+  display: flex;
+  flex-direction: column; /* Imposta la direzione principale come colonna, quindi gli elementi sono disposti verticalmente */
+  align-items: center; /* Centra gli elementi orizzontalmente */
+  width: 100%; /* Occupa l'intera larghezza del contenitore padre */
+}

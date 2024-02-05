@@ -1,0 +1,24 @@
+Crea un oggetto json Energies:
+energies: contiene 4 elementi che identificano i vari aspetti della sfera umana. sfera corporea(Body), sfera sentimentale emozionale(Heart), sfera mentale(Mind), sfera sessuale (Sexual). per ognuna di queste 4 dai un valore da 0 a 10 per indicare l'impatto dell'esperienza sull'autore.
+Metti 0 se non ci sono riferimenti diretti o implicazioni che indichino un impatto dell'esperienza sulla sfera sessuale(Sex), mentale (Mind), emozionale(Heart), o corporea(Body) dell'autore.
+
+ecco l'esempio di json. Nota bene che e' solo un esempio di output:
+
+"Energies": [
+{
+"Body": 8,
+"Description": "L'esperienza ha portato a un miglioramento significativo della flessibilità fisica e del comfort nelle posture di seduta."
+},
+{
+"Heart": 7,
+"Description": ""
+},
+{
+"Mind": 9,
+"Description": ""
+},
+{
+"Sexual": 0,
+"Description": ""
+}
+],

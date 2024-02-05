@@ -18,7 +18,8 @@ export interface LocationDbItem {
 export interface LocationAggDbItem {
   stato: string;
   level_1: string;
-  xps: number[];
+  xps: number;
+  geom?: Geom;
 }
 
 export interface LocationAggComboDbItem {

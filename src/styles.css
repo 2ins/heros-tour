@@ -3,6 +3,8 @@
 html,
 body {
   height: 100%;
+  background-color: black;
+  color: white;
 }
 body {
   margin: 0;
@@ -33,8 +35,8 @@ body {
 }
 
 .circle-icon-actions {
-  background-color: lightgray; /* Colore dello sfondo del cerchio */
-  border: 0px solid black;
+  background-color: black; /* Colore dello sfondo del cerchio */
+  border: 0px solid white;
   border-radius: 50%; /* Rendi il bordo circolare */
 }
 .circle-icon-actions-button {
@@ -42,6 +44,7 @@ body {
   background-color: white;
   color: blue;
   border: 1px solid white;
+
   border-radius: 50%; /* Rendi il bordo circolare */
 }
 .circle-icon-actions-item {
@@ -83,4 +86,61 @@ mat-tab
   max-height: "100vh";
   height: "100%";
   width: "100%";
+}
+
+.div-container-uploadimg {
+  display: flex;
+  flex-direction: column; /* Imposta la direzione principale come colonna, quindi gli elementi sono disposti verticalmente */
+  align-items: center; /* Centra gli elementi orizzontalmente */
+  justify-content: center; /* Centra gli elementi verticalmente */
+  height: 300px; /* o qualsiasi altro valore */
+
+  background-color: lightgray;
+  margin: 20px;
+
+  height: 200px;
+  width: 90%;
+}
+
+.cerchio {
+  width: 7px;
+  height: 7px;
+  border-radius: 35%;
+  background-color: #000; /* Imposta il colore di sfondo del cerchio */
+  color: white;
+  margin: 5px;
+  border: 1px solid black;
+  display: inline-block; /* Imposta il cerchio come elemento inline-block */
+  vertical-align: middle; /* Allinea il cerchio verticalmente al centro del contenuto */
+}
+
+.contenitore {
+  font-size: x-small;
+  border: 0px solid black;
+  margin-right: 5px; /* Aggiunge margine a destra per separare gli elementi */
+  display: inline-flex; /* Utilizza flexbox per posizionare gli elementi sulla stessa linea */
+}
+
+.blackGroup {
+  background-color: #1f1f1f;
+  padding: 5px;
+  border-radius: 0px;
+  margin-top: 5px;
+}
+
+.cardcustom {
+  background-color: #1f1f1f;
+  color: white;
+  border-radius: 15%;
+  border: 1px solid white;
+}
+
+.mat-card {
+  background: black;
+  color: white;
+  border: 1px solid white;
+  border-radius: 15%;
+}
+.linkColor {
+  color: #99c3ff;
 }

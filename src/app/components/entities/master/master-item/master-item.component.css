@@ -1,0 +1,120 @@
+.image-cropper {
+  width: 130px;
+  height: 130px;
+  overflow: hidden;
+  border-radius: 15%;
+  border: 2px solid #99c3ff;
+}
+.image-cropper-xp {
+  width: 75px;
+  height: 75px;
+  overflow: hidden;
+  border-radius: 50%;
+}
+.profile-pic {
+  display: inline;
+  margin: 0 auto;
+}
+.profile-pic-height {
+  height: 100%;
+}
+.profile-pic-width {
+  width: 100%;
+}
+div.inline {
+  float: left;
+
+  text-align: center;
+}
+div.inlineTag {
+  float: left;
+  text-align: center;
+  color: blue;
+  font-size: larger;
+}
+
+/* HORIZONTAL SCROLL */
+.scroll-container {
+  overflow: auto;
+  white-space: nowrap;
+
+  background: transparent;
+  height: 100%;
+  border-radius: 15px;
+}
+
+.gridscroll {
+  display: inline-block;
+}
+
+.gridscroll div {
+  display: inline-block;
+}
+
+.gridscroll img {
+  margin-right: 0px;
+  border-radius: 10%;
+}
+
+.cerchio {
+  width: 10px; /* Imposta la larghezza desiderata per il cerchio */
+  height: 10px; /* Imposta l'altezza uguale alla larghezza per renderlo circolare */
+  /* Imposta il colore di sfondo */
+  border-radius: 35%; /* Imposta il bordo a 50% per renderlo circolare */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white; /* Imposta il colore del testo */
+
+  margin-left: 0px;
+  margin-right: 5px;
+
+  border: 1px solid black;
+}
+
+.contenitore {
+  display: flex; /* Utilizza flexbox per posizionare gli elementi sulla stessa linea */
+  align-items: center; /* Allinea verticalmente gli elementi al centro */
+  font-size: x-small;
+}
+
+.WI {
+  background: rgba(255, 252, 127);
+}
+.CO {
+  background: rgba(3, 138, 255);
+}
+.HU {
+  background: rgba(254, 121, 104);
+}
+.JU {
+  background: rgba(201, 242, 155);
+}
+.TE {
+  background: rgba(255, 148, 112);
+}
+.TR {
+  background: rgba(213, 184, 255);
+}
+
+mat-grid-list {
+  margin: -8px; /* Imposta un margine negativo per ridurre lo spazio tra le righe */
+}
+
+mat-grid-tile {
+  padding: 8px; /* Imposta il padding per mantenere uno spazio uniforme intorno ai mat-grid-tile */
+}
+
+.background-div {
+  background-size: cover; /* Imposta la dimensione dell'immagine per coprire l'intero div */
+  background-position: center; /* Imposta la posizione dell'immagine al centro del div */
+  color: white;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.centra-testo {
+  display: flex;
+  justify-content: center; /* Allinea orizzontalmente al centro */
+  align-items: center; /* Allinea verticalmente al centro */
+  border: 0px solid black;
+}

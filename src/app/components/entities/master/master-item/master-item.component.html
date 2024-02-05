@@ -1,0 +1,83 @@
+<mat-card
+  (click)="onSelect(user)"
+  *ngIf="user"
+  style="
+    border: 1px solid white;
+    height: 160px;
+    border-radius: 15px;
+    margin-bottom: 10px;
+  "
+  class="cardcustom"
+>
+  <mat-card-content>
+    <div fxLayout="row">
+      <div style="border: 0px solid black; height: 120px">
+        <div
+          routerLink="/masters/master/{{ user.id }}"
+          style="cursor: pointer; text-align: center; display: inline-block"
+        >
+          <div class="image-cropper">
+            <img
+              #mrImgElement
+              src="{{
+                'https://enrgmsdppekwfvmbdxsl.supabase.co/storage/v1/object/public/avatars/' +
+                  user.avatar_url
+              }}"
+              width="100%"
+              class="profile-pic"
+            />
+          </div>
+        </div>
+        <br />
+      </div>
+      <div style="margin-left: 10px; width: 100%; text-align: left">
+        <b style="font-size: large">{{ user.name }} </b>
+        <br />
+
+        <div
+          *ngIf="user && user.tot_xps && user.tot_xps > 0"
+          style="border-top: 1px solid gray"
+        >
+          <div *ngFor="let quality of user.qualities; let i = index">
+            <div class="contenitore" *ngIf="i < 3">
+              <div class="cerchio" [ngClass]="quality.virtue"></div>
+              {{ quality.name }} ({{ quality.count }})
+            </div>
+          </div>
+        </div>
+
+        <i style="color: gray; font-size: x-small">
+          tot experiences: ({{ user.tot_xps }})
+        </i>
+
+        <div
+          *ngIf="user && user.tot_xps && user.tot_xps > 0"
+          style="display: block"
+        ></div>
+      </div>
+    </div>
+  </mat-card-content>
+  <mat-card-footer>
+    <!-- Il contenuto del footer va qui -->
+    <span>
+      <div *ngIf="user.activities">
+        <div
+          style="
+            text-align: left;
+            font-size: small;
+            margin: 15px;
+            margin-top: 20px;
+          "
+          class="linkColor"
+        >
+          <label
+            style="cursor: pointer"
+            *ngFor="let a of user.activities"
+            routerLink="/activities/activity/{{ a.id }}"
+            >• {{ a.description }}&nbsp;
+          </label>
+        </div>
+      </div>
+    </span>
+  </mat-card-footer>
+</mat-card>

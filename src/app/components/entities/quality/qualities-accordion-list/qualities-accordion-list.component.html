@@ -1,0 +1,102 @@
+<div class="blackGroup">
+  <h2 style="text-align: left; margin-left: 25px">Strenght cards</h2>
+  <div id="xButton"></div>
+  <mat-accordion class="customAcc">
+    <div *ngFor="let q of qualities" class="customAcc">
+      <div *ngIf="(q.count * 100) / (tot_xps || 1) as appo">
+        <mat-expansion-panel *ngIf="appo >= 60 || showMore" class="customAcc">
+          <mat-expansion-panel-header class="specific-class">
+            <mat-panel-title>
+              <div>
+                <img
+                  [ngClass]="q.virtue"
+                  src="{{
+                    'https://enrgmsdppekwfvmbdxsl.supabase.co/storage/v1/object/public/q/' +
+                      q.id +
+                      '.jpg'
+                  }}"
+                  style="
+                    width: 70px;
+                    height: 70px;
+                    margin-right: 8px;
+
+                    border-radius: 15%;
+                    padding: 3px;
+                    border: 1px solid black;
+                  "
+                />
+              </div>
+              <div style="width: 100%; color: white">
+                <b>{{ q.name }}</b>
+                <br />
+
+                <div style="color: gray; font-size: small">
+                  <div *ngIf="appo >= 80">Very strong</div>
+                  <div *ngIf="appo >= 60 && appo < 80">Strong</div>
+                  <div *ngIf="appo >= 40 && appo < 60">Medium</div>
+                  <div *ngIf="appo >= 20 && appo < 40">Weak</div>
+                  <div *ngIf="appo >= 0 && appo < 20">Very weak</div>
+                </div>
+              </div>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div style="width: 100%">
+            <app-horizontal-viewer
+              [descrioptions]="q.desc_all"
+            ></app-horizontal-viewer>
+          </div>
+        </mat-expansion-panel>
+      </div>
+    </div>
+  </mat-accordion>
+
+  <div *ngIf="showMore">
+    <div class="blackGroup">
+      <h2 style="text-align: left; margin-left: 25px; margin-top: 20px">
+        Virtues Prospect
+      </h2>
+      <div
+        style="
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          border-top: 0px solid gray;
+        "
+      >
+        <div
+          style="
+            width: 90%;
+            border: 0px solid black;
+            justify-content: center;
+            margin-top: 10px;
+          "
+        >
+          <app-virtues-pie [qualities]="qualities"></app-virtues-pie>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div
+    style="
+      text-align: center;
+      margin: 15px;
+      background-color: #28282b;
+      border-radius: 15px;
+      padding: 7px;
+    "
+  >
+    <div *ngIf="showMore">
+      <!--
+
+  
+    
+     -->
+
+      <div style="cursor: pointer" (click)="showChange()">Show less cards</div>
+    </div>
+    <div *ngIf="!showMore">
+      <div style="cursor: pointer" (click)="showChange()">Show more cards</div>
+    </div>
+  </div>
+</div>

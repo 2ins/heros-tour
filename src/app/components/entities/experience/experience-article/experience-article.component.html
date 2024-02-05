@@ -1,0 +1,159 @@
+<div *ngIf="article">
+  <mat-card *ngIf="test && article.header">
+    <mat-card-header>
+      <mat-card-title>{{ article.header.author_name }}</mat-card-title>
+      <mat-card-subtitle>
+        Date: {{ article.header.date }} | Place: {{ article.header.place }}
+      </mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <b>{{ article.header.activity_name }}</b>
+      <p>{{ article.header.summary }}</p>
+      <p>
+        Author's Article:
+        <a href="{{ article.header.article_link }}" target="_blank">{{
+          article.header.article_link
+        }}</a>
+      </p>
+      <p>
+        Author's Profile:
+        <a href="{{ article.header.author_link }}" target="_blank">{{
+          article.header.author_link
+        }}</a>
+      </p>
+    </mat-card-content>
+  </mat-card>
+
+  <div style="margin: 30px">
+    <div *ngIf="article.header">
+      <p>Duration: {{ article.header.duration }}</p>
+      <p>
+        Author's Name:
+        <b>
+          {{ article.header.author_name }}
+        </b>
+      </p>
+      <p>
+        <a href="{{ article.header.article_link }}" target="_blank"
+          >Original article</a
+        >
+      </p>
+    </div>
+
+    <h2>Qualities involved</h2>
+
+    <mat-accordion>
+      <mat-expansion-panel *ngFor="let item of article.table">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            {{ item.Quality }}
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <p style="font-size: larger; font-weight: bold">
+          {{ item.Description }}
+        </p>
+
+        <div *ngFor="let cit of item.Citations">
+          <b>context:</b><br />{{ cit.context }} <bR /><bR /> <b>citation:</b
+          ><br />"<i>{{ cit.citation }}</i
+          >"
+        </div>
+        <br />
+
+        cards linked:
+
+        <ul>
+          <li *ngFor="let sel of item.Seligman_Strengths">
+            {{ sel }}
+          </li>
+        </ul>
+
+        <app-qualities-list-grid
+          [qualities]="filterQualityList(item.Seligman_Strengths)"
+        >
+        </app-qualities-list-grid>
+
+        <br />
+        <label (click)="open(item)">open</label>
+      </mat-expansion-panel>
+    </mat-accordion>
+
+    <!--
+ <br />
+   
+    <i *ngIf="article._id" style="color: gray; font-size: xx-small"
+      >doc:{{ article._id.$oid }}</i
+    >
+     -->
+  </div>
+  <mat-card *ngIf="test">
+    <mat-card-content>
+      <div style="margin: 0px">
+        <h2>resuming seligman</h2>
+        <app-qualities-list-grid [showAll]="true" [qualities]="myQs">
+        </app-qualities-list-grid>
+      </div>
+    </mat-card-content>
+  </mat-card>
+  <mat-card *ngIf="test && article.footer">
+    <mat-card-content>
+      <h2>Energies involved</h2>
+
+      <div class="footer">
+        <div class="footer-item" *ngFor="let energy of article.footer.Energies">
+          <b>
+            <span *ngIf="energy.Body && energy.Body > -1"
+              >Body: {{ energy.Body }}</span
+            >
+            <span *ngIf="energy.Heart && energy.Heart > -1"
+              >Heart: {{ energy.Heart }}</span
+            >
+            <span *ngIf="energy.Mind && energy.Mind > -1"
+              >Mind: {{ energy.Mind }}</span
+            >
+            <span *ngIf="energy.Sexual && energy.Sexual > -1"
+              >Sexual: {{ energy.Sexual }}</span
+            >
+          </b>
+        </div>
+      </div>
+
+      <!--
+    <mat-accordion>
+      <mat-expansion-panel *ngFor="let energy of article.footer.Energies">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <b>
+              <span *ngIf="energy.Body && energy.Body > -1"
+                >Body: {{ energy.Body }}</span
+              >
+              <span *ngIf="energy.Heart && energy.Heart > -1"
+                >Heart: {{ energy.Heart }}</span
+              >
+              <span *ngIf="energy.Mind && energy.Mind > -1"
+                >Mind: {{ energy.Mind }}</span
+              >
+              <span *ngIf="energy.Sexual && energy.Sexual > -1"
+                >Sexual: {{ energy.Sexual }}</span
+              >
+            </b>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <div style="display: flex; flex-direction: column">
+          <p>{{ energy.Description }}</p>
+          <span *ngIf="energy.Body">{{ energy.Description }}</span>
+          <span *ngIf="energy.Heart"> {{ energy.Description }}</span>
+          <span *ngIf="energy.Mind"> {{ energy.Description }}</span>
+          <span *ngIf="energy.Sexual && energy.Sexual > -1">
+            {{ energy.Description }}</span
+          >
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+    -->
+    </mat-card-content>
+  </mat-card>
+</div>

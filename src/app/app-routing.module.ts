@@ -1,30 +1,37 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ActivitiesComponent } from './components/activities/activities.component';
-import { ActivityDetailComponent } from './components/activity-detail/activity-detail.component';
-import { ActivityInsertComponent } from './components/activity-insert/activity-insert.component';
-import { ActivityMasterInsertComponent } from './components/activity-master-insert/activity-master-insert.component';
-import { AggLocationsViewComponent } from './components/agg-locations-view/agg-locations-view.component';
-import { ExperienceDetailComponent } from './components/experience-detail/experience-detail.component';
-import { ExperienceInsertOverviewComponent } from './components/experience-insert-overview/experience-insert-overview.component';
-import { ExperienceInsertComponent } from './components/experience-insert/experience-insert.component';
-import { ExperiencesComponent } from './components/experiences/experiences.component';
+import { ActivitiesComponent } from './components/entities/activity/activities/activities.component';
+import { ActivityDetailComponent } from './components/entities/activity/activity-detail/activity-detail.component';
+import { ActivityInsertComponent } from './components/entities/activity/activity-insert/activity-insert.component';
+import { ActivityMasterInsertComponent } from './components/entities/activity/activity-master-insert/activity-master-insert.component';
+import { ExperienceDetailComponent } from './components/entities/experience/experience-detail/experience-detail.component';
+import { ExperienceInsertOverviewComponent } from './components/entities/experience/experience-insert-overview/experience-insert-overview.component';
+import { ExperienceInsertComponent } from './components/entities/experience/experience-insert/experience-insert.component';
+import { ExperiencesByQualityComponent } from './components/entities/experience/experiences-by-quality/experiences-by-quality.component';
+import { ExperiencesComponent } from './components/entities/experience/experiences/experiences.component';
+import { AggLocationsViewComponent } from './components/entities/locations/agg-locations-view/agg-locations-view.component';
+import { MasterDetailComponent } from './components/entities/master/master-detail/master-detail.component';
+import { MasterInsertComponent } from './components/entities/master/master-insert/master-insert.component';
+import { MastersComponent } from './components/entities/master/masters/masters.component';
+import { QualitiesComponent } from './components/entities/quality/qualities/qualities.component';
+import { QualityComponent } from './components/entities/quality/quality/quality.component';
+import { UserDetailComponent } from './components/entities/user/user-detail/user-detail.component';
+import { UsersComponent } from './components/entities/user/users/users.component';
+import { VirtuesComponent } from './components/entities/virtue/virtues/virtues.component';
+import { HomeSearchComponent } from './components/home-search/home-search.component';
 import { HomeviewComponent } from './components/homeview/homeview.component';
-import { MasterDetailComponent } from './components/master-detail/master-detail.component';
-import { MasterInsertComponent } from './components/master-insert/master-insert.component';
-import { MastersComponent } from './components/masters/masters.component';
+import { MongoArticleDetailComponent } from './components/mongo/mongo-article-detail/mongo-article-detail.component';
+import { MongoTestComponent } from './components/mongo/mongo-test/mongo-test.component';
+import { ChatInterfaceComponent } from './components/openai/chat-interface/chat-interface.component';
 import { ProfilemanagerComponent } from './components/profilemanager/profilemanager.component';
-import { QualitiesComponent } from './components/qualities/qualities.component';
-import { QualityComponent } from './components/quality/quality.component';
-import { UserDetailComponent } from './components/user-detail/user-detail.component';
-import { UsersComponent } from './components/users/users.component';
-import { VirtuesComponent } from './components/virtues/virtues.component';
 import { ErrorComponent } from './error/error.component';
 import { TestOutlineComponent } from './test-outline/test-outline.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'home', pathMatch: 'full' },
-
+  { path: '', redirectTo: 'homesearch', pathMatch: 'full' },
+  { path: 'mongo', component: MongoTestComponent },
+  { path: 'mongoArticleDetail', component: MongoArticleDetailComponent },
+  { path: 'chatgpt', component: ChatInterfaceComponent },
   { path: 'qualities', component: QualitiesComponent },
   { path: 'virtues', component: VirtuesComponent },
   { path: 'masters', component: MastersComponent },
@@ -36,6 +43,7 @@ const routes: Routes = [
   { path: 'addMaster', component: MasterInsertComponent },
   { path: 'addActivity', component: ActivityInsertComponent },
   { path: 'home', component: HomeviewComponent },
+  { path: 'homesearch', component: HomeSearchComponent },
   { path: 'testout', component: TestOutlineComponent },
   {
     path: 'addExperienceOverview',
@@ -74,6 +82,16 @@ const routes: Routes = [
         path: 'experience/:id',
         component: ExperienceDetailComponent,
         data: { showHeader: false },
+      },
+    ],
+  },
+  {
+    path: 'experiencesByQuality',
+    children: [
+      {
+        path: 'quality/:q',
+        component: ExperiencesByQualityComponent,
+        data: { byQuality: true },
       },
     ],
   },

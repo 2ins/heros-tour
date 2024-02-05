@@ -1,0 +1,44 @@
+<div fxLayout="row" *ngIf="!isMobile">
+  <div fxFlex.gt-sm="75%">
+    <p>
+      <b style="font-size: x-large">Masters</b
+      ><button
+        [routerLinkActive]="'active'"
+        routerLink="/addMaster"
+        mat-stroked-button
+        style="
+          margin-right: 10px;
+          margin-bottom: 10px;
+          color: blue;
+          float: right;
+        "
+      >
+        Add New Master
+      </button>
+    </p>
+    <br />
+    <div style="width: 99%">
+      <mat-grid-list cols="2" rowHeight="200px">
+        <ng-container *ngFor="let master of masters | async">
+          <mat-grid-tile colspan="1">
+            <div style="width: 100%; height: 100%; margin: 5px">
+              <app-master-item [user]="master"></app-master-item>
+            </div>
+          </mat-grid-tile>
+        </ng-container>
+      </mat-grid-list>
+    </div>
+  </div>
+  <div fxFlex.gt-sm="25%">
+    <app-search-composite
+      placeHolder="Search masters"
+      (notifyParent)="getNotification($event)"
+    ></app-search-composite>
+  </div>
+</div>
+
+<div *ngIf="isMobile">
+  <div *ngFor="let master of masters | async">
+    <app-master-item [user]="master"> </app-master-item>
+  </div>
+</div>

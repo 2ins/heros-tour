@@ -8,11 +8,13 @@ import {
   GetAllActivities,
   SetSelectedActivity,
 } from '../actions/activity.action';
+import { AddFile, CleanFile } from '../actions/file.action';
 import {
   AddExperienceTransaction,
   DeleteHero,
   GetHeroById,
   GetHeroes,
+  GetHeroesByQuality,
   SearchHeroes,
   SetSelectedHero,
   UpdateHero,
@@ -23,7 +25,7 @@ import {
   GetLocations,
 } from '../actions/locations.action';
 import {
-  AddMaster,
+  AddMasterTransaction,
   GetAllMastersList,
   GetMastersOverview,
   GetMastersOverviewSearch,
@@ -40,12 +42,13 @@ import { GetQualities } from '../actions/quality.action';
 import { SetActivitySearch } from '../actions/search.action';
 import { Activity, ActivityTable } from '../model/activity';
 import { Hero, HeroTable } from '../model/hero';
+import { ImageHelp } from '../model/image';
 import {
   LocationAggComboDbItem,
   LocationAggDbItem,
   LocationDbItem,
 } from '../model/location';
-import { Master, MasterActivityTable, MasterTable } from '../model/master';
+import { Master, MasterTable } from '../model/master';
 import { Quality } from '../model/quality';
 import { Search } from '../model/search';
 import { LoaderService } from '../services/loader.service';
@@ -72,6 +75,7 @@ export class HeroStateModel {
   aggLocations: LocationAggDbItem[] = [];
   aggComboLocations: LocationAggComboDbItem[] = [];
   addedMaster?: MasterTable;
+  imageFile?: ImageHelp;
 }
 
 @State<HeroStateModel>({
@@ -96,6 +100,7 @@ export class HeroStateModel {
     addedMaster: undefined,
     allMasters: [],
     newHeroTable: undefined,
+    imageFile: undefined,
   },
 })
 @Injectable()
@@ -186,12 +191,43 @@ export class HeroState {
   static getAddedMaster(state: HeroStateModel) {
     return state.addedMaster;
   }
+  @Selector()
+  static getImageFile(state: HeroStateModel) {
+    return state.imageFile;
+  }
 
   @Action(GetHeroes)
   getAllHeroes({ getState, setState }: StateContext<HeroStateModel>) {
     console.log('GetHeroes');
     this.loadingService.start();
     const query = this.supabase.getHeroes();
+    return from(query).pipe(
+      tap(({ data: result, error, status }) => {
+        console.log(result);
+        this.loadingService.stop();
+
+        var mapped = result?.map(function (obj) {
+          return obj.j;
+        });
+
+        console.log(mapped);
+        const state = getState();
+        setState({
+          ...state,
+          heroes: mapped as unknown as Hero[],
+        });
+      })
+    );
+  }
+
+  @Action(GetHeroesByQuality)
+  getAllHeroesByQuality(
+    { getState, setState }: StateContext<HeroStateModel>,
+    { payload }: GetHeroesByQuality
+  ) {
+    console.log('GetHeroesByQuality');
+    this.loadingService.start();
+    const query = this.supabase.getHeroesByQuality(payload);
     return from(query).pipe(
       tap(({ data: result, error, status }) => {
         console.log(result);
@@ -461,50 +497,24 @@ export class HeroState {
     });
   }
 
-  @Action(AddMaster)
-  AddMaster(
+  @Action(AddMasterTransaction)
+  AddMasterTransaction(
     { getState, patchState, setState }: StateContext<HeroStateModel>,
-    { payload }: AddMaster
+    { payload }: AddMasterTransaction
   ) {
-    this.loadingService.start();
-    var pippo = payload.arr;
-    payload.arr = undefined;
-    payload.preselectedActivities = undefined;
-    const insert = this.supabase.addMaster(payload);
+    const upsert = this.supabase.addMasterTransaction(payload);
     //va in inserimento o aggiornamento
-    return from(insert.select('*')).pipe(
+
+    return from(upsert.select('*')).pipe(
       tap(({ data: result, error, status }) => {
         this.loadingService.stop();
-        const state = getState();
-        if (result) {
-          const addedMaster = result[0];
-          const newId = result[0].id;
-          var httpCalls: any = [];
-          //se ho gia un id dal payload allora sono in aggiornamento
-          //vado a cancellare tutte le attivita legate al masteer dalla tabella masterActivities
-          if (payload.id) {
-            console.log('HO UN ID, ', payload.id);
-            const d = this.supabase
-              .deleteMasterActivity(payload.id)
-              .then(({ data }) => {
-                //inserire nella tabella masterActivities
-                if (pippo) {
-                  this.insertMasterActivities(pippo, httpCalls, newId);
-                }
-              });
-          } else {
-            console.log('NON HO UN ID, ', payload.id);
-            //altrimenti inserisco senza scancellare
-            if (pippo) {
-              this.insertMasterActivities(pippo, httpCalls, newId);
-            }
-          }
-
-          setState({
-            ...state,
-            addedMaster: addedMaster,
-          });
-        }
+        console.log('AddExperienceTransaction ', result);
+        var id: number = result as unknown as number;
+        payload.id = id;
+        setState({
+          ...getState(),
+          addedMaster: payload,
+        });
       })
     );
   }
@@ -517,24 +527,6 @@ export class HeroState {
     setState({
       ...getState(),
       addedMaster: payload,
-    });
-  }
-
-  insertMasterActivities(
-    pippo: MasterActivityTable[],
-    httpCalls: any,
-    newId: any
-  ) {
-    this.loadingService.start();
-    pippo.forEach((hq) => {
-      hq.id_master = newId;
-      httpCalls.push(from(this.supabase.addMasterActivity(hq)));
-    });
-    forkJoin(httpCalls).subscribe((response: any) => {
-      this.loadingService.stop();
-      response.forEach((r: any) => {
-        r.data.map(function (obj: any) {});
-      });
     });
   }
 
@@ -797,5 +789,26 @@ export class HeroState {
         });
       })
     );
+  }
+
+  @Action(AddFile)
+  AddFile(
+    { getState, setState }: StateContext<HeroStateModel>,
+    { payload }: AddFile
+  ) {
+    const state = getState();
+    setState({
+      ...state,
+      imageFile: payload,
+    });
+  }
+
+  @Action(CleanFile)
+  CleanFile({ getState, setState }: StateContext<HeroStateModel>) {
+    const state = getState();
+    setState({
+      ...state,
+      imageFile: undefined,
+    });
   }
 }

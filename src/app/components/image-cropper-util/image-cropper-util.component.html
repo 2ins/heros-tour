@@ -1,0 +1,62 @@
+<div>
+  <image-cropper
+    style="width: 100%"
+    [imageChangedEvent]="imageChangedEvent"
+    [maintainAspectRatio]="true"
+    [aspectRatio]="1"
+    format="png"
+    (imageCropped)="imageCropped($event)"
+    (imageLoaded)="imageLoaded()"
+    (cropperReady)="cropperReady()"
+    (loadImageFailed)="loadImageFailed()"
+  ></image-cropper>
+  <div class="footer">
+    <div class="central">
+      <button
+        (click)="select()"
+        mat-dialog-close
+        mat-raised-button
+        color="primary"
+      >
+        select this image
+      </button>
+    </div>
+  </div>
+  <div class="footer">
+    <div class="central">
+      <img
+        *ngIf="imageSrc"
+        [src]="imageSrc"
+        alt="Preview"
+        width="300px"
+        style="border: 1px solid black; border-radius: 5%"
+      />
+    </div>
+  </div>
+
+  <input
+    type="file"
+    (change)="fileChangeEvent($event)"
+    #fileInput
+    style="display: none"
+  />
+
+  <div class="footer">
+    <div class="leftlink">
+      <div>
+        <div
+          [ngClass]="{
+            'div-container-uploadimg': !imageSrc
+          }"
+          (click)="fileInput.click()"
+        >
+          <mat-icon>add_photo_alternate</mat-icon><br />
+          upload another image
+        </div>
+      </div>
+    </div>
+    <div class="rightLink">
+      <label mat-dialog-close>cancel</label>
+    </div>
+  </div>
+</div>
