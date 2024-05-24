@@ -99,4 +99,14 @@ export class ExperienceArticleComponent implements OnInit {
   open(q: TableItem) {
     this.route.navigateByUrl('/experiencesByQuality/quality/' + q.Quality);
   }
+  //popoup utils
+  isPopupOpen = false;
+
+  openPopup() {
+    this.isPopupOpen = true;
+  }
+
+  closePopup() {
+    this.isPopupOpen = false;
+  }
 }

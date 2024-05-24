@@ -1,0 +1,26 @@
+/* Sovrascrivi l'altezza del header dell'accordion */
+.mat-expansion-panel-header {
+  height: 96px; /* Imposta l'altezza desiderata */
+  min-height: 96px; /* Importante per sovrascrivere l'altezza minima predefinita */
+  padding: 1 1;
+}
+
+.mat-expansion-panel {
+  border-bottom: solid 1px gray;
+}
+
+::ng-deep .specific-class > .mat-expansion-indicator:after {
+  color: white;
+}
+
+/* Sovrascrivi l'altezza della freccia (se necessario) */
+.mat-expansion-indicator::after {
+  top: calc(
+    50% - 6px
+  ); /* Centra la freccia verticalmente, adatta questo valore in base all'altezza del header */
+}
+
+.customAcc {
+  background-color: #1f1f1f;
+  color: white;
+}

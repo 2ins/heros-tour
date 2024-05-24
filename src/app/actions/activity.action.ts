@@ -13,7 +13,7 @@ export class GetAllActivities {
 }
 export class SetSelectedActivity {
   static readonly type = '[Activity] SetSelected';
-  constructor(public payload: number) {}
+  constructor(public payload: number, public loc: string) {}
 }
 export class AddActivity {
   static readonly type = '[Activity] Add';

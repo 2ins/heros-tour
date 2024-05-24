@@ -1,5 +1,5 @@
 <app-header></app-header>
-<div style="padding-top: 50px">
+<div [ngStyle]="isMobile ? { 'padding-top': '50px' } : {}">
   <div *ngIf="sea as x">
     <div style="margin: 5px">
       <mat-chip-list>
@@ -26,6 +26,8 @@
         </mat-chip>
       </mat-chip-list>
     </div>
+    <!--
+
 
     <div
       style="margin: 5px"
@@ -42,29 +44,36 @@
         autofocus="false"
       />
       <div class="icon-right" (click)="openDialog()">
-        <!-- Icona a destra -->
+        
         <div>
           <mat-icon class="circle-icon">search</mat-icon>
         </div>
       </div>
     </div>
   </div>
+-->
 
-  <mat-tab-group
-    mat-stretch-tabs
-    class="example-stretched-tabs mat-elevation-z4"
-    selectedIndex="1"
-  >
-    <mat-tab label="Activities ({{ (activities | async)?.length }})">
-      <app-activities></app-activities>
-    </mat-tab>
-    <mat-tab label="Masters ({{ (masters | async)?.length }})">
-      <app-masters></app-masters>
-    </mat-tab>
-    <!--
+    <mat-tab-group
+      mat-stretch-tabs
+      class="example-stretched-tabs mat-elevation-z4"
+      selectedIndex="0"
+      style="color: white"
+    >
+      <mat-tab
+        label="Activities ({{ (activities | async)?.length }})"
+        style="color: white"
+      >
+        <app-activities></app-activities>
+      </mat-tab>
+
+      <mat-tab label="Masters ({{ (masters | async)?.length }})">
+        <app-masters></app-masters>
+      </mat-tab>
+      <!--
     <mat-tab label="Experiences ({{ (heroes | async)?.length }})">
       <app-experiences></app-experiences>
     </mat-tab>
   -->
-  </mat-tab-group>
+    </mat-tab-group>
+  </div>
 </div>

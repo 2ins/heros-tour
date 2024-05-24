@@ -19,6 +19,7 @@ import {
 import { Hero } from 'src/app/model/hero';
 import { MobileService } from 'src/app/services/mobile.service';
 import { NavigationHistoryService } from 'src/app/services/navigation-history-service.service';
+import { ScrollService } from 'src/app/services/scroll.service';
 import { HeroState } from 'src/app/states/todo.state';
 import { MyProfile } from 'src/app/supabase.service';
 
@@ -29,6 +30,7 @@ import { MyProfile } from 'src/app/supabase.service';
 })
 export class ExperienceDetailComponent implements OnInit {
   @ViewChild('createdAt') createdAt?: ElementRef;
+  @ViewChild('scrollTargetx') scrollTarget!: ElementRef;
 
   @Select(HeroState.getSelectedHero) selectedHero?: Observable<Hero>;
   @Select(HeroState.getUserProfile) currentUser?: Observable<MyProfile>;
@@ -38,6 +40,7 @@ export class ExperienceDetailComponent implements OnInit {
   editEnabled: boolean = false;
 
   experienceId?: any;
+  qidSelected?: any;
   isMobile: boolean = false;
 
   @Output() upsertHeroEvent = new EventEmitter<Hero>();
@@ -49,19 +52,39 @@ export class ExperienceDetailComponent implements OnInit {
     private ms: MobileService,
     private location: Location,
     @Inject(DOCUMENT) private document: Document,
-    private navigationHistoryService: NavigationHistoryService
+    private navigationHistoryService: NavigationHistoryService,
+    private scroller: ScrollService
   ) {
     this.dt = new Date();
     this.document.documentElement.scrollTop = 0;
   }
 
+  ngAfterViewInit() {
+    //this.scrollToElement();
+  }
+
+  scrollToElement() {
+    if (this.scrollTarget) {
+      alert(this.scrollTarget.nativeElement);
+      // this.scroller.scrollToElement(this.scrollTarget.nativeElement);
+      this.scroller.scrollToElementById('scrollId');
+    }
+  }
+
   ngOnInit(): void {
-    this.activatedRoute.paramMap.subscribe((map) => {
-      this.experienceId = map.get('id') as string;
+    // Subscription
+    this.activatedRoute.paramMap.subscribe((paramMap) => {
+      this.experienceId = paramMap.get('id') as string; // Ensure 'hero_id' matches your actual parameter name
       console.log('1: experienceId?:' + this.experienceId);
-      if (this.experienceId) {
-        this.store.dispatch(new GetHeroById(this.experienceId));
-      }
+
+      this.activatedRoute.queryParamMap.subscribe((queryParamMap) => {
+        this.qidSelected = queryParamMap.get('qid') as string;
+        console.log('2: qidSelected?:' + this.qidSelected);
+
+        if (this.experienceId) {
+          this.store.dispatch(new GetHeroById(this.experienceId));
+        }
+      });
     });
     this.isMobile = this.ms.isMobile();
 

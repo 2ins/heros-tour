@@ -1,64 +1,110 @@
 <mat-card
   (click)="onSelect(activity)"
   *ngIf="activity"
-  style="border: 0px solid black; margin: 5px; padding: 5px"
+  style="
+    border: 0px solid gray;
+    height: 160px;
+    border-radius: 15px;
+    margin-bottom: 10px;
+    background-color: #1f1f1f;
+  "
+  class="cardcustom"
 >
-  <mat-card-content
-    routerLink="/activities/activity/{{ activity.id }}"
-    style="cursor: pointer; text-align: center"
-  >
-    <div>
-      <div style="text-align: left">
-        <b>{{ activity.description }} </b>
-      </div>
-
-      <div fxLayout="row" style="width: 100%">
-        <div class="two-columns">
-          <div class="column1">
-            <!-- Contenuto della prima colonna -->
-
+  <mat-card-content>
+    <div fxLayout="row">
+      <div style="border: 0px solid black; height: 120px">
+        <div
+          routerLink="/activities/activity/{{ activity.id }}"
+          style="cursor: pointer; text-align: center; display: inline-block"
+        >
+          <div class="image-cropper">
             <img
+              #mrImgElement
               src="{{
                 'https://enrgmsdppekwfvmbdxsl.supabase.co/storage/v1/object/public/avatars/' +
                   activity.img_url
               }}"
-              class="profile-pic"
               width="100%"
-              style="border-radius: 5%"
+              class="profile-pic"
             />
           </div>
-          <div class="column2">
-            <!-- Contenuto della seconda colonna -->
+        </div>
+        <br />
+      </div>
+      <div style="margin-left: 10px; width: 100%; text-align: left">
+        <b style="font-size: large">{{ activity.description }} </b>
+        <br />
 
-            <div style="width: 100%">
-              <app-virtues-pie
-                [qualities]="activity.qualities"
-              ></app-virtues-pie>
+        <div
+          *ngIf="activity && activity.xps_count && activity.xps_count > 0"
+          style="border-top: 1px solid gray"
+        >
+          <div
+            *ngIf="
+              theSearch?.arr
+                | findQualityFromSearch : activity.qualities as calcolated
+            "
+          >
+            <div *ngFor="let quality of calcolated; let i = index">
+              <div class="contenitore" *ngIf="i < 3">
+                <div class="cerchio" [ngClass]="quality.virtue"></div>
+                <div
+                  [ngStyle]="{
+                    'text-decoration': quality.isSearch ? 'underline' : 'none'
+                  }"
+                >
+                  {{ quality.name }}
+                </div>
+
+                <div style="color: gray">
+                  - ({{
+                    quality.count | strenghtCardByXps : activity.xps_count
+                  }})
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </div>
 
-    <div
-      style="
-        text-align: left;
-        font-size: xx-small;
-        height: 20px;
-        white-space: nowrap;
-        margin-right: 10px;
-      "
-    >
-      <div
-        style="color: black; cursor: pointer; display: inline"
-        *ngFor="let quality of activity.qualities; let i = index"
-        routerLink="/qualities/quality/{{ quality.id }}"
-      >
-        <div class="contenitore" *ngIf="i < 3">
-          <div class="cerchio" [ngClass]="quality.virtue"></div>
-          {{ quality.name }} ({{ quality.count }})
-        </div>
+        <i style="color: gray; font-size: x-small">
+          global experiences: ({{ activity.xps_count }}) </i
+        ><br />
+        <i style="color: gray; font-size: x-small" *ngIf="theSearch?.location">
+          masters in {{ theSearch?.location }}: ({{
+            activity.masters_search_count
+          }})
+        </i>
+
+        <div
+          *ngIf="activity && activity.xps_count && activity.xps_count > 0"
+          style="display: block"
+        ></div>
       </div>
     </div>
   </mat-card-content>
+  <mat-card-footer>
+    <!-- Il contenuto del footer va qui -->
+    <!--
+    <span>
+      <div *ngIf="user.activities">
+        <div
+          style="
+            text-align: left;
+            font-size: small;
+            margin: 15px;
+            margin-top: 20px;
+          "
+          class="linkColor"
+        >
+          <label
+            style="cursor: pointer"
+            *ngFor="let a of user.activities"
+            routerLink="/activities/activity/{{ a.id }}"
+            >• {{ a.description }}&nbsp;
+          </label>
+        </div>
+      </div>
+    </span>
+  -->
+  </mat-card-footer>
 </mat-card>

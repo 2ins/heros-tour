@@ -1,10 +1,11 @@
 <div
+  *ngIf="isMobile"
   style="
     float: left;
     width: 100%;
     z-index: 0;
     margin-bottom: 20px;
-    background-color: white;
+    background-color: black;
     border: solid grey 1px;
     position: fixed;
     z-index: 10;
@@ -16,6 +17,10 @@
         class="image-cropper"
         style="float: left; margin-left: 15px; margin-top: 10px; height: 35px"
       >
+        INNERNAUTIC
+        <!--
+
+      
         <img
           src="{{
             'https://enrgmsdppekwfvmbdxsl.supabase.co/storage/v1/object/public/avatars/logo2.png'
@@ -23,6 +28,7 @@
           width="100%"
           class="profile-pic"
         />
+        -->
       </div>
     </span>
   </div>

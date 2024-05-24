@@ -1,45 +1,226 @@
 <app-header></app-header>
-<div class="colonnine">
-  <img
-    src="{{
-      'https://enrgmsdppekwfvmbdxsl.supabase.co/storage/v1/object/public/avatars/logo2.png'
-    }}"
-    width="100%"
-    class="profile-pic"
-  />
-  <br />
-  <br />
-  <h2 class="appfooter">
-    InnerNautic stimulates inner awareness and facilitates the discovery of the
-    world through sharing experiences in the community.
-  </h2>
-  <br />
 
-  <div class="appcontent">
-    <div class="column small">
-      <button
-        [routerLinkActive]="'active'"
-        [routerLink]="'/qualities'"
-        class="buttonx"
-      >
-        <img src="assets/tarots.jpg" />
-      </button>
-      explore by card
-    </div>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>InnerNautic - Discover Your Inner World</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        line-height: 1.6;
+        color: #333;
+        background-color: black;
+      }
 
-    <div class="column small">
-      <button
-        [routerLinkActive]="'active'"
-        [routerLink]="'/locations'"
-        class="buttonx"
-      >
-        <img src="assets/pngworld.jpg" />
-      </button>
-      explore by location
-    </div>
-  </div>
-  <br />
-  <br />
+      .container {
+        max-width: 1100px;
+        margin: auto;
+        overflow: hidden;
+        padding: 0 20px;
+      }
 
+      header {
+        background: #007bff;
+        color: #ffffff;
+        padding-top: 30px;
+        min-height: 70px;
+        border-bottom: #0779e4 3px solid;
+      }
+
+      header h1 {
+        text-align: center;
+        margin: 0;
+        padding-bottom: 10px;
+      }
+
+      .content {
+        padding: 20px;
+        background: black;
+      }
+
+      .content h2,
+      .content h1,
+      .content h3 {
+        color: #007bff;
+      }
+
+      .content p {
+        margin: 10px 0;
+      }
+
+      .key-features,
+      .why-choose,
+      .explore-human {
+        color: #e7e7e7;
+        padding: 15px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+      }
+
+      .cta-button {
+        display: block;
+        width: 100%;
+        max-width: 200px;
+        margin: 20px auto;
+        padding: 10px;
+        background: #007bff;
+        color: #fff;
+        text-align: center;
+        text-decoration: none;
+        border-radius: 5px;
+      }
+
+      footer {
+        background: #333;
+        color: #fff;
+        text-align: center;
+        padding: 10px;
+        margin-top: 20px;
+      }
+    </style>
+  </head>
+  <!--
+  
+-->
   <app-auth *ngIf="!authenticated"></app-auth>
-</div>
+
+  <body>
+    <section class="container content">
+      <br /><br />
+      <h1>Wellcome to InnerNautic</h1>
+      <div class="key-features">
+        Discover intriguing world destinations and live life-changing
+        experiences.
+      </div>
+
+      <div class="column">
+        <img src="assets/black_turtle.jpg" class="buttonx" style="width: 90%" />
+      </div>
+      <br />
+
+      <div>
+        <h2>InnerNautic is here for:</h2>
+        <div class="key-features">
+          <b class="linkColor">• Personal Growth: </b>
+          <p style="margin-left: 20px">
+            Embrace opportunities for profound personal development as you
+            traverse the globe.
+          </p>
+          <b class="linkColor">• Inspiration from Travelers: </b>
+          <p style="margin-left: 20px">
+            Find inspiration from like-minded souls who seek inner change.
+          </p>
+          <b class="linkColor"> • Avoid the Fake Reality: </b>
+          <p style="margin-left: 20px">
+            Experience the genuine essence of travel with InnerNautic.
+          </p>
+        </div>
+      </div>
+
+      <!--
+
+   
+      <div class="column" style="color: white">
+        InnerNautic stimulates inner awareness and facilitates the discovery of
+        the world through sharing experiences in the community.
+      </div>
+         -->
+      <br />
+      <div>
+        <h2>Search by card and location</h2>
+        <div class="key-features">
+          <p style="color: white">
+            Find activites and masters reccomended by the community
+          </p>
+        </div>
+        <div class="appcontent" style="color: white">
+          <div class="column small">
+            <button
+              [routerLinkActive]="'active'"
+              [routerLink]="'/qualities'"
+              class="buttonx"
+            >
+              <img src="assets/tarots.jpg" class="buttonx" />
+            </button>
+            <b class="linkColor">explore by card</b>
+            Use cards to explore all various aspects of human experience.
+          </div>
+
+          <div class="column small">
+            <button
+              [routerLinkActive]="'active'"
+              [routerLink]="'/locations'"
+              class="buttonx"
+            >
+              <img src="assets/pngworld.jpg" class="buttonx" />
+            </button>
+            <b class="linkColor"> explore by location</b>
+            If you are already in a place, or planning to go somewhere.
+          </div>
+        </div>
+      </div>
+
+      <!--
+
+   
+      <br />
+      <hr />
+      <br />
+
+      <hr />
+      <h2>Each card is a gateway to the soul.</h2>
+
+      <div class="explore-human">
+        <div class="column">
+          <button
+            [routerLinkActive]="'active'"
+            [routerLink]="'/qualities'"
+            class="buttonx"
+          >
+            <img src="assets/tarots.jpg" class="buttonx" style="width: 70%" />
+          </button>
+        </div>
+        <p>
+          InnerNautic uses Self-Understanding and Inner Development cards to
+          explore all various aspects of human experience, from courage to
+          spirituality, from self-discipline to social skills, from
+          open-mindedness to heart-opening as a universal language to share
+          experiences.
+        </p>
+
+        <hr />
+      </div>
+      <h2>Explore by continent, country or city</h2>
+
+      <div class="explore-human">
+        <div class="column">
+          <button
+            [routerLinkActive]="'active'"
+            [routerLink]="'/qualities'"
+            class="buttonx"
+          >
+            <img src="assets/pngworld.jpg" class="buttonx" style="width: 70%" />
+          </button>
+        </div>
+        <p>
+          If you are already in a place, or planning to go somewhere. Find
+          inspiration by the most popular activities in the area and find the
+          best masters, teachers, schools or events by reccomandation
+        </p>
+      </div>
+
+      <hr />
+
+      <a href="#" class="cta-button">Join the Movement</a>
+        -->
+    </section>
+
+    <footer>
+      <p>InnerNautic © 2024. All Rights Reserved.</p>
+    </footer>
+  </body>
+</html>

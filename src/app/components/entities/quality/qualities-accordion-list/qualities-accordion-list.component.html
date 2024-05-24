@@ -31,8 +31,10 @@
                 <br />
 
                 <div style="color: gray; font-size: small">
-                  <div *ngIf="appo >= 80">Very strong</div>
-                  <div *ngIf="appo >= 60 && appo < 80">Strong</div>
+                  <div *ngIf="appo >= 80" style="color: green">Very strong</div>
+                  <div *ngIf="appo >= 60 && appo < 80" style="color: green">
+                    Strong
+                  </div>
                   <div *ngIf="appo >= 40 && appo < 60">Medium</div>
                   <div *ngIf="appo >= 20 && appo < 40">Weak</div>
                   <div *ngIf="appo >= 0 && appo < 20">Very weak</div>
@@ -43,6 +45,7 @@
           <div style="width: 100%">
             <app-horizontal-viewer
               [descrioptions]="q.desc_all"
+              [qid]="q.id"
             ></app-horizontal-viewer>
           </div>
         </mat-expansion-panel>

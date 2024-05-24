@@ -41,44 +41,58 @@
       </p>
     </div>
 
-    <h2>Qualities involved</h2>
+    <img style="width: 20px" src="assets/gpt.png" (click)="openPopup()" />
 
-    <mat-accordion>
-      <mat-expansion-panel *ngFor="let item of article.table">
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            {{ item.Quality }}
-          </mat-panel-title>
-        </mat-expansion-panel-header>
+    <!-- Struttura della popup -->
 
-        <p style="font-size: larger; font-weight: bold">
-          {{ item.Description }}
-        </p>
+    <!-- Struttura della popup -->
+    <div class="popup" *ngIf="isPopupOpen">
+      <div class="popup-content">
+        <span class="close" (click)="closePopup()">close</span>
+        <h2>Qualities involved</h2>
 
-        <div *ngFor="let cit of item.Citations">
-          <b>context:</b><br />{{ cit.context }} <bR /><bR /> <b>citation:</b
-          ><br />"<i>{{ cit.citation }}</i
-          >"
+        <div class="popup-body">
+          <mat-accordion class="customAcc">
+            <mat-expansion-panel
+              *ngFor="let item of article.table"
+              class="customAcc"
+            >
+              <mat-expansion-panel-header class="customAcc">
+                <mat-panel-title class="customAcc">
+                  {{ item.Quality }}
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+
+              <p style="font-size: larger; font-weight: bold">
+                {{ item.Description }}
+              </p>
+
+              <div *ngFor="let cit of item.Citations" class="customAcc">
+                <b>context:</b><br />{{ cit.context }} <br /><br />
+                <b>citation:</b><br />"<i>{{ cit.citation }}</i
+                >"
+              </div>
+              <br />
+
+              cards linked:
+
+              <ul>
+                <li *ngFor="let sel of item.Seligman_Strengths">
+                  {{ sel }}
+                </li>
+              </ul>
+
+              <app-qualities-list-grid
+                [qualities]="filterQualityList(item.Seligman_Strengths)"
+              ></app-qualities-list-grid>
+
+              <br />
+              <label (click)="open(item)">open</label>
+            </mat-expansion-panel>
+          </mat-accordion>
         </div>
-        <br />
-
-        cards linked:
-
-        <ul>
-          <li *ngFor="let sel of item.Seligman_Strengths">
-            {{ sel }}
-          </li>
-        </ul>
-
-        <app-qualities-list-grid
-          [qualities]="filterQualityList(item.Seligman_Strengths)"
-        >
-        </app-qualities-list-grid>
-
-        <br />
-        <label (click)="open(item)">open</label>
-      </mat-expansion-panel>
-    </mat-accordion>
+      </div>
+    </div>
 
     <!--
  <br />

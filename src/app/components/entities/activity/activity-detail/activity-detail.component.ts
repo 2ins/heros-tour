@@ -5,6 +5,7 @@ import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { SetSelectedActivity } from 'src/app/actions/activity.action';
 import { Activity } from 'src/app/model/activity';
+import { Search } from 'src/app/model/search';
 import { MobileService } from 'src/app/services/mobile.service';
 import { HeroState } from 'src/app/states/todo.state';
 import { SupabaseService } from 'src/app/supabase.service';
@@ -23,6 +24,9 @@ export class ActivityDetailComponent implements OnInit {
   activity?: Activity;
   activityId?: any;
   isMobile: boolean = false;
+
+  @Select(HeroState.getActivitySearch) search?: Observable<Search>;
+  theSearch?: Search;
 
   constructor(
     private readonly supabase: SupabaseService,
@@ -43,30 +47,22 @@ export class ActivityDetailComponent implements OnInit {
       a.qualities?.sort((a, b) => b.count - a.count);
     });
 
+    this.search?.subscribe((x) => {
+      this.theSearch = x;
+    });
+
     this.activatedRoute.paramMap.subscribe((map) => {
       this.activityId = map.get('id');
       console.log('activityId?:' + this.activityId);
       if (this.activityId) {
-        this.store.dispatch(new SetSelectedActivity(this.activityId));
-      }
-    });
+        var loc = this.theSearch?.location;
+        console.log('this.theSearch', this.theSearch);
 
-    /*
-    this.activities?.subscribe((list) => {
-      console.log('di concetto');
-      if (list) {
-        if (list.length == 0) {
-          this.store.dispatch(new GetActivitiesOverview(''));
-        } else {
-          this.activity = list.find((x) => x.id == this.activityId);
-          console.log('attivita selezionata:', this.activityId);
-          if (this.activity) {
-            this.store.dispatch(new SetSelectedActivity(this.activity));
-          }
-        }
+        this.store.dispatch(
+          new SetSelectedActivity(this.activityId, loc || '')
+        );
       }
     });
-    */
   }
 
   backClicked() {

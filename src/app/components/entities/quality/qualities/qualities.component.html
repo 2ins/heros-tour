@@ -1,66 +1,6 @@
 <div class="container" style="width: 99%">
-  <!--
-  
-  
-
-
-  <div style="padding-top: 0px">
-    <div class="heroes">
-      <div id="parent">
-        <mat-tab-group
-          [(selectedIndex)]="tab2Index"
-          mat-stretch-tabs
-          class="example-stretched-tabs mat-elevation-z4"
-        >
-          <mat-tab label="Virtues">
-            <div style="padding: 20px">
-              the following are the 6 virtues. please select one to see all the
-              card strenghts related to it.
-            </div>
-            <div [ngClass]="'grid-container-mobile-v'">
-              <div
-                *ngFor="let v of virtueList"
-                (click)="selectVirtue(v)"
-                class="containerbox-v"
-                [ngClass]="v.id"
-              >
-                <div class="testo-sovrapposto-v">
-                  <b>{{ v.name }}</b>
-                </div>
-              </div>
-            </div>
-            <div style="padding: 20px; text-align: right">
-              Inner Nautic is inspired by Positive Psycholgy.
-              <div
-                style="color: blue; font-weight: bold"
-                (click)="openVirtue()"
-              >
-                show more about virtues
-              </div>
-            </div>
-          </mat-tab>
-
-          <mat-tab label="Strenghts" *ngIf="selectedVirtue">
-            <div style="padding: 20px">
-              please choose a card by clicking to continue exploring or click
-              'show more' to know more about the card
-            </div>
-
-            <app-qualities-list-vertical-big
-              [qualities]="currentqualitites"
-              [showAll]="true"
-              (notifySelection)="doSomethingQuality($event)"
-            ></app-qualities-list-vertical-big>
-          </mat-tab>
-        </mat-tab-group>
-      </div>
-    </div>
-  </div>
-</div>
-
-  -->
   <div *ngFor="let v of virtueList">
-    <h2 style="margin: 10px" [ngClass]="v.id">{{ v.name }}</h2>
+    <h2 style="margin: 10px">{{ v.name }}</h2>
 
     <div style="margin: 20px">
       {{ v.description }}
@@ -75,64 +15,6 @@
     <hr />
   </div>
 
-  <!--
-   Wisdom
-  <app-qualities-list-horizontal
-    [qualities]="thequalitites | filterByVirtuePipe : 'WI'"
-    [showAll]="true"
-  >
-  </app-qualities-list-horizontal>
-  Courage
-  <app-qualities-list-horizontal
-    [qualities]="thequalitites | filterByVirtuePipe : 'CO'"
-    [showAll]="true"
-  >
-  </app-qualities-list-horizontal>
-  Justice
-  <app-qualities-list-horizontal
-    [qualities]="thequalitites | filterByVirtuePipe : 'JU'"
-    [showAll]="true"
-  >
-  </app-qualities-list-horizontal>
-  Humanity
-  <app-qualities-list-horizontal
-    [qualities]="thequalitites | filterByVirtuePipe : 'HU'"
-    [showAll]="true"
-  >
-  </app-qualities-list-horizontal>
-  Trascendance
-  <app-qualities-list-horizontal
-    [qualities]="thequalitites | filterByVirtuePipe : 'TR'"
-    [showAll]="true"
-  >
-  </app-qualities-list-horizontal>
--->
-  <!--
-  <mat-accordion>
-    <mat-expansion-panel *ngFor="let v of virtueList">
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          <div style="width: 100%">
-            <b [ngClass]="v.id">{{ v.name }}</b>
-          </div>
-        </mat-panel-title>
-      </mat-expansion-panel-header>
-      <div style="width: 100%">
-        <div style="margin: 20px">
-          {{ v.description }}
-        </div>
-        <app-qualities-list-grid
-          [qualities]="thequalitites | filterByVirtuePipe : v.id"
-          [showAll]="true"
-          (notifySelection)="doSomethingQuality($event)"
-        >
-        </app-qualities-list-grid>
-      </div>
-    </mat-expansion-panel>
-  </mat-accordion>
-
-
--->
   <ng-template #header>
     <div
       style="

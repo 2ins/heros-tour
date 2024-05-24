@@ -13,8 +13,9 @@
             "
           >
             <app-experience-master-user-pic
-              *ngIf="!isMasterDetail"
-              [hero]="hero"
+              *ngIf="hero?.profile && hero?.master && !isMasterDetail"
+              [profile_url]="hero.profile.avatar_url"
+              [master_url]="hero.master.avatar_url"
             ></app-experience-master-user-pic>
             <img
               *ngIf="isMasterDetail"
@@ -78,7 +79,7 @@
     >
       {{ hero | descriptionManager | slice : 0 : 300 }}
       <b *ngIf="(hero | descriptionManager).length > 300">...continue</b>
-      <div style="border-top: 1px solid gray; margin-top: 5px">
+      <div style="border-top: 0px solid gray; margin-top: 5px">
         <div
           style="cursor: pointer; display: inline"
           *ngFor="let quality of hero.qualities; let i = index"

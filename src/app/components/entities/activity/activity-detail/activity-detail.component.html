@@ -1,26 +1,45 @@
 <div *ngIf="activity != undefined">
   <div *ngIf="!isMobile">
     <div fxLayout="row">
-      <div fxFlex.gt-sm="60%">
-        <ng-container *ngTemplateOutlet="detail"></ng-container>
+      <div fxFlex.gt-sm="70%">
+        <div class="two-columns">
+          <div class="column1">
+            <ng-container *ngTemplateOutlet="detailDesc"></ng-container>
+          </div>
+          <div class="column2">
+            <div style="padding-top: 0px; margin-left: 10px">
+              <h1 style="text-align: left; margin-bottom: 0px">
+                {{ activity.description }}
+              </h1>
+
+              <div style="text-align: left">
+                experiences:
+                <b>{{ activity.xps_count }}</b>
+              </div>
+
+              <div style="text-align: left">
+                masters:
+                <b>{{ activity.master_count }}</b>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      <div fxFlex.gt-sm="40%">
-        <ng-container *ngTemplateOutlet="VirtuePie"></ng-container>
-      </div>
+      <br />
     </div>
     <ng-container *ngTemplateOutlet="prospect"></ng-container>
   </div>
-
   <div *ngIf="isMobile">
+    <ng-container *ngTemplateOutlet="header"></ng-container>
+    <div style="width: 100%; padding-top: 40px"></div>
     <ng-container *ngTemplateOutlet="detailXp"></ng-container>
 
     <ng-container *ngTemplateOutlet="prospect"></ng-container>
   </div>
 
   <ng-template #detailXp>
-    <ng-container *ngTemplateOutlet="header"></ng-container>
     <div>
-      <div style="width: 100%; padding-top: 40px" class="inline">
+      <div style="width: 100%" class="inline">
         <div>
           <div style="width: 100%; margin: 10px">
             <div>
@@ -30,6 +49,24 @@
             </div>
           </div>
         </div>
+        <div style="display: flex; justify-content: center">
+          <div class="image-main">
+            <img
+              src="{{
+                'https://enrgmsdppekwfvmbdxsl.supabase.co/storage/v1/object/public/avatars/' +
+                  activity.img_url
+              }}"
+              class="profile-pic"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template #detailDesc>
+    <div>
+      <div style="width: 100%" class="inline">
         <div style="display: flex; justify-content: center">
           <div class="image-main">
             <img
@@ -125,11 +162,21 @@
     </div>
     <br />
 
-    <div
-      class="inline blackGroup"
-      style="width: 100%; border-top: 0px solid gray"
-    >
-      <h2 style="text-align: left; margin-left: 25px">Masters</h2>
+    <div class="inline" style="width: 100%; border-top: 0px solid gray">
+      <h2
+        *ngIf="theSearch?.location"
+        style="text-align: left"
+        style="text-align: left; margin-left: 25px"
+      >
+        Masters in {{ theSearch?.location }}
+      </h2>
+      <h2
+        *ngIf="!theSearch?.location"
+        style="text-align: left"
+        style="text-align: left; margin-left: 25px"
+      >
+        Masters
+      </h2>
 
       <mat-grid-list
         cols="2"

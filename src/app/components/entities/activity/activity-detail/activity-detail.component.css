@@ -37,3 +37,20 @@ div.inlineTag {
   background-color: black; /* Sfondo nero */
   color: white; /* Testo bianco */
 }
+
+/*same as master detail to be commonized*/
+.two-columns {
+  display: flex;
+  width: 100%;
+  max-width: 100%;
+}
+
+.column1 {
+  border: 0px solid gray;
+  width: 45%;
+}
+.column2 {
+  border: 0px solid gray;
+  margin-left: 0px;
+  width: 55%;
+}

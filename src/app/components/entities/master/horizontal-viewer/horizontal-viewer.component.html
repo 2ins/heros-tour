@@ -1,10 +1,28 @@
 <div class="scroll-container">
   <div class="gridscroll">
     <div *ngFor="let quality of descrioptions">
-      <div class="xxx" *ngIf="quality">
+      <div
+        class="xxx"
+        *ngIf="quality && quality.description"
+        (click)="go(quality)"
+      >
         <div class="testodentro">
           <div>
-            {{ quality }}
+            <div class="slida">
+              {{ quality.description }}
+            </div>
+
+            <div style="width: 30px" class="footer">
+              <app-experience-master-user-pic
+                [master_url]="quality.master_img"
+                [profile_url]="quality.user_img"
+              >
+              </app-experience-master-user-pic>
+            </div>
+            <div class="user-info">
+              <div>{{ quality.user_name }}</div>
+              <div>@{{ quality.master_name }}</div>
+            </div>
           </div>
         </div>
       </div>

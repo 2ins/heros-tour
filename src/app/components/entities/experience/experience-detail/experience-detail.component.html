@@ -1,34 +1,58 @@
 <div *ngIf="selectedHero | async as heroX">
   <div *ngIf="!isMobile">
     <div fxLayout="row">
-      <div fxFlex.gt-sm="60%">
+      <div fxFlex.gt-sm="45%">
         <ng-container *ngTemplateOutlet="detail"></ng-container>
       </div>
-      <div fxFlex.gt-sm="40%">
-        <app-virtues-pie [qualities]="heroX.qualities"></app-virtues-pie>
+      <div fxFlex.gt-sm="55%">
+        <label style="color: gray"
+          >{{ heroX.profile.username }} @<b>{{ heroX.master.name }}</b></label
+        ><br />
+        <br />
+        <ng-container *ngTemplateOutlet="detailText"></ng-container>
       </div>
     </div>
     <br />
-    <ng-container *ngTemplateOutlet="detailText"></ng-container>
-    <h1 style="text-align: center">Strenghts</h1>
-    <app-qualities-list-grid
-      *ngIf="heroX.qualities"
+    <br />
+    <br />
+
+    <app-qualities-list-xp
       [qualities]="heroX.qualities"
-      [showMore]="true"
-    ></app-qualities-list-grid>
+      [preselected]="qidSelected"
+    >
+    </app-qualities-list-xp>
+    <br />
+    <div style="width: 25%; margin: 0 auto"></div>
+
+    <div style="width: 50%; margin: 0 auto; text-align: center">
+      <app-virtues-pie [qualities]="heroX.qualities"></app-virtues-pie>
+    </div>
+    <br />
     <app-locations></app-locations>
   </div>
 
   <div *ngIf="isMobile">
+    <ng-container *ngTemplateOutlet="header"></ng-container>
+    <div style="padding: 25px"></div>
     <ng-container *ngTemplateOutlet="detail"></ng-container>
-
+    <br />
+    <br />
     <ng-container *ngTemplateOutlet="detailText"></ng-container>
-
+    <!--
     <app-qualities-list-grid
       *ngIf="heroX.qualities"
       [qualities]="heroX.qualities"
       [showMore]="true"
     ></app-qualities-list-grid>
+  -->
+
+    <div #scrollTargetx id="scrollId"></div>
+    <app-qualities-list-xp
+      [qualities]="heroX.qualities"
+      [preselected]="qidSelected"
+    >
+    </app-qualities-list-xp>
+
     <hr />
     <h2 style="text-align: left">Virtues</h2>
     <div style="display: flex; justify-content: center; align-items: center">
@@ -44,12 +68,8 @@
   </div>
 
   <ng-template #detail>
-    <ng-container *ngTemplateOutlet="header"></ng-container>
-
     <div>
-      <div style="padding: 50px">
-        <app-experience-pic [hero]="heroX"></app-experience-pic>
-      </div>
+      <app-experience-pic [hero]="heroX"></app-experience-pic>
 
       <div>
         <div style="width: 100%"></div>
@@ -80,12 +100,12 @@
 
   <ng-template #activities>
     <span style="display: flex; margin-left: 25px">
-      <div *ngIf="heroX.activities" style="text-align: right">
+      <div *ngIf="heroX.activities" style="text-align: left">
         <i
-          style="color: blue; cursor: pointer"
+          style="color: #99c3ff; cursor: pointer"
           *ngFor="let a of heroX.activities"
           routerLink="/activities/activity/{{ a.id }}"
-          >#{{ a.name }}&nbsp;
+          >• {{ a.description }}<br />
         </i>
       </div>
     </span>
@@ -97,7 +117,7 @@
         width: 100%;
         z-index: 0;
         margin-bottom: 20px;
-        background-color: white;
+        background-color: black;
         border: solid grey 1px;
         position: fixed;
         z-index: 10;

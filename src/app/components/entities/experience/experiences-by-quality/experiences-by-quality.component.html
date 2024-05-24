@@ -55,7 +55,8 @@
                 "
               >
                 <app-experience-master-user-pic
-                  [hero]="hero"
+                  [profile_url]="hero?.profile?.avatar_url"
+                  [master_url]="hero?.master?.avatar_url"
                 ></app-experience-master-user-pic>
               </div>
             </div>

@@ -1,5 +1,5 @@
 <div fxLayout="row" *ngIf="!isMobile">
-  <div fxFlex.gt-sm="75%">
+  <div fxFlex.gt-sm="99%">
     <p>
       <b style="font-size: x-large">Masters</b
       ><button
@@ -28,12 +28,6 @@
         </ng-container>
       </mat-grid-list>
     </div>
-  </div>
-  <div fxFlex.gt-sm="25%">
-    <app-search-composite
-      placeHolder="Search masters"
-      (notifyParent)="getNotification($event)"
-    ></app-search-composite>
   </div>
 </div>
 

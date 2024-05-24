@@ -15,6 +15,7 @@ import { Activity } from 'src/app/model/activity';
 import { Hero } from 'src/app/model/hero';
 import { Master } from 'src/app/model/master';
 import { Search } from 'src/app/model/search';
+import { MobileService } from 'src/app/services/mobile.service';
 import { HeroState } from 'src/app/states/todo.state';
 import { SearchCompositeComponent } from '../search-composite/search-composite.component';
 
@@ -24,6 +25,8 @@ import { SearchCompositeComponent } from '../search-composite/search-composite.c
   styleUrls: ['./homeview.component.css'],
 })
 export class HomeviewComponent implements OnInit, AfterViewInit {
+  isMobile: boolean = false;
+
   ngAfterViewInit(): void {
     document
       .getElementsByClassName('mat-tab-header-pagination-before')[0]
@@ -43,7 +46,11 @@ export class HomeviewComponent implements OnInit, AfterViewInit {
 
   @ViewChild('textElem') textElem?: ElementRef;
 
-  constructor(private store: Store, public dialog: MatDialog) {}
+  constructor(
+    private store: Store,
+    public dialog: MatDialog,
+    public mobileS: MobileService
+  ) {}
 
   remove(el: number): void {
     const index = this.sea.arr.indexOf(el);
@@ -63,6 +70,7 @@ export class HomeviewComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
+    this.isMobile = this.mobileS.isMobile();
     this.searchX?.subscribe((appo) => (this.sea = appo));
     /*
     this.heroes?.subscribe((h) => {

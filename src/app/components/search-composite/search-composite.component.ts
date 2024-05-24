@@ -12,6 +12,7 @@ import { SetActivitySearch } from 'src/app/actions/search.action';
 import { LocationDbItem } from 'src/app/model/location';
 import { Quality, VIRTUES_LIST } from 'src/app/model/quality';
 import { Search } from 'src/app/model/search';
+import { MobileService } from 'src/app/services/mobile.service';
 import { HeroState } from 'src/app/states/todo.state';
 import { SupabaseService } from 'src/app/supabase.service';
 
@@ -33,6 +34,7 @@ export class SearchCompositeComponent implements OnInit {
   searchLoc: string = '';
   hashMap = new Map<string, Quality[]>();
   virtuesList = VIRTUES_LIST;
+  isMobile: boolean = false;
 
   @Input()
   placeHolder?: string;
@@ -57,10 +59,13 @@ export class SearchCompositeComponent implements OnInit {
   constructor(
     private readonly supabase: SupabaseService,
     private store: Store,
-    private router: Router
+    private router: Router,
+    private mobile: MobileService
   ) {}
 
   ngOnInit(): void {
+    this.isMobile = this.mobile.isMobile();
+
     this.store.dispatch(new GetLocations());
     this.locationsAll?.subscribe((e) => {
       this.streets = e.map((oggetto) => oggetto.frammento);

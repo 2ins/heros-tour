@@ -1,17 +1,24 @@
-<div
-  *ngIf="!isMobile"
-  class="container"
-  [ngClass]="{ class1: !isMobile }"
-  style="padding-top: 50px"
->
+<div *ngIf="!isMobile" class="container" style="padding-top: 50px">
   <div fxLayout="row">
     <div fxFlex.gt-sm="15%">
       <app-menu-list [session]="session"></app-menu-list>
     </div>
-    <div fxFlex.gt-sm="85%">
-      <div class="container" style="width: 99%">
+    <div fxFlex.gt-sm="66%">
+      <div
+        class="container"
+        style="
+          width: 99%;
+          border-left: 1px solid #172727;
+          border-right: 1px solid #172727;
+          padding-right: 10px;
+          padding-left: 10px;
+        "
+      >
         <router-outlet></router-outlet>
       </div>
+    </div>
+    <div fxFlex.gt-sm="19%">
+      <app-search-composite placeHolder="Search"></app-search-composite>
     </div>
   </div>
 </div>

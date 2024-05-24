@@ -307,7 +307,7 @@ export class SupabaseService {
   }
   getMasterById(idMaster: number) {
     return this.supabase
-      .from('overview_masters')
+      .from('overview_masters_extended')
       .select(`*`)
       .eq('id', idMaster);
   }
@@ -373,15 +373,16 @@ export class SupabaseService {
     return this.supabase.rpc('???', { activityID: idActivity });
   }
   //get all heroes of the master
-  getMastersOfActivity(idActivity: number) {
-    return this.supabase.rpc('getmastersbyactivity', {
-      activityid: idActivity,
+  getMastersOfActivity(idActivity: number, location: string) {
+    return this.supabase.rpc('getmastersbyactivity_loc', {
+      idactivity: idActivity,
+      loc: location,
     });
   }
 
   getActivityOverviewXP(idAct: number) {
     return this.supabase
-      .from('overview_activities')
+      .from('overview_activities_extended')
       .select(`*`)
       .eq('id', idAct);
   }

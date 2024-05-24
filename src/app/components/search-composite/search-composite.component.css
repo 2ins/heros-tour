@@ -91,3 +91,23 @@ li {
   ); /* Limita la larghezza massima a un terzo della larghezza del contenitore */
   box-sizing: border-box; /* Includi padding e bordo nella larghezza */
 }
+
+/*solo per la versione desktop*/
+.flex-container-desk {
+  display: flex;
+  flex-direction: column; /* Ensure items are stacked in a single column */
+  flex-wrap: nowrap; /* Prevent wrapping to a new line */
+}
+
+.flex-item-desk {
+  border: 1px solid gray;
+  padding: 10px;
+  margin: 5px;
+  flex: 1;
+  width: 100%; /* Ensure each item takes up the full width */
+  box-sizing: border-box; /* Include padding and border in the width */
+}
+
+.desktop-style ::ng-deep .mat-checkbox-frame {
+  border-color: white !important;
+}

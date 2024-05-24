@@ -1,4 +1,5 @@
 import { Activity } from './activity';
+import { HeroListElement } from './hero';
 
 export interface Quality {
   id: number;
@@ -11,7 +12,8 @@ export interface Quality {
   activities?: Activity[];
   selected: boolean;
   desc_xp?: string;
-  desc_all?: string[];
+  desc_all?: HeroListElement[];
+  isSearch: boolean;
 }
 
 export interface Virtue {

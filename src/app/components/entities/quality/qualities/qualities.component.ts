@@ -92,7 +92,9 @@ export class QualitiesComponent implements OnInit {
   }
   doSomethingQuality(quality: Quality) {
     if (this.sea) {
-      this.sea.arr = [quality.id];
+      if (!this.sea.arr.includes(quality.id)) {
+        this.sea.arr.push(quality.id);
+      }
       this.store.dispatch(new SetActivitySearch(this.sea));
       this.route.navigate(['/home']);
       this.store.dispatch(new GetActivitiesOverview(this.sea));

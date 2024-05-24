@@ -12,22 +12,22 @@ body {
 }
 
 .WI {
-  background: rgba(255, 252, 127, 0.3);
+  background: rgba(255, 252, 127, 1);
 }
 .CO {
-  background: rgba(3, 138, 255, 0.3);
+  background: rgba(3, 138, 255, 1);
 }
 .HU {
-  background: rgba(254, 121, 104, 0.3);
+  background: rgba(254, 121, 104, 1);
 }
 .JU {
-  background: rgba(201, 242, 155, 0.3);
+  background: rgba(201, 242, 155, 1);
 }
 .TE {
-  background: rgba(255, 148, 112, 0.3);
+  background: rgba(255, 148, 112, 1);
 }
 .TR {
-  background: rgba(213, 184, 255, 0.3);
+  background: rgba(213, 184, 255, 1);
 }
 
 .mat-icon-size {
@@ -136,9 +136,9 @@ mat-tab
 }
 
 .mat-card {
-  background: black;
+  background-color: #1f1f1f;
   color: white;
-  border: 1px solid white;
+  border: 1px solid gray;
   border-radius: 15%;
 }
 .linkColor {

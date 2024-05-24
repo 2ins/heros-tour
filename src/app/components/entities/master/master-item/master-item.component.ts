@@ -1,7 +1,10 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { Store } from '@ngxs/store';
+import { Select, Store } from '@ngxs/store';
+import { Observable } from 'rxjs';
 import { Master } from 'src/app/model/master';
+import { Search } from 'src/app/model/search';
+import { HeroState } from 'src/app/states/todo.state';
 import { SupabaseService } from 'src/app/supabase.service';
 
 @Component({
@@ -13,6 +16,10 @@ export class MasterItemComponent implements OnInit {
   @Input()
   user?: Master;
 
+  @Select(HeroState.getActivitySearch) search?: Observable<Search>;
+
+  theSearch?: Search;
+
   @ViewChild('mrImgElement', { static: false }) mrImgElementRef!: ElementRef;
 
   constructor(
@@ -21,7 +28,11 @@ export class MasterItemComponent implements OnInit {
     private router: Router
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.search?.subscribe((x) => {
+      this.theSearch = x;
+    });
+  }
 
   get imageUrl(): string {
     return `url('https://enrgmsdppekwfvmbdxsl.supabase.co/storage/v1/object/public/avatars/${this.user?.avatar_url}')`;
@@ -32,13 +43,5 @@ export class MasterItemComponent implements OnInit {
   }
   ngAfterViewInit() {
     //this.calculateImageClass();
-  }
-
-  calculateImageClass() {
-    const mrImg: HTMLImageElement = this.mrImgElementRef.nativeElement;
-    const imageClass =
-      mrImg.width >= mrImg.height ? 'profile-pic-height' : 'profile-pic-width';
-    mrImg.classList.add(imageClass);
-    console.log(this.user?.name + ' - ' + imageClass);
   }
 }

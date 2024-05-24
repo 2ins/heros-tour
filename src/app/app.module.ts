@@ -129,6 +129,10 @@ import { HeroState } from './states/todo.state';
 import { TestOutlineComponent } from './test-outline/test-outline.component';
 import { QualitiesAccordionListComponent } from './components/entities/quality/qualities-accordion-list/qualities-accordion-list.component';
 import { MultipleLocationsMapComponent } from './components/entities/maps/multiple-locations-map/multiple-locations-map.component';
+import { StrenghtCardByXpsPipe } from './pipes/strenght-card-by-xps.pipe';
+import { QualitiesListXpComponent } from './components/entities/quality/qualities-list-xp/qualities-list-xp.component';
+import { FindQualityFromSearchPipe } from './pipes/find-quality-from-search.pipe';
+import { ActivitiesAccordionListComponent } from './components/entities/activity/activities-accordion-list/activities-accordion-list.component';
 
 //import ChartDataLabels from 'chartjs-plugin-datalabels';
 
@@ -229,6 +233,10 @@ Chart.defaults.plugins.tooltip.enabled = false;
     FilterByVirtuePipe,
     QualitiesAccordionListComponent,
     MultipleLocationsMapComponent,
+    StrenghtCardByXpsPipe,
+    QualitiesListXpComponent,
+    FindQualityFromSearchPipe,
+    ActivitiesAccordionListComponent,
   ],
   imports: [
     BrowserModule,

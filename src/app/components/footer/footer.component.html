@@ -19,29 +19,26 @@
   </div>
 
   <div class="icon-elem">
+    <button [routerLinkActive]="'active'" [routerLink]="'/locations'">
+      <mat-icon>language</mat-icon>
+    </button>
+  </div>
+
+  <div class="icon-elem">
+    <button [routerLinkActive]="'active'" [routerLink]="'/qualities'">
+      <img class="icon" src="assets/cards_black.png" />
+    </button>
+  </div>
+
+  <!--
+  <div class="icon-elem">
     <button (click)="openPersonalUserPage()">
       <mat-icon>account_circle</mat-icon>
     </button>
   </div>
-  <!--
-  <div class="icon-elem">
-    <button [routerLinkActive]="'active'" [routerLink]="'/locations'">
-      <img class="icon" src="assets/world.png" style="width: 22px" />
-    </button>
-  </div>
-   -->
   <div class="icon-elem">
     <button [routerLinkActive]="'active'" [routerLink]="'/users'">
       <mat-icon>people</mat-icon>
     </button>
   </div>
-  <!--
-
- 
-  <div class="icon-elem">
-    <button [routerLinkActive]="'active'" [routerLink]="'/qualities'">
-      <img class="icon" src="assets/card1234.png" />
-    </button>
-  </div>
-   -->
-</div>
+--></div>

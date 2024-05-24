@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { MobileService } from 'src/app/services/mobile.service';
 import { ActivitySearchComponent } from '../entities/activity/activity-search/activity-search.component';
 import { ExperienceInsertOverviewComponent } from '../entities/experience/experience-insert-overview/experience-insert-overview.component';
 import { SearchCompositeComponent } from '../search-composite/search-composite.component';
@@ -11,10 +12,12 @@ import { SearchCompositeComponent } from '../search-composite/search-composite.c
 })
 export class HeaderComponent implements OnInit {
   dialogConfig = new MatDialogConfig();
+  isMobile: boolean = false;
 
-  constructor(public dialog: MatDialog) {}
+  constructor(public dialog: MatDialog, private mobile: MobileService) {}
 
   ngOnInit(): void {
+    this.isMobile = this.mobile.isMobile();
     this.dialogConfig = new MatDialogConfig();
     this.dialogConfig.autoFocus = true;
     this.dialogConfig.width = '100%';

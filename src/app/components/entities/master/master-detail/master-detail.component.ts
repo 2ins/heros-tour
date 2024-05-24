@@ -107,16 +107,6 @@ export class MasterDetailComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    /*
-    var a1 = { lat: 12, lng: 24 } as google.maps.LatLngLiteral;
-    console.log('a1', a1);
-    var a2 = { lat: 15, lng: 27 } as google.maps.LatLngLiteral;
-    var a3 = { lat: 40, lng: 15 } as google.maps.LatLngLiteral;
-    this.centersAppo.push(a1);
-    this.centersAppo.push(a2);
-    this.centersAppo.push(a3);
-*/
-
     console.log('this.centersAppo', this.centersAppo);
 
     this.isMobile = this.ms.isMobile();

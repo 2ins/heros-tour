@@ -641,10 +641,10 @@ export class HeroState {
   @Action(SetSelectedActivity)
   SetSelectedActivity(
     { getState, setState }: StateContext<HeroStateModel>,
-    { payload }: SetSelectedActivity
+    { payload, loc }: SetSelectedActivity
   ) {
     this.loadingService.start();
-    const queryMasters = this.supabase.getMastersOfActivity(payload);
+    const queryMasters = this.supabase.getMastersOfActivity(payload, loc);
     const queryActivity = this.supabase.getActivityOverviewXP(payload);
 
     return forkJoin([from(queryMasters), from(queryActivity)]).subscribe(

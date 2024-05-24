@@ -1,4 +1,4 @@
-<div fxLayout="row" *ngIf="quality">
+<div *ngIf="quality">
   <ng-container *ngTemplateOutlet="header"></ng-container>
   <div
     fxFlex.gt-sm="60%"
@@ -49,46 +49,19 @@
       </div>
 
       <br />
-      <p *ngIf="!editMode">{{ quality.description }}</p>
-      <!--
- <button *ngIf="!editMode" (click)="appendQueryParam()">edit</button>
-  <button
-    *ngIf="editMode"
-    (click)="editMode = false"
-    [routerLink]="['/qualities/quality/', quality?.id]"
-  >
-    update
-  </button>
-  -->
+      <p *ngIf="!editMode" style="color: black">{{ quality.description }}</p>
     </div>
     <br /><br />
     <div>
       <h1 style="color: green">In Depth</h1>
       {{ qualityDesc }}
-      <br /><br />
-      <div *ngIf="quality">
-        <div *ngIf="quality.activities">
-          <h1 style="color: green">Activities for this Archtype</h1>
-
-          <div *ngIf="quality.activities">
-            <div
-              *ngFor="let a of quality.activities"
-              style="display: inline; color: blue"
-            >
-              <p
-                style="cursor: pointer"
-                routerLink="/activities/activity/{{ a.id }}"
-              >
-                #{{ a.name }}
-
-                ({{ a.count }})
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <br />
     </div>
+    <br />
+    <br />
+    <h1 style="color: green">Activities related</h1>
+    <app-activities-accordion-list
+      [quality]="quality"
+    ></app-activities-accordion-list>
   </div>
   <ng-template #header>
     <div
@@ -97,10 +70,11 @@
         width: 100%;
         z-index: 0;
         margin-bottom: 20px;
-        background-color: white;
+        background-color: black;
         border: solid grey 1px;
         position: fixed;
         z-index: 10;
+        color: white;
       "
     >
       <div style="border-bottom: 0px solid black">

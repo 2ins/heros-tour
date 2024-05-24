@@ -43,6 +43,12 @@
           >
             {{ quality.count }}
           </div>
+          <div class="text-overlay-info" (click)="go(quality)">
+            <mat-icon
+              style="background-color: black; border: black; border-radius: 50%"
+              >info</mat-icon
+            >
+          </div>
         </div>
 
         <div
@@ -55,12 +61,13 @@
               font-size: small;
             "
           >
-            <b style="color: green">{{ quality.name }}</b>
+            <b style="color: blue">{{ quality.name }}</b>
 
             <br />
           </div>
         </div>
       </div>
+
       <i>
         {{ quality.desc_xp }}
       </i>

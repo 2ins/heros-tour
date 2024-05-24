@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Hero } from 'src/app/model/hero';
 
 @Component({
   selector: 'app-experience-master-user-pic',
@@ -8,7 +7,10 @@ import { Hero } from 'src/app/model/hero';
 })
 export class ExperienceMasterUserPicComponent implements OnInit {
   @Input()
-  hero?: Hero;
+  profile_url?: string;
+
+  @Input()
+  master_url?: string;
 
   constructor() {}
 

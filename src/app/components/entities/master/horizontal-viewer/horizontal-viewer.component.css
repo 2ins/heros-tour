@@ -1,24 +1,55 @@
 /* HORIZONTAL SCROLL */
 .scroll-container {
-  overflow: auto;
-  white-space: nowrap;
+  overflow-x: auto; /* Consente lo scorrimento orizzontale */
+  white-space: nowrap; /* Mantiene gli elementi in linea */
   background: transparent;
 }
 
-.gridscroll div {
-  display: inline-block;
-  text-align: left;
+.gridscroll {
+  display: flex; /* Usa flexbox per i contenuti interni */
+  flex-wrap: nowrap; /* Impedisce l'inviluppo degli elementi */
 }
 
 .xxx {
-  border: 1px solid gray;
+  position: relative; /* Imposta il riferimento per il posizionamento assoluto del footer */
+  display: inline-flex; /* Usa inline-flex per mantenere l'allineamento in linea */
+  flex-direction: column; /* Organizza i contenuti in colonna */
+  justify-content: space-between; /* Spinge il footer in basso */
+  border: 0px solid gray;
   border-radius: 15px;
   margin: 5px;
-  padding: 5px;
-  text-align: center;
+  padding: 5px 5px 30px 5px; /* Aggiungi padding in basso per fare spazio al footer */
+  text-align: left;
   width: 200px;
   background-color: #28282b;
+  height: 150px; /* Altezza fissa */
 }
+
 .testodentro {
-  white-space: normal;
+  white-space: normal; /* Consente al testo di andare a capo */
+  margin: 10px;
+}
+
+.footer {
+  position: absolute; /* Posiziona il footer in modo assoluto all'interno del suo parent .xxx */
+  bottom: 5px; /* Posiziona il footer 5px sopra il bordo inferiore del parent */
+  left: 0; /* Allinea il footer a sinistra; regola questo valore se necessario */
+  width: 100%; /* Fai in modo che il footer si estenda per tutta la larghezza del div .xxx */
+  text-align: center; /* Centra il contenuto del footer, se necessario */
+}
+.slida {
+  height: 120px;
+  overflow-y: auto;
+}
+.user-descriptions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Allinea il testo a sinistra */
+  justify-content: center;
+}
+
+.user-info {
+  margin-left: 35px;
+  color: gray;
+  font-size: x-small;
 }

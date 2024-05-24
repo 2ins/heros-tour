@@ -15,10 +15,12 @@ import { SupabaseService } from '../../../../supabase.service';
 })
 export class MastersComponent implements OnInit {
   @Select(HeroState.getMasterList) masters?: Observable<Master[]>;
+  @Select(HeroState.getActivitySearch) search?: Observable<Search>;
 
   searchMaster?: string;
   isMobile: boolean = false;
   indxTab: number = 0;
+  theSearch?: Search;
 
   constructor(
     private readonly supabase: SupabaseService,
@@ -29,6 +31,10 @@ export class MastersComponent implements OnInit {
   ngOnInit(): void {
     this.isMobile = this.ms.isMobile();
     //this.store.dispatch(new GetMastersOverview());
+    this.search?.subscribe((x) => {
+      console.log('SEARCH___', x);
+      this.theSearch = x;
+    });
   }
   /*
   onSelect(master: Master): void {
@@ -41,5 +47,6 @@ export class MastersComponent implements OnInit {
     this.store.dispatch(new GetMastersOverviewSearch(x)).subscribe(() => {
       this.indxTab = 0;
     });
+    console.log('SEARCH___', x);
   }
 }

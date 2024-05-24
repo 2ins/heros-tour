@@ -2,10 +2,11 @@
   (click)="onSelect(user)"
   *ngIf="user"
   style="
-    border: 1px solid white;
+    border: 0px solid gray;
     height: 160px;
     border-radius: 15px;
     margin-bottom: 10px;
+    background-color: #1f1f1f;
   "
   class="cardcustom"
 >
@@ -38,10 +39,27 @@
           *ngIf="user && user.tot_xps && user.tot_xps > 0"
           style="border-top: 1px solid gray"
         >
-          <div *ngFor="let quality of user.qualities; let i = index">
-            <div class="contenitore" *ngIf="i < 3">
-              <div class="cerchio" [ngClass]="quality.virtue"></div>
-              {{ quality.name }} ({{ quality.count }})
+          <div
+            *ngIf="
+              theSearch?.arr
+                | findQualityFromSearch : user.qualities as calcolated
+            "
+          >
+            <div *ngFor="let quality of calcolated; let i = index">
+              <div class="contenitore" *ngIf="i < 3">
+                <div class="cerchio" [ngClass]="quality.virtue"></div>
+                <div
+                  [ngStyle]="{
+                    'text-decoration': quality.isSearch ? 'underline' : 'none'
+                  }"
+                >
+                  {{ quality.name }}
+                </div>
+
+                <div style="color: gray">
+                  - ({{ quality.count | strenghtCardByXps : user.tot_xps }})
+                </div>
+              </div>
             </div>
           </div>
         </div>

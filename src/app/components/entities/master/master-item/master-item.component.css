@@ -3,7 +3,7 @@
   height: 130px;
   overflow: hidden;
   border-radius: 15%;
-  border: 2px solid #99c3ff;
+  border: 0px solid #99c3ff;
 }
 .image-cropper-xp {
   width: 75px;
@@ -117,4 +117,14 @@ mat-grid-tile {
   justify-content: center; /* Allinea orizzontalmente al centro */
   align-items: center; /* Allinea verticalmente al centro */
   border: 0px solid black;
+}
+/* Cambia il colore di sfondo delle etichette */
+::ng-deep .mat-tab-group .mat-tab-label {
+  background-color: black; /* Teal 500 */
+  color: white; /* Colore del testo */
+}
+
+/* Cambia il colore dell'indicatore di selezione */
+::ng-deep .mat-tab-group .mat-ink-bar {
+  background-color: white;
 }

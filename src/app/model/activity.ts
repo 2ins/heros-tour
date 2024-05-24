@@ -10,7 +10,9 @@ export interface Activity {
   qualities?: Quality[];
   xps_count?: number;
   master_count?: number;
+  masters_search_count?: number;
   masters?: Master[];
+  description_xp?: Quality[];
 }
 
 export interface ActivityTable {

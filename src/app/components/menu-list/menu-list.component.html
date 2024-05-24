@@ -1,4 +1,4 @@
-<div style="padding-right: 15px">
+<div style="padding-right: 15px" class="button-container">
   <button
     mat-menu-item
     style="padding: 5px"
@@ -7,7 +7,8 @@
   >
     Home
   </button>
-  <hr />
+
+  <!--
   <button
     mat-menu-item
     style="padding: 5px"
@@ -16,24 +17,7 @@
   >
     Virtues
   </button>
-  <button
-    mat-menu-item
-    style="padding: 5px"
-    [routerLinkActive]="'active'"
-    [routerLink]="'/qualities'"
-  >
-    Strenghts
-  </button>
-  <hr />
-
-  <button
-    mat-menu-item
-    style="padding: 5px"
-    [routerLinkActive]="'active'"
-    routerLink="/users"
-  >
-    Heroes
-  </button>
+-->
 
   <button
     mat-menu-item
@@ -42,6 +26,14 @@
     routerLink="/locations"
   >
     Locations
+  </button>
+  <button
+    mat-menu-item
+    style="padding: 5px"
+    [routerLinkActive]="'active'"
+    [routerLink]="'/qualities'"
+  >
+    Cards
   </button>
 
   <!--
@@ -63,7 +55,15 @@
     Add New Master
   </button>
 -->
-  <hr />
+
+  <button
+    mat-menu-item
+    style="padding: 5px"
+    [routerLinkActive]="'active'"
+    routerLink="/users"
+  >
+    Heroes
+  </button>
   <button
     mat-menu-item
     style="padding: 5px"

@@ -1,0 +1,104 @@
+<div class="blackGroup">
+  <div id="xButton"></div>
+  <mat-accordion class="customAcc" *ngIf="quality">
+    <div *ngFor="let a of quality.activities" class="customAcc">
+      <div *ngIf="((a.count || 1) * 100) / (a.xps_count || 1) as appo">
+        <mat-expansion-panel *ngIf="appo >= 60 || showMore" class="customAcc">
+          <mat-expansion-panel-header class="specific-class">
+            <mat-panel-title>
+              <div>
+                <img
+                  src="{{
+                    'https://enrgmsdppekwfvmbdxsl.supabase.co/storage/v1/object/public/avatars/' +
+                      a.img_url
+                  }}"
+                  style="
+                    width: 88px;
+                    height: 88px;
+                    margin-right: 8px;
+
+                    border-radius: 15%;
+                    padding: 3px;
+                    border: 1px solid black;
+                  "
+                />
+              </div>
+
+              <div style="width: 100%; color: white">
+                <b>{{ a.description }}</b>
+                <br />
+
+                <div style="color: gray; font-size: small">
+                  <div *ngIf="appo >= 80" style="color: green">Very strong</div>
+                  <div *ngIf="appo >= 60 && appo < 80" style="color: green">
+                    Strong
+                  </div>
+                  <div *ngIf="appo >= 40 && appo < 60">Medium</div>
+                  <div *ngIf="appo >= 20 && appo < 40">Weak</div>
+                  <div *ngIf="appo >= 0 && appo < 20">Very weak</div>
+                </div>
+              </div>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+
+          <div style="width: 100%" *ngIf="a.description_xp">
+            <app-horizontal-viewer
+              [descrioptions]="a.description_xp[0].desc_all"
+            ></app-horizontal-viewer>
+
+            <div
+              style="
+                text-align: center;
+                margin-top: 15px;
+                background-color: #28282b;
+                border-radius: 15px;
+                padding: 7px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+              "
+              (click)="open(a.id)"
+            >
+              <div
+                style="
+                  cursor: pointer;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                "
+              >
+                {{ a.description }} <mat-icon>chevron_right</mat-icon>
+              </div>
+            </div>
+          </div>
+        </mat-expansion-panel>
+      </div>
+    </div>
+  </mat-accordion>
+  <div
+    style="
+      text-align: center;
+      margin: 15px;
+      background-color: #28282b;
+      border-radius: 15px;
+      padding: 7px;
+    "
+  >
+    <div *ngIf="showMore">
+      <!--
+
+  
+    
+     -->
+
+      <div style="cursor: pointer" (click)="showChange()">
+        Show less activities
+      </div>
+    </div>
+    <div *ngIf="!showMore">
+      <div style="cursor: pointer" (click)="showChange()">
+        Show more activities
+      </div>
+    </div>
+  </div>
+</div>

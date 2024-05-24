@@ -41,4 +41,14 @@ export interface HeroQualitiesTable {
   desc_xp?: string;
 }
 
+export interface HeroListElement {
+  hero_id: number;
+  master_id: number;
+  master_name: string;
+  master_img: string;
+  user_id: string;
+  user_name: string;
+  user_img: string;
+  description: string;
+}
 export type ActivityFrequency = { [activityName: string]: number };

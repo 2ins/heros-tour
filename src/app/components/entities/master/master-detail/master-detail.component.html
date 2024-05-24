@@ -2,11 +2,7 @@
   <div *ngIf="!isMobile">
     <div>
       <div fxFlex.gt-sm="70%">
-        <ng-container *ngTemplateOutlet="detailXp"></ng-container>
-      </div>
-
-      <div fxFlex.gt-sm="40%">
-        <ng-container *ngTemplateOutlet="prospect"></ng-container>
+        <ng-container *ngTemplateOutlet="detailXpDesk"></ng-container>
       </div>
     </div>
   </div>
@@ -127,6 +123,63 @@
             </div>
           </div>
           <div class="column2">
+            <ng-container *ngTemplateOutlet="prospect"></ng-container>
+          </div>
+        </div>
+        <div></div>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template #detailXpDesk>
+    <div>
+      <div>
+        <!--
+
+       
+        <app-header-simple style="position: relative">
+          <label descript><b> master: </b>{{ x.name }}</label>
+
+          <button
+            *ngIf="authenticated"
+            buttonList
+            mat-button
+            [matMenuTriggerFor]="menu"
+            style="border: 0px solid black; background-color: black"
+          >
+            <mat-icon class="circle-icon-actions">more_horizon</mat-icon>
+          </button>
+        </app-header-simple>
+         -->
+
+        <br />
+
+        <div class="two-columns">
+          <div class="column1">
+            <div style="display: flex; justify-content: center">
+              <div class="image-main">
+                <img
+                  src="{{
+                    'https://enrgmsdppekwfvmbdxsl.supabase.co/storage/v1/object/public/avatars/' +
+                      master.avatar_url
+                  }}"
+                  class="profile-pic"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="column2">
+            <div style="padding-top: 0px; margin-left: 10px">
+              <h1 style="text-align: left; margin-bottom: 0px">
+                {{ x.name }}
+              </h1>
+
+              <div style="text-align: left; margin-top: 0px">
+                <a class="linkColor" href="//{{ x.website }}" target="_blank">{{
+                  x.website
+                }}</a>
+              </div>
+            </div>
             <ng-container *ngTemplateOutlet="prospect"></ng-container>
           </div>
         </div>

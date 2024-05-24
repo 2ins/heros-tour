@@ -41,6 +41,23 @@ div.inline {
   padding: 10px; /* Padding intorno al testo */
 }
 
+.text-overlay-info {
+  border-radius: 50%;
+  height: 9px;
+  width: 13px;
+  position: absolute; /* Imposta il testo come posizione assoluta rispetto al contenitore */
+  bottom: 0%; /* Posiziona il testo al centro verticale del contenitore */
+  left: 0%; /* Posiziona il testo al centro orizzontale del contenitore */
+  transform: translate(
+    -5px,
+    -9px
+  ); /* Muove il testo indietro di metà della sua larghezza e altezza per centrarlo perfettamente */
+  background: rgba(0, 0, 0, 0);
+
+  color: white; /* Colore del testo */
+  padding: 10px; /* Padding intorno al testo */
+}
+
 .image-container {
   position: relative; /* Imposta il contenitore come posizione relativa per posizionare gli elementi interni */
   text-align: center; /* Allinea il testo al centro orizzontalmente */

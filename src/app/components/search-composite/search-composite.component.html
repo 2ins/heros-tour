@@ -1,4 +1,7 @@
-<mat-dialog-content style="max-height: 100%; padding: 0px">
+<mat-dialog-content
+  style="max-height: 100%; padding: 0px"
+  [ngClass]="{ 'desktop-style': !isMobile }"
+>
   <ng-container *ngTemplateOutlet="composite"></ng-container>
 
   <ng-template #composite>
@@ -51,11 +54,12 @@
     </div>
 
     <div style="padding-left: 15px">
-      <br /><br />
-
-      <div class="flex-container" *ngIf="true">
+      <div
+        [ngClass]="isMobile ? 'flex-container' : 'flex-container-desk'"
+        *ngIf="true"
+      >
         <div
-          class="flex-item"
+          [ngClass]="isMobile ? 'flex-item' : 'flex-item-desk'"
           *ngFor="let el of hashMap.keys()"
           style="
             border: 0px solid green;
