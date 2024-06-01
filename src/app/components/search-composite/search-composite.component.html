@@ -6,28 +6,17 @@
 
   <ng-template #composite>
     <div class="container">
-      <div class="icon-left">
+      <div class="icon-left" *ngIf="isMobile">
         <div mat-dialog-close>
           <mat-icon class="circle-icon, icon-back">arrow_back</mat-icon>
         </div>
       </div>
       <div>
-        <!--
-
-        
-        <input
-          type="search"
-          class="input-text"
-          [(ngModel)]="search"
-          [placeholder]="'by name'"
-          autofocus="false"
-        /><br />
-        -->
-
         <form class="example-form">
+          <br />
           <input
             type="text"
-            placeholder="Search for a place, city, region or country"
+            placeholder="place, city, region, country"
             [formControl]="control"
             [matAutocomplete]="auto"
             [(ngModel)]="searchLoc"

@@ -1,78 +1,127 @@
-<div style="padding-right: 15px" class="button-container">
-  <button
-    mat-menu-item
-    style="padding: 5px"
+<div style="padding-right: 15px; border: 0px solid white">
+  <div
+    class="flex-container"
     [routerLinkActive]="'active'"
-    [routerLink]="'/home'"
+    [routerLink]="'/homesearch'"
   >
+    <mat-icon class="menu-icon">home</mat-icon>
     Home
-  </button>
+  </div>
+  <hr />
 
   <!--
   <button
-    mat-menu-item
-    style="padding: 5px"
+   
+   
     [routerLinkActive]="'active'"
     [routerLink]="'/virtues'"
   >
     Virtues
   </button>
 -->
-
-  <button
-    mat-menu-item
-    style="padding: 5px"
+  <div
+    class="flex-container"
     [routerLinkActive]="'active'"
     routerLink="/locations"
   >
+    <mat-icon class="menu-icon">map</mat-icon>
+
     Locations
-  </button>
-  <button
-    mat-menu-item
-    style="padding: 5px"
+  </div>
+  <div
+    class="flex-container"
     [routerLinkActive]="'active'"
     [routerLink]="'/qualities'"
   >
+    <img class="flex-icon" src="assets/cards_black.png" />
     Cards
-  </button>
+  </div>
 
-  <!--
-  <button
-    mat-menu-item
-    style="padding: 5px"
-    [routerLinkActive]="'active'"
-    routerLink="/addnew"
-  >
-    Add New Experience
-  </button>
-
-  <button
-    mat-menu-item
-    style="padding: 5px"
-    [routerLinkActive]="'active'"
-    routerLink="/addMaster"
-  >
-    Add New Master
-  </button>
--->
-
-  <button
-    mat-menu-item
-    style="padding: 5px"
-    [routerLinkActive]="'active'"
-    routerLink="/users"
-  >
+  <div class="flex-container" [routerLinkActive]="'active'" routerLink="/users">
+    <mat-icon class="menu-icon">group</mat-icon>
     Heroes
-  </button>
-  <button
-    mat-menu-item
-    style="padding: 5px"
+  </div>
+  <hr />
+  <div
+    class="flex-container"
+    [routerLinkActive]="'active'"
+    routerLink="/searchmaster"
+    [queryParams]="{ type: 'search' }"
+  >
+    <mat-icon class="menu-icon">search</mat-icon>
+
+    Search Masters
+  </div>
+  <div
+    class="flex-container"
+    [routerLinkActive]="'active'"
+    routerLink="/searchactivity"
+    [queryParams]="{ type: 'search' }"
+  >
+    <mat-icon class="menu-icon">search</mat-icon>
+
+    Search Activities
+  </div>
+  <hr />
+  <div *ngIf="user">
+    <div
+      class="flex-container"
+      [routerLinkActive]="'active'"
+      routerLink="/addMaster"
+    >
+      <mat-icon class="menu-icon">person_add</mat-icon>
+
+      Add a Master
+    </div>
+    <div
+      class="flex-container"
+      [routerLinkActive]="'active'"
+      routerLink="/addActivity"
+    >
+      <mat-icon class="menu-icon">playlist_add</mat-icon>
+
+      Add an Activity
+    </div>
+    <div
+      class="flex-container"
+      [routerLinkActive]="'active'"
+      routerLink="/addXp"
+      [queryParams]="{ type: 'addXp' }"
+    >
+      <mat-icon class="menu-icon">add_circle</mat-icon>
+
+      Add an Experience
+    </div>
+    <hr />
+  </div>
+  <div
+    class="flex-container"
+    *ngIf="user"
     [routerLinkActive]="'active'"
     routerLink="/profile"
   >
+    <mat-icon class="menu-icon">person</mat-icon>
+
     My Profile
-  </button>
-  <button (click)="onLogOut()" mat-menu-item style="padding: 5px">
-    Sign Out
-  </button>
+  </div>
+
+  <div
+    class="flex-container"
+    *ngIf="!user"
+    [routerLinkActive]="'active'"
+    (click)="signInWithGoogle()"
+  >
+    <img src="/assets/g.jpeg" class="flex-icon flex-icon-g" />
+    Sign in with Google
+  </div>
+  <div
+    class="flex-container"
+    *ngIf="user"
+    [routerLinkActive]="'active'"
+    (click)="signOut()"
+    [routerLink]="'/homesearch'"
+  >
+    <mat-icon class="menu-icon">logout</mat-icon>
+    Logout
+  </div>
 </div>

@@ -32,7 +32,7 @@ export class HeaderComponent implements OnInit {
       SearchCompositeComponent,
       this.dialogConfig
     );
-    dialogRef.componentInstance.placeHolder = 'Search activities';
+    //dialogRef.componentInstance.placeHolder = 'Search activities';
 
     dialogRef.afterClosed().subscribe((result) => {
       console.log(`Dialog result: ${result}`);

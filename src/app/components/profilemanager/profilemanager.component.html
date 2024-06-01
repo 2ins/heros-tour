@@ -1,9 +1,9 @@
-<app-header-simple [description]="'edit profile'"></app-header-simple>
+<div *ngIf="isMobile">
+  <app-header-simple [description]="'edit profile'"></app-header-simple>
 
-<div
-  *ngIf="userProfile | async as myUser"
-  style="margin-left: 20px; padding-top: 100px"
->
+  <div style="padding-top: 50px"></div>
+</div>
+<div *ngIf="userProfile | async as myUser" style="margin-left: 20px">
   <div>
     username:
     <input

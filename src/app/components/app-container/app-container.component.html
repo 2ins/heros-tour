@@ -18,7 +18,10 @@
       </div>
     </div>
     <div fxFlex.gt-sm="19%">
-      <app-search-composite placeHolder="Search"></app-search-composite>
+      <app-search-composite
+        placeHolder="Search"
+        *ngIf="showComponent"
+      ></app-search-composite>
     </div>
   </div>
 </div>

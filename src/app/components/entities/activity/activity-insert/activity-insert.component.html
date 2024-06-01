@@ -1,33 +1,36 @@
-<app-header-simple [isDialog]="isDialog">
-  <label descript>add a new Activity</label>
-</app-header-simple>
+<div *ngIf="isMobile">
+  <app-header-simple [isDialog]="isDialog">
+    <label descript style="color: white">add a new Activity</label>
+  </app-header-simple>
+  <div style="padding-top: 40px"></div>
+</div>
+<div *ngIf="!isMobile && isDialog">
+  <div
+    mat-dialog-close
+    style="
+      margin: 5px;
+      align-items: center;
+      justify-content: center;
+      text-decoration: underline;
+      cursor: pointer;
+    "
+  >
+    Cancel
+  </div>
+</div>
 
 <div
   style="
-    padding-top: 40px;
     margin-left: 0px;
     background-color: #ffffff;
     color: black;
     height: 100%;
+    border-radius: 15px;
   "
 >
-  <form class="example-form" #masterForm="ngForm" style="width: 100%">
-    <mat-form-field>
-      <mat-label>hashtag#</mat-label>
-      <input
-        [(ngModel)]="newActivity.name"
-        matInput
-        placeholder="Activity hashtag"
-        name="name"
-        #name="ngModel"
-        required
-        ngModel
-        minlength="5"
-      />
-    </mat-form-field>
-    <br />
-    <mat-form-field>
-      <mat-label>description</mat-label>
+  <form class="example-form" #masterForm="ngForm">
+    <mat-form-field style="margin-left: 30px; margin-top: 20px">
+      <mat-label>name</mat-label>
       <input
         matInput
         placeholder="Vinyasa Yoga"
@@ -51,12 +54,14 @@
       upload an image
     </div>
 
-    <button
-      (click)="save()"
-      [disabled]="!masterForm.form.valid"
-      mat-dialog-close
-    >
-      save
-    </button>
+    <div class="button-container">
+      <button
+        (click)="save()"
+        [disabled]="!masterForm.form.valid"
+        mat-dialog-close
+      >
+        Save
+      </button>
+    </div>
   </form>
 </div>

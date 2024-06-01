@@ -15,7 +15,7 @@ import { Observable, Subscription } from 'rxjs';
 import { SetSelectedMaster } from 'src/app/actions/master.action';
 import { Quality } from 'src/app/model/quality';
 import { MobileService } from 'src/app/services/mobile.service';
-import { SupabaseService } from 'src/app/supabase.service';
+import { MyProfile, SupabaseService } from 'src/app/supabase.service';
 import { Master } from '../../../../model/master';
 import { HeroState } from '../../../../states/todo.state';
 import { PopupComponent } from '../../../popup/popup.component';
@@ -26,6 +26,7 @@ import { PopupComponent } from '../../../popup/popup.component';
 })
 export class MasterDetailComponent implements OnInit, OnDestroy {
   @Select(HeroState.getSelectedMaster) selectedMaster?: Observable<Master>;
+  @Select(HeroState.getUserProfile) currentUser?: Observable<MyProfile>;
   //@Select(HeroState.getMasterList) masters?: Observable<Master[]>;
   private subscription?: Subscription;
 
@@ -37,6 +38,7 @@ export class MasterDetailComponent implements OnInit, OnDestroy {
   qualities?: Quality[];
   randomNumber?: number;
   authenticated: boolean = false;
+  profile: any = null;
 
   centersAppo: google.maps.LatLngLiteral[] = [];
 
@@ -114,6 +116,9 @@ export class MasterDetailComponent implements OnInit, OnDestroy {
       this.masterId = map.get('id');
 
       this.store.dispatch(new SetSelectedMaster(this.masterId));
+    });
+    this.currentUser?.subscribe((cu) => {
+      this.profile = cu;
     });
   }
 

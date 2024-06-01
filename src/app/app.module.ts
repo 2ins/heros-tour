@@ -133,6 +133,7 @@ import { StrenghtCardByXpsPipe } from './pipes/strenght-card-by-xps.pipe';
 import { QualitiesListXpComponent } from './components/entities/quality/qualities-list-xp/qualities-list-xp.component';
 import { FindQualityFromSearchPipe } from './pipes/find-quality-from-search.pipe';
 import { ActivitiesAccordionListComponent } from './components/entities/activity/activities-accordion-list/activities-accordion-list.component';
+import { LoginComponentComponent } from './components/login-component/login-component.component';
 
 //import ChartDataLabels from 'chartjs-plugin-datalabels';
 
@@ -237,6 +238,7 @@ Chart.defaults.plugins.tooltip.enabled = false;
     QualitiesListXpComponent,
     FindQualityFromSearchPipe,
     ActivitiesAccordionListComponent,
+    LoginComponentComponent,
   ],
   imports: [
     BrowserModule,

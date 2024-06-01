@@ -1,5 +1,9 @@
-<ng-container *ngTemplateOutlet="header"></ng-container>
-<div style="padding-top: 50px; color: black; background-color: white">
+<div *ngIf="isMobile">
+  <ng-container *ngTemplateOutlet="header"></ng-container>
+  <div style="padding-top: 50px"></div>
+</div>
+
+<div style="color: black; background-color: black; color: white">
   <div *ngIf="selectedMaster">
     <div fxLayout="row">
       <div style="margin: 10px">
@@ -33,10 +37,17 @@
             <div>
               <br />
               <label
-                style="color: blue; cursor: pointer; font-style: italic"
+                style="
+                  cursor: pointer;
+                  font-style: italic;
+                  cursor: pointer;
+                  display: block;
+                  text-align: left;
+                "
+                class="linkColor"
                 *ngFor="let a of selectedMaster.activities"
                 routerLink="/activities/activity/{{ a.id }}"
-                >#{{ a.name }}&nbsp;
+                >• {{ a.description }}
               </label>
             </div>
           </div>
@@ -58,6 +69,7 @@
   <input type="hidden" #hidden />
 
   <textarea
+    class="custom-textarea"
     placeholder="Experience description"
     [(ngModel)]="textareaValue"
     style="width: 95%; border: 1px solid gray; margin: 10px"
@@ -71,19 +83,21 @@
   <br />
   <div style="display: block; margin: 10px">
     <input
+      class="custom-date-input"
       type="date"
       #createdAt
       [ngModel]="event_date | date : 'yyyy-MM-dd'"
       (ngModelChange)="event_date = $event"
       [value]="event_date | date : 'yyyy-MM-dd'"
+      style="background-color: balck; color: white"
     />
   </div>
 
   <div>
     <input
-      style="width: 95%; margin: 10px"
+      style="width: 95%; margin: 10px; background-color: black; color: white"
       type="text"
-      class="my-search-box"
+      class="my-search-box custom-textarea"
       (keydown.enter)="$event.preventDefault()"
       placeholder="Search Location"
       type="text"
@@ -154,7 +168,7 @@
   </div>
 
   <br />
-
+  <!--
   <div *ngIf="isMobile">
     <div
       *ngFor="let quality of qualities | async"
@@ -197,12 +211,7 @@
 
             <textarea
               placeholder="Describe how {{ quality.name }} has been good"
-              style="
-                width: 95%;
-                border: 1px solid gray;
-                margin-left: 5px;
-                background-color: white;
-              "
+              style="width: 95%; border: 1px solid gray; margin-left: 5px"
               matInput
               cdkTextareaAutosize
               #autosize="cdkTextareaAutosize"
@@ -219,10 +228,7 @@
   <div *ngIf="!isMobile">
     <div *ngFor="let quality of qualities | async">
       <div class="three-columns-grid" *ngIf="quality.selected == true">
-        <!--
-
-
-        -->
+        
 
         <div
           style="
@@ -274,6 +280,92 @@
       </div>
     </div>
   </div>
+
+-->
+
+  <div style="width: 99%; margin-bottom: 40px">
+    <div>
+      <div>
+        <div>
+          <div style="margin-left: 10px">
+            <div *ngFor="let quality of theQualities">
+              <div>
+                <div
+                  fxLayout="column"
+                  *ngIf="quality.selected == true"
+                  style="margin-bottom: 30px"
+                >
+                  <div fxLayout="row">
+                    <div>
+                      <div class="">
+                        <div style="width: 100%">
+                          <img
+                            [ngClass]="quality.virtue"
+                            style="
+                              width: 100px;
+                              height: 100px;
+                              margin-right: 8px;
+
+                              border-radius: 15%;
+                              padding: 3px;
+                              border: 1px solid black;
+                            "
+                            src="{{
+                              'https://enrgmsdppekwfvmbdxsl.supabase.co/storage/v1/object/public/q/' +
+                                quality.id +
+                                '.jpg'
+                            }}"
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div style="margin-left: 10px; margin-top: 0px" fxFlex>
+                      <p>
+                        <b style="color: white">{{ quality.name }}</b>
+                      </p>
+
+                      <textarea
+                        class="custom-textarea"
+                        placeholder="Describe how {{
+                          quality.name
+                        }} has been good"
+                        style="
+                          width: 95%;
+                          border: 0.1px solid gray;
+                          margin-left: 0px;
+                        "
+                        matInput
+                        cdkTextareaAutosize
+                        #autosize="cdkTextareaAutosize"
+                        cdkAutosizeMinRows="4"
+                        cdkAutosizeMaxRows="10"
+                        [(ngModel)]="quality.desc_xp"
+                      ></textarea>
+
+                      <br />
+                    </div>
+                  </div>
+                  <div style="margin-left: 0px; margin-top: 0px" fxFlex>
+                    <div
+                      style="
+                        color: burlywood;
+                        font-style: italic;
+                        font-size: small;
+                      "
+                    >
+                      {{ quality.name }} is "{{ quality.description }}"
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <ng-template #header>
     <div
       style="

@@ -1,18 +1,24 @@
 <div *ngIf="user != undefined">
   <div *ngIf="!isMobile">
     <div fxLayout="row">
-      <div fxFlex.gt-sm="70%">
+      <div fxFlex.gt-sm="55%">
         <ng-container *ngTemplateOutlet="detail"></ng-container>
       </div>
-      <div fxFlex.gt-sm="30%">
+      <div fxFlex.gt-sm="45%">
         <!--<ng-container *ngTemplateOutlet="VirtuePie"></ng-container>-->
-        <ng-container *ngTemplateOutlet="Activities"></ng-container>
+        <div style="border: 0px solid black; z-index: 2">
+          <h1>{{ user.username }}</h1>
+          <div>{{ user.website }}</div>
+        </div>
+        <ng-container *ngTemplateOutlet="ActivitiesDesktop"></ng-container>
       </div>
     </div>
     <ng-container *ngTemplateOutlet="prospect"></ng-container>
   </div>
 
   <div *ngIf="isMobile">
+    <ng-container *ngTemplateOutlet="header"></ng-container>
+    <div style="width: 100%; padding-top: 40px" class="inline"></div>
     <ng-container *ngTemplateOutlet="detail"></ng-container>
     <!-- <ng-container *ngTemplateOutlet="VirtuePie"></ng-container> -->
     <div
@@ -31,14 +37,8 @@
   </div>
 
   <ng-template #detail>
-    <ng-container *ngTemplateOutlet="header"></ng-container>
     <div>
-      <div style="width: 100%; padding-top: 40px" class="inline">
-        <div style="border: 0px solid black; z-index: 2">
-          <h1>{{ user.username }}</h1>
-          <div>{{ user.website }}</div>
-        </div>
-
+      <div style="width: 100%" class="inline">
         <div
           style="
             border: 0px solid black;
@@ -65,22 +65,58 @@
       experiences experienced: <b>{{ user.tot_xps }}</b>
     </div>
   </ng-template>
-
+  <!--
   <ng-template #Activities>
-    <div style="display: flex; justify-content: center; width: 100%">
+    <div style="display: flex; justify-content: left; width: 100%">
       <div *ngIf="user.activities">
         <div class="inlineTag">
           <label
-            style="color: blue; cursor: pointer"
+            style="cursor: pointer"
+            class="linkColor"
             *ngFor="let a of user.activities"
             routerLink="/activities/activity/{{ a.id }}"
             >•{{ a.description }}{{ isMobile | delimit }}
           </label>
+          <br />
+        </div>
+      </div>
+    </div>
+  </ng-template>
+-->
+
+  <ng-template #Activities>
+    <div style="display: flex; justify-content: left; width: 100%">
+      <div *ngIf="user.activities">
+        <div class="inlineTag">
+          <label
+            style="cursor: pointer"
+            class="linkColor"
+            *ngFor="let a of user.activities"
+            routerLink="/activities/activity/{{ a.id }}"
+            >•{{ a.description }}{{ isMobile | delimit }}
+          </label>
+          <br />
         </div>
       </div>
     </div>
   </ng-template>
 
+  <ng-template #ActivitiesDesktop>
+    <div>
+      <div *ngIf="user.activities">
+        <div class="inlineTag">
+          <label
+            style="cursor: pointer; display: block; text-align: left"
+            class="linkColor"
+            *ngFor="let a of user.activities"
+            routerLink="/activities/activity/{{ a.id }}"
+            >•{{ a.description }}{{ isMobile | delimit }}
+          </label>
+          <br />
+        </div>
+      </div>
+    </div>
+  </ng-template>
   <ng-template #prospect>
     <div>
       <div>
@@ -113,7 +149,7 @@
         width: 100%;
         z-index: 0;
         margin-bottom: 20px;
-        background-color: white;
+        background-color: black;
         border: solid grey 1px;
         position: fixed;
         z-index: 10;

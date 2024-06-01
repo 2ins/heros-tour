@@ -1,0 +1,6 @@
+.input-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%; /* Assicurati che il contenitore abbia la larghezza desiderata */
+}

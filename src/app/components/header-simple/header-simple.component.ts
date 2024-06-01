@@ -8,7 +8,7 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class HeaderSimpleComponent implements OnInit {
   @Input()
-  description: String = '';
+  description: String = 'diocane';
 
   @Input()
   isDialog: boolean = false;

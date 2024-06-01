@@ -17,3 +17,48 @@
   align-items: center; /* Centra gli elementi orizzontalmente */
   width: 100%; /* Occupa l'intera larghezza del contenitore padre */
 }
+
+.dark-theme-input {
+  background-color: black;
+}
+
+.dark-input {
+  color: white;
+  caret-color: white; /* Imposta il colore del cursore */
+}
+
+.dark-theme-input .mat-form-field-label {
+  color: white;
+}
+
+.dark-input::placeholder {
+  color: gray;
+  opacity: 1; /* Assicura che il placeholder mantenga il colore definito */
+}
+
+/* Cambia il colore del placeholder per i browser che usano pseudo-elementi */
+.dark-input::-webkit-input-placeholder {
+  color: gray;
+}
+
+.dark-input::-moz-placeholder {
+  color: gray;
+}
+
+.dark-input:-ms-input-placeholder {
+  color: gray;
+}
+
+.dark-input::-ms-input-placeholder {
+  color: gray;
+}
+
+/* Cambia il colore della label quando il campo è attivo */
+.dark-theme-input .mat-form-field-label.mat-focused {
+  color: white !important;
+}
+
+/* Cambia il colore della linea di fondo */
+.dark-theme-input .mat-form-field-underline .mat-form-field-ripple {
+  background-color: white;
+}

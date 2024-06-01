@@ -1,9 +1,64 @@
 <div *ngIf="quality">
-  <ng-container *ngTemplateOutlet="header"></ng-container>
-  <div
-    fxFlex.gt-sm="60%"
-    style="padding: 10px; padding-top: 40px; margin: 10px"
-  >
+  <div *ngIf="isMobile">
+    <ng-container *ngTemplateOutlet="header"></ng-container>
+    <div style="padding-top: 50px"></div>
+  </div>
+
+  <div *ngIf="!isMobile">
+    <div fxFlex.gt-sm="40%" style="padding: 10px; margin: 10px">
+      <div
+        class="inline"
+        style="
+          border: solid gray 1px;
+          padding: 0;
+          width: 100%;
+          border-radius: 5%;
+          text-align: center;
+        "
+        [ngClass]="quality.virtue"
+      >
+        <h1 style="color: green">{{ quality.name }}</h1>
+        <div style="margin-bottom: 10px">
+          <div *ngIf="quality != undefined">
+            <div
+              *ngFor="let a of quality.tags"
+              style="display: inline; color: green"
+            >
+              {{ a }},
+            </div>
+          </div>
+        </div>
+        <p style="text-align: center">
+          <i style="color: black; font-size: xx-small">
+            {{ quality.virtue | virtueFinder }}
+          </i>
+        </p>
+
+        <div>
+          <img
+            width="100%"
+            src="{{
+              'https://enrgmsdppekwfvmbdxsl.supabase.co/storage/v1/object/public/q/' +
+                quality.id +
+                '.jpg'
+            }}"
+          />
+        </div>
+
+        <br />
+        <p *ngIf="!editMode" style="color: black">{{ quality.description }}</p>
+      </div>
+    </div>
+
+    <div fxFlex.gt-sm="60%" style="padding: 10px; margin: 10px">
+      <div>
+        <h1 style="color: green">In Depth</h1>
+        {{ qualityDesc }}
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="isMobile">
     <div
       class="inline"
       style="
@@ -32,12 +87,7 @@
         </i>
       </p>
 
-      <div
-        [ngClass]="{
-          widthDesktop: !mobileService.isMobile(),
-          widthMobile: mobileService.isMobile()
-        }"
-      >
+      <div>
         <img
           width="100%"
           src="{{
@@ -58,11 +108,15 @@
     </div>
     <br />
     <br />
+  </div>
+
+  <div style="padding: 10px; margin: 10px">
     <h1 style="color: green">Activities related</h1>
     <app-activities-accordion-list
       [quality]="quality"
     ></app-activities-accordion-list>
   </div>
+
   <ng-template #header>
     <div
       style="

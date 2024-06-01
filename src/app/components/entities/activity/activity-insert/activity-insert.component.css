@@ -1,1 +1,10 @@
+.button-container {
+  display: flex;
+  justify-content: center; /* Centra il pulsante orizzontalmente */
+  align-items: center; /* Centra il pulsante verticalmente */
+}
 
+button {
+  padding: 10px 20px; /* Aggiungi un po' di padding per migliorare l'aspetto del pulsante */
+  margin-bottom: 20px;
+}

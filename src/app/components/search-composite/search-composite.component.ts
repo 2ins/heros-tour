@@ -2,12 +2,11 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Select, Store } from '@ngxs/store';
-import { Observable, combineLatest, map, startWith } from 'rxjs';
+import { Observable, map, startWith } from 'rxjs';
 import { GetActivitiesOverview } from 'src/app/actions/activity.action';
 import { SearchHeroes } from 'src/app/actions/hero.action';
 import { GetLocations } from 'src/app/actions/locations.action';
 import { GetMastersOverviewSearch } from 'src/app/actions/master.action';
-import { GetQualities } from 'src/app/actions/quality.action';
 import { SetActivitySearch } from 'src/app/actions/search.action';
 import { LocationDbItem } from 'src/app/model/location';
 import { Quality, VIRTUES_LIST } from 'src/app/model/quality';
@@ -24,6 +23,7 @@ import { SupabaseService } from 'src/app/supabase.service';
 export class SearchCompositeComponent implements OnInit {
   @Select(HeroState.getQualityList) qualities?: Observable<Quality[]>;
   @Select(HeroState.getActivitySearch) searchX?: Observable<Search>;
+
   @Select(HeroState.getAllLocations) locationsAll?: Observable<
     LocationDbItem[]
   >;
@@ -35,6 +35,7 @@ export class SearchCompositeComponent implements OnInit {
   hashMap = new Map<string, Quality[]>();
   virtuesList = VIRTUES_LIST;
   isMobile: boolean = false;
+  theQualities?: Quality[];
 
   @Input()
   placeHolder?: string;
@@ -64,6 +65,16 @@ export class SearchCompositeComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.qualities?.subscribe((quos) => {
+      this.theQualities = quos;
+      this.theQualities.forEach((el: Quality) => {
+        if (!this.hashMap.get(el.virtue)) {
+          this.hashMap.set(el.virtue, []);
+        }
+        this.hashMap.get(el.virtue)?.push(el);
+      });
+    });
+
     this.isMobile = this.mobile.isMobile();
 
     this.store.dispatch(new GetLocations());
@@ -76,81 +87,30 @@ export class SearchCompositeComponent implements OnInit {
     );
 
     var auxS = { search: '', arr: [], location: '' } as Search;
-    /*
-    this.qualities?.subscribe((qs) => {
-      if (qs && qs.length != 0) {
-        qs.forEach((e) => {
-          e.selected = false;
-          console.log('ciao1', e.id, auxS);
-        });
 
-        this.hashMap = new Map([]);
-        if (qs != undefined) {
-          qs.forEach((el: Quality) => {
-            if (!this.hashMap.get(el.virtue)) {
-              this.hashMap.set(el.virtue, []);
-            }
-            this.hashMap.get(el.virtue)?.push(el);
-          });
-        }
-      } else {
-        this.store.dispatch(new GetQualities());
-      }
-    });
-
-    this.searchX?.subscribe((appo) => {
-      
-    });
-*/
-    combineLatest([this.searchX, this.qualities]).subscribe((x: any) => {
-      var auxS = x[0] as Search;
-      var qs = x[1];
-
-      if (auxS == undefined) {
-        this.store.dispatch(
-          new SetActivitySearch({ search: '', arr: [], location: '' } as Search)
-        );
-      }
-
-      if (qs && qs.length != 0) {
-        qs.forEach((e: any) => {
-          e.selected = false;
-          if (auxS.arr.find((el) => e.id == el)) {
-            e.selected = true;
+    this.searchX?.subscribe((sea) => {
+      this.searchLoc = sea.location;
+      this.theQualities?.map((e) => (e.selected = false));
+      sea.arr.forEach((index) => {
+        if (this.theQualities) {
+          const quality = this.theQualities.find(
+            (el: Quality) => el.id == index
+          );
+          if (quality) {
+            quality.selected = true;
           }
-        });
-
-        this.hashMap = new Map([]);
-        if (qs != undefined) {
-          qs.forEach((el: Quality) => {
-            if (!this.hashMap.get(el.virtue)) {
-              this.hashMap.set(el.virtue, []);
-            }
-            this.hashMap.get(el.virtue)?.push(el);
-          });
         }
-      } else {
-        this.store.dispatch(new GetQualities());
-      }
-      this.search = auxS.search;
-      this.searchLoc = auxS.location;
+      });
     });
   }
-
   getArr(): number[] {
     var arr: number[] = [];
-    if (this.qualities) {
-      this.qualities
-        .pipe(
-          map((array: Quality[]) => {
-            array.forEach((item: Quality) => {
-              if (item.selected) {
-                arr.push(item.id);
-              }
-            });
-          })
-        )
-        .subscribe();
+    if (this.theQualities) {
+      this.theQualities.forEach((item: Quality) => {
+        if (item.selected) {
+          arr.push(item.id);
+        }
+      });
     }
     return arr;
   }

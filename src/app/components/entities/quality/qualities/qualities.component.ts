@@ -46,7 +46,7 @@ export class QualitiesComponent implements OnInit {
 
   ngOnInit(): void {
     this.isMobile = this.mobileService.isMobile();
-    this.store.dispatch(new GetQualities());
+    //this.store.dispatch(new GetQualities());
     this.activatedRoute.data.subscribe((d) => {
       console.log('data', d);
     });
@@ -95,7 +95,8 @@ export class QualitiesComponent implements OnInit {
       if (!this.sea.arr.includes(quality.id)) {
         this.sea.arr.push(quality.id);
       }
-      this.store.dispatch(new SetActivitySearch(this.sea));
+      const clonedSearch: Search = { ...this.sea };
+      this.store.dispatch(new SetActivitySearch(clonedSearch));
       this.route.navigate(['/home']);
       this.store.dispatch(new GetActivitiesOverview(this.sea));
       this.store.dispatch(new SearchHeroes(this.sea));

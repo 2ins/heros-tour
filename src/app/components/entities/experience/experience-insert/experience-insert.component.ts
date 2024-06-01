@@ -136,7 +136,9 @@ export class ExperienceInsertComponent implements OnInit, AfterViewInit {
 
     this.qualities?.subscribe((qs) => {
       //assegna alla variabile
-      this.theQualities = qs;
+      this.theQualities = this.filterQualities(qs);
+
+      // this.theQualities.map((x) => (x.selected = false));
       //hashmap di utility. serve per gestire il raggruppamento nella view
       this.generateMap();
       //valorizza le qualita con selected a true a partire da preselectedQs
@@ -150,6 +152,35 @@ export class ExperienceInsertComponent implements OnInit, AfterViewInit {
         this.myProfile = p;
       }
     });
+  }
+
+  filterQualities(qualities: Quality[]): Quality[] {
+    return qualities.map(
+      ({
+        id,
+        name,
+        description,
+        count,
+        tags,
+        virtue,
+        isSearch,
+        activities,
+        desc_xp,
+        desc_all,
+      }) => ({
+        id,
+        name,
+        description,
+        count,
+        tags,
+        virtue,
+        activities,
+        selected: false,
+        desc_xp,
+        desc_all,
+        isSearch,
+      })
+    );
   }
 
   setSelected(m: Master): void {

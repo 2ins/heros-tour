@@ -4,6 +4,7 @@ import { ActivitiesComponent } from './components/entities/activity/activities/a
 import { ActivityDetailComponent } from './components/entities/activity/activity-detail/activity-detail.component';
 import { ActivityInsertComponent } from './components/entities/activity/activity-insert/activity-insert.component';
 import { ActivityMasterInsertComponent } from './components/entities/activity/activity-master-insert/activity-master-insert.component';
+import { ActivitySearchComponent } from './components/entities/activity/activity-search/activity-search.component';
 import { ExperienceDetailComponent } from './components/entities/experience/experience-detail/experience-detail.component';
 import { ExperienceInsertOverviewComponent } from './components/entities/experience/experience-insert-overview/experience-insert-overview.component';
 import { ExperienceInsertComponent } from './components/entities/experience/experience-insert/experience-insert.component';
@@ -41,9 +42,12 @@ const routes: Routes = [
   { path: 'profile', component: ProfilemanagerComponent },
   { path: 'addnew', component: ExperienceInsertComponent },
   { path: 'addMaster', component: MasterInsertComponent },
+  { path: 'addXp', component: ExperienceInsertOverviewComponent },
   { path: 'addActivity', component: ActivityInsertComponent },
   { path: 'home', component: HomeviewComponent },
   { path: 'homesearch', component: HomeSearchComponent },
+  { path: 'searchmaster', component: ExperienceInsertOverviewComponent },
+  { path: 'searchactivity', component: ActivitySearchComponent },
   { path: 'testout', component: TestOutlineComponent },
   {
     path: 'addExperienceOverview',

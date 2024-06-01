@@ -53,3 +53,8 @@ div.inlineTag {
   margin-right: 0px;
   border-radius: 10%;
 }
+
+.desktop-align {
+  display: block;
+  margin-bottom: 8px;
+}

@@ -669,7 +669,16 @@ export class HeroState {
     { getState, setState }: StateContext<HeroStateModel>,
     { payload }: SetUserProfile
   ) {
-    this.loadingService.start();
+    if (payload) {
+      this.loadingService.start();
+    } else {
+      const state = getState();
+
+      setState({
+        ...state,
+        userProfile: undefined,
+      });
+    }
     var prof = this.supabase.profile(payload);
 
     return from(prof).pipe(

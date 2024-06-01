@@ -10,6 +10,7 @@ import { AddActivity, GetAllActivities } from 'src/app/actions/activity.action';
 import { CleanFile } from 'src/app/actions/file.action';
 import { ActivityTable } from 'src/app/model/activity';
 import { ImageHelp } from 'src/app/model/image';
+import { MobileService } from 'src/app/services/mobile.service';
 import { HeroState } from 'src/app/states/todo.state';
 import { SupabaseService } from 'src/app/supabase.service';
 import { openCropperDialog } from 'src/app/utils/dialog.utils';
@@ -30,7 +31,7 @@ export class ActivityInsertComponent implements OnInit {
 
   @Input()
   isDialog: boolean = false;
-
+  isMobile: boolean = false;
   constructor(
     public dialog: MatDialog,
     private store: Store,
@@ -38,10 +39,12 @@ export class ActivityInsertComponent implements OnInit {
     private sanitizer: DomSanitizer,
     private readonly supabase: SupabaseService,
     private _snackBar: MatSnackBar,
-    private location: Location
+    private location: Location,
+    private mobile: MobileService
   ) {}
 
   ngOnInit(): void {
+    this.isMobile = this.mobile.isMobile();
     var activity = history.state.activity;
     console.log('activity', activity);
     if (activity) {

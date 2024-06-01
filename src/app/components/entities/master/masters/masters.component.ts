@@ -32,7 +32,6 @@ export class MastersComponent implements OnInit {
     this.isMobile = this.ms.isMobile();
     //this.store.dispatch(new GetMastersOverview());
     this.search?.subscribe((x) => {
-      console.log('SEARCH___', x);
       this.theSearch = x;
     });
   }
@@ -47,6 +46,5 @@ export class MastersComponent implements OnInit {
     this.store.dispatch(new GetMastersOverviewSearch(x)).subscribe(() => {
       this.indxTab = 0;
     });
-    console.log('SEARCH___', x);
   }
 }

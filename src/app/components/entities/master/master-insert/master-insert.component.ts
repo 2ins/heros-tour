@@ -15,6 +15,7 @@ import { ActivityTable } from 'src/app/model/activity';
 import { ImageHelp } from 'src/app/model/image';
 import { MasterActivityTable, MasterTable } from 'src/app/model/master';
 import { LoaderService } from 'src/app/services/loader.service';
+import { MobileService } from 'src/app/services/mobile.service';
 import { HeroState } from 'src/app/states/todo.state';
 import { SupabaseService } from 'src/app/supabase.service';
 import { openCropperDialog } from 'src/app/utils/dialog.utils';
@@ -40,6 +41,7 @@ export class MasterInsertComponent implements OnInit {
   file?: File;
   imageSrc?: string;
   name?: string;
+  isMobile: boolean = false;
 
   newMaster: MasterTable = {
     name: '',
@@ -55,7 +57,8 @@ export class MasterInsertComponent implements OnInit {
     private _snackBar: MatSnackBar,
     private loadingService: LoaderService,
     private location: Location,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private mobile: MobileService
   ) {}
 
   handleOpenDialog(): void {
@@ -63,6 +66,7 @@ export class MasterInsertComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.isMobile = this.mobile.isMobile();
     var master = history.state.master;
 
     if (master) {

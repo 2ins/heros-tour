@@ -11,6 +11,7 @@ import { Observable } from 'rxjs';
 import { GetActivitiesOverview } from 'src/app/actions/activity.action';
 import { SearchHeroes } from 'src/app/actions/hero.action';
 import { GetMastersOverviewSearch } from 'src/app/actions/master.action';
+import { SetActivitySearch } from 'src/app/actions/search.action';
 import { Activity } from 'src/app/model/activity';
 import { Hero } from 'src/app/model/hero';
 import { Master } from 'src/app/model/master';
@@ -57,6 +58,9 @@ export class HomeviewComponent implements OnInit, AfterViewInit {
     if (index >= 0) {
       this.sea.arr.splice(index, 1);
     }
+    const clonedSearch: Search = { ...this.sea };
+
+    this.store.dispatch(new SetActivitySearch(clonedSearch));
     this.store.dispatch(new GetActivitiesOverview(this.sea));
     this.store.dispatch(new SearchHeroes(this.sea));
     this.store.dispatch(new GetMastersOverviewSearch(this.sea));
@@ -64,14 +68,17 @@ export class HomeviewComponent implements OnInit, AfterViewInit {
 
   removeLocation(): void {
     this.sea.location = '';
+    const clonedSearch: Search = { ...this.sea };
+    this.store.dispatch(new SetActivitySearch(clonedSearch));
     this.store.dispatch(new GetActivitiesOverview(this.sea));
-    this.store.dispatch(new SearchHeroes(this.sea));
+    this.store.dispatch(new SearchHeroes(clonedSearch));
     this.store.dispatch(new GetMastersOverviewSearch(this.sea));
   }
 
   ngOnInit(): void {
     this.isMobile = this.mobileS.isMobile();
     this.searchX?.subscribe((appo) => (this.sea = appo));
+
     /*
     this.heroes?.subscribe((h) => {
       h?.sort((a, b) => {
@@ -83,6 +90,7 @@ export class HomeviewComponent implements OnInit, AfterViewInit {
     */
     if (this.sea == undefined) {
       var searchc: Search = { search: '', arr: [], location: '' };
+      this.store.dispatch(new SetActivitySearch(searchc));
       this.store.dispatch(new SearchHeroes(searchc));
       this.store.dispatch(new GetMastersOverviewSearch(searchc));
       this.store.dispatch(new GetActivitiesOverview(searchc));
@@ -105,7 +113,7 @@ export class HomeviewComponent implements OnInit, AfterViewInit {
       panelClass: 'full-screen-modal',
       autoFocus: false,
     });
-    dialogRef.componentInstance.placeHolder = 'Search activities';
+    //dialogRef.componentInstance.placeHolder = 'Search activities';
 
     dialogRef.afterClosed().subscribe((result: any) => {
       console.log(`Dialog result: ${result}`);

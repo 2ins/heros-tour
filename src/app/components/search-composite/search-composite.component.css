@@ -37,13 +37,15 @@ li {
 .container {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
+  width: 100%;
+  width: 100%;
 }
 
 .icon-left,
 .icon-right {
   flex: 0 0 auto;
-  margin: 0 5px; /* Spazio tra icone e input */
+  margin: 0 12px; /* Spazio tra icone e input */
 }
 
 .input-text {

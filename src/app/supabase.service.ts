@@ -39,6 +39,15 @@ export class SupabaseService {
     );
   }
 
+  signInWithProvider(provider: 'google' | 'github') {
+    return this.supabase.auth.signInWithOAuth({
+      provider: provider,
+    });
+  }
+
+  getUserSupabase() {
+    return this.supabase.auth.getUser();
+  }
   //AUTHENTICATIONS
   get session() {
     this.supabase.auth.getSession().then(({ data }) => {

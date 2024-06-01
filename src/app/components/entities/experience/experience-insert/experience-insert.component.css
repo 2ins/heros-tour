@@ -73,3 +73,54 @@ li {
   ); /* Limita la larghezza massima a un terzo della larghezza del contenitore */
   box-sizing: border-box; /* Includi padding e bordo nella larghezza */
 }
+
+.custom-textarea::placeholder {
+  color: gray;
+}
+.custom-textarea {
+  background-color: black;
+  color: white;
+}
+
+/* Stili per l'input di tipo date */
+.custom-date-input {
+  background-color: black;
+  color: white;
+}
+
+.custom-date-input::-webkit-datetime-edit {
+  color: white;
+}
+
+.custom-date-input::-webkit-datetime-edit-text {
+  color: white;
+}
+
+.custom-date-input::-webkit-datetime-edit-month-field {
+  color: white;
+}
+
+.custom-date-input::-webkit-datetime-edit-day-field {
+  color: white;
+}
+
+.custom-date-input::-webkit-datetime-edit-year-field {
+  color: white;
+}
+
+.custom-date-input::-webkit-inner-spin-button {
+  display: none;
+}
+
+.custom-date-input::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+}
+
+/* Pseudo-elementi per il placeholder */
+.custom-date-input::-webkit-input-placeholder {
+  color: white;
+}
+
+::ng-deep .mat-checkbox-frame {
+  border-color: white !important;
+}

@@ -4,6 +4,7 @@ import {
   ElementRef,
   Inject,
   OnInit,
+  Optional,
   ViewChild,
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
@@ -12,7 +13,7 @@ import {
   MatDialog,
   MatDialogConfig,
 } from '@angular/material/dialog';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Select, Store } from '@ngxs/store';
 import { Observable, map, startWith } from 'rxjs';
 import { GetAllActivities } from 'src/app/actions/activity.action';
@@ -29,14 +30,26 @@ import { ActivityMasterInsertComponent } from '../activity-master-insert/activit
 })
 export class ActivitySearchComponent implements OnInit {
   isSearchOnly: boolean = false;
+  data: any = {};
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: any,
+    @Optional() @Inject(MAT_DIALOG_DATA) public injectedData: any,
     private store: Store,
     private route: Router,
     private location: Location,
-    public dialog: MatDialog
-  ) {}
+    public dialog: MatDialog,
+    private actrout: ActivatedRoute
+  ) {
+    if (this.injectedData) {
+      this.data = this.injectedData;
+    } else {
+      this.actrout.queryParams.subscribe((params) => {
+        if (params) {
+          this.data.type = params['type'];
+        }
+      });
+    }
+  }
 
   @ViewChild('textSearch')
   public textSearch!: ElementRef;

@@ -1,0 +1,12 @@
+<!-- src/app/login/login.component.html -->
+<div>
+  <button (click)="signInWithGoogle()">Sign in with Google</button
+  ><img src="/assets/g.jpeg" style="width: 25px; border-radius: 50%" />
+  <button (click)="signInWithGitHub()">Sign in with GitHub</button>
+  <button (click)="signOut()">Sign out</button>
+
+  <div *ngIf="user">
+    <p>Welcome, {{ user.email }}</p>
+    <p>ID: {{ user.id }}</p>
+  </div>
+</div>

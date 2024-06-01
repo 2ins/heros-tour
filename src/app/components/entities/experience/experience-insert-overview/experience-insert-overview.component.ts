@@ -4,11 +4,12 @@ import {
   ElementRef,
   Inject,
   OnInit,
+  Optional,
   ViewChild,
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Select, Store } from '@ngxs/store';
 import { Observable, map, startWith } from 'rxjs';
 import { GetAllMastersList } from 'src/app/actions/master.action';
@@ -25,14 +26,27 @@ export class ExperienceInsertOverviewComponent implements OnInit {
   titleReview: string = " Write your experience, make someone's experience";
   titleSearch: string = 'Search a master';
   title: string = '';
+  data: any = {};
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: any,
+    @Optional() @Inject(MAT_DIALOG_DATA) public injectedData: any,
     private store: Store,
     private route: Router,
+    private actrout: ActivatedRoute,
     private location: Location,
     private sharedMongoArticleService: SharedMongoArticleService
-  ) {}
+  ) {
+    if (this.injectedData) {
+      this.data = this.injectedData;
+    } else {
+      this.actrout.queryParams.subscribe((params) => {
+        if (params) {
+          this.data.type = params['type'];
+        }
+      });
+    }
+    //se solo se apro da menu button
+  }
 
   @ViewChild('textSearch')
   public textSearch!: ElementRef;
@@ -44,6 +58,7 @@ export class ExperienceInsertOverviewComponent implements OnInit {
   searchLoc: string = '';
 
   ngOnInit(): void {
+    console.log(this.data);
     if (this.data.type == 'search') {
       this.title = this.titleSearch;
     } else {
@@ -54,6 +69,7 @@ export class ExperienceInsertOverviewComponent implements OnInit {
       console.log('lenght', e.length);
       this.streets = e;
     });
+
     this.filteredStreets = this.control.valueChanges.pipe(
       startWith(''),
       map((value) => this._filter(value))

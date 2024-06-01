@@ -3,46 +3,48 @@
 </h1>
 
 <form class="example-form">
-  <button mat-button mat-dialog-close>
-    <mat-icon>arrow_back</mat-icon>
-  </button>
-  <input
-    #textSearch
-    type="text"
-    placeholder="Search for a Master"
-    [formControl]="control"
-    [matAutocomplete]="auto"
-    [(ngModel)]="searchLoc"
-    (focusout)="unFocusOnSearchControl()"
-    style="width: 70%"
-  />
-  <mat-autocomplete
-    #auto="matAutocomplete"
-    (optionSelected)="unFocusOnSearchControl()"
-  >
-    <mat-option
-      mat-dialog-close
-      *ngFor="let item of filteredStreets | async"
-      [value]="item.name"
-      style="height: 80px"
-      (click)="addXp(item)"
+  <div class="input-container">
+    <button mat-button mat-dialog-close *ngIf="injectedData">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <input
+      #textSearch
+      type="text"
+      placeholder="Search for a Master"
+      [formControl]="control"
+      [matAutocomplete]="auto"
+      [(ngModel)]="searchLoc"
+      (focusout)="unFocusOnSearchControl()"
+      style="width: 70%"
+    />
+    <mat-autocomplete
+      #auto="matAutocomplete"
+      (optionSelected)="unFocusOnSearchControl()"
     >
-      <img
-        with="80"
-        height="80"
-        src="{{
-          'https://enrgmsdppekwfvmbdxsl.supabase.co/storage/v1/object/public/avatars/' +
-            item.avatar_url
-        }}"
-      />{{ item.name }}
-    </mat-option>
-    <mat-option
-      *ngIf="searchLoc.length > 1"
-      routerLink="/addMaster"
-      mat-dialog-close
-    >
-      <mat-icon>add_circle_outline</mat-icon>
-      add a new master
-    </mat-option>
-  </mat-autocomplete>
+      <mat-option
+        mat-dialog-close
+        *ngFor="let item of filteredStreets | async"
+        [value]="item.name"
+        style="height: 80px"
+        (click)="addXp(item)"
+      >
+        <img
+          with="80"
+          height="80"
+          src="{{
+            'https://enrgmsdppekwfvmbdxsl.supabase.co/storage/v1/object/public/avatars/' +
+              item.avatar_url
+          }}"
+        />{{ item.name }}
+      </mat-option>
+      <mat-option
+        *ngIf="searchLoc.length > 1"
+        routerLink="/addMaster"
+        mat-dialog-close
+      >
+        <mat-icon>add_circle_outline</mat-icon>
+        add a new master
+      </mat-option>
+    </mat-autocomplete>
+  </div>
 </form>

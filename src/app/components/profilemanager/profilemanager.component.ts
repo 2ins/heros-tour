@@ -9,6 +9,7 @@ import { CleanFile } from 'src/app/actions/file.action';
 import { SetProfile } from 'src/app/actions/profiles.action';
 import { ImageHelp } from 'src/app/model/image';
 import { LoaderService } from 'src/app/services/loader.service';
+import { MobileService } from 'src/app/services/mobile.service';
 import { HeroState } from 'src/app/states/todo.state';
 import { MyProfile, SupabaseService } from 'src/app/supabase.service';
 import { openCropperDialog } from 'src/app/utils/dialog.utils';
@@ -30,6 +31,7 @@ export class ProfilemanagerComponent implements OnInit {
   imageSrc?: string;
   name?: string;
   myUser?: MyProfile;
+  isMobile: boolean = false;
 
   @Input()
   session!: AuthSession;
@@ -42,10 +44,12 @@ export class ProfilemanagerComponent implements OnInit {
     private store: Store,
     private sanitizer: DomSanitizer,
     private _snackBar: MatSnackBar,
-    private loadingService: LoaderService
+    private loadingService: LoaderService,
+    private mobile: MobileService
   ) {}
 
   ngOnInit(): void {
+    this.isMobile = this.mobile.isMobile();
     this.userProfile?.subscribe((us) => {
       if (us) {
         this.myUser = us;
