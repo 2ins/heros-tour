@@ -65,27 +65,9 @@
       experiences experienced: <b>{{ user.tot_xps }}</b>
     </div>
   </ng-template>
-  <!--
-  <ng-template #Activities>
-    <div style="display: flex; justify-content: left; width: 100%">
-      <div *ngIf="user.activities">
-        <div class="inlineTag">
-          <label
-            style="cursor: pointer"
-            class="linkColor"
-            *ngFor="let a of user.activities"
-            routerLink="/activities/activity/{{ a.id }}"
-            >•{{ a.description }}{{ isMobile | delimit }}
-          </label>
-          <br />
-        </div>
-      </div>
-    </div>
-  </ng-template>
--->
 
   <ng-template #Activities>
-    <div style="display: flex; justify-content: left; width: 100%">
+    <div style="display: flex; justify-content: center; width: 100%">
       <div *ngIf="user.activities">
         <div class="inlineTag">
           <label
@@ -155,7 +137,7 @@
         z-index: 10;
       "
     >
-      <div style="border-bottom: 0px solid black">
+      <div style="border-bottom: 0px solid black; color: white">
         <button mat-button (click)="backClicked()">
           <mat-icon>arrow_back</mat-icon>
         </button>

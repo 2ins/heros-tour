@@ -20,7 +20,7 @@
         mat-menu-item
         [routerLinkActive]="'active'"
         style="color: white"
-        [routerLink]="'/profile'"
+        routerLink="/users/user/{{ profile.id }}"
       >
         <mat-icon class="menu-icon" style="color: white">person</mat-icon>
         {{ profile.email }}

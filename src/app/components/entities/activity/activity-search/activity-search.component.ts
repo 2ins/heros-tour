@@ -20,6 +20,7 @@ import { GetAllActivities } from 'src/app/actions/activity.action';
 import { SetAddedMaster } from 'src/app/actions/master.action';
 import { ActivityTable } from 'src/app/model/activity';
 import { MasterTable } from 'src/app/model/master';
+import { MobileService } from 'src/app/services/mobile.service';
 import { HeroState } from 'src/app/states/todo.state';
 import { ActivityMasterInsertComponent } from '../activity-master-insert/activity-master-insert.component';
 
@@ -31,6 +32,7 @@ import { ActivityMasterInsertComponent } from '../activity-master-insert/activit
 export class ActivitySearchComponent implements OnInit {
   isSearchOnly: boolean = false;
   data: any = {};
+  isMobile: boolean = false;
 
   constructor(
     @Optional() @Inject(MAT_DIALOG_DATA) public injectedData: any,
@@ -38,7 +40,8 @@ export class ActivitySearchComponent implements OnInit {
     private route: Router,
     private location: Location,
     public dialog: MatDialog,
-    private actrout: ActivatedRoute
+    private actrout: ActivatedRoute,
+    private mobile: MobileService
   ) {
     if (this.injectedData) {
       this.data = this.injectedData;
@@ -67,6 +70,7 @@ export class ActivitySearchComponent implements OnInit {
   activityButtonDisabled: boolean = true;
 
   ngOnInit(): void {
+    this.isMobile = this.mobile.isMobile();
     if (this.data && this.data.type == 'search') {
       this.isSearchOnly = true;
     } else {

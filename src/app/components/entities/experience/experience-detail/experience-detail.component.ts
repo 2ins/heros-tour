@@ -21,7 +21,7 @@ import { MobileService } from 'src/app/services/mobile.service';
 import { NavigationHistoryService } from 'src/app/services/navigation-history-service.service';
 import { ScrollService } from 'src/app/services/scroll.service';
 import { HeroState } from 'src/app/states/todo.state';
-import { MyProfile } from 'src/app/supabase.service';
+import { MyProfile, SupabaseService } from 'src/app/supabase.service';
 
 @Component({
   selector: 'app-experience-detail',
@@ -38,6 +38,7 @@ export class ExperienceDetailComponent implements OnInit {
   hero?: Hero;
   dt?: Date;
   editEnabled: boolean = false;
+  theCurrentUser?: MyProfile;
 
   experienceId?: any;
   qidSelected?: any;
@@ -53,33 +54,20 @@ export class ExperienceDetailComponent implements OnInit {
     private location: Location,
     @Inject(DOCUMENT) private document: Document,
     private navigationHistoryService: NavigationHistoryService,
-    private scroller: ScrollService
+    private scroller: ScrollService,
+    private supabase: SupabaseService
   ) {
     this.dt = new Date();
     this.document.documentElement.scrollTop = 0;
-  }
-
-  ngAfterViewInit() {
-    //this.scrollToElement();
-  }
-
-  scrollToElement() {
-    if (this.scrollTarget) {
-      alert(this.scrollTarget.nativeElement);
-      // this.scroller.scrollToElement(this.scrollTarget.nativeElement);
-      this.scroller.scrollToElementById('scrollId');
-    }
   }
 
   ngOnInit(): void {
     // Subscription
     this.activatedRoute.paramMap.subscribe((paramMap) => {
       this.experienceId = paramMap.get('id') as string; // Ensure 'hero_id' matches your actual parameter name
-      console.log('1: experienceId?:' + this.experienceId);
 
       this.activatedRoute.queryParamMap.subscribe((queryParamMap) => {
         this.qidSelected = queryParamMap.get('qid') as string;
-        console.log('2: qidSelected?:' + this.qidSelected);
 
         if (this.experienceId) {
           this.store.dispatch(new GetHeroById(this.experienceId));
@@ -89,18 +77,11 @@ export class ExperienceDetailComponent implements OnInit {
     this.isMobile = this.ms.isMobile();
 
     this.selectedHero?.subscribe((h) => {
-      console.log('2: this.selectedHero?.subscribe', h);
       this.hero = h;
-      console.log('this hero', this.hero);
       this.dt = this.hero.created_at;
-      h.profile_id;
-      this.currentUser?.subscribe((cu) => {
-        if (cu.id == h.profile_id) {
-          this.editEnabled = true;
-        } else {
-          this.editEnabled = false;
-        }
-      });
+      if (this.supabase._session?.user.id == h.profile_id) {
+        this.editEnabled = true;
+      }
     });
   }
 
@@ -149,27 +130,6 @@ export class ExperienceDetailComponent implements OnInit {
   }
 
   backClicked() {
-    const history = this.navigationHistoryService.getHistory();
-    var historyLenght = history.length;
-    console.log(history);
-    console.log(historyLenght);
-
-    console.log('2', history[historyLenght - 2]);
-
-    var i = 2;
-    while (i < historyLenght) {
-      console.log('i', i);
-      var url = history[historyLenght - i];
-      if (url.includes('/addnew') || url.includes('experiences')) {
-        console.log('includd');
-        i++;
-      } else {
-        console.log('iz', url);
-        this.route.navigateByUrl(url);
-        break;
-      }
-    }
-    console.log('az', '/masters/master/' + this.hero?.master_id);
-    this.route.navigateByUrl('/masters/master/' + this.hero?.master_id);
+    this.location.back();
   }
 }

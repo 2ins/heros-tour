@@ -3,7 +3,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
-import { GetUsers, SetSelectedUser } from 'src/app/actions/profiles.action';
+import { SetSelectedUser } from 'src/app/actions/profiles.action';
 import { MobileService } from 'src/app/services/mobile.service';
 import { HeroState } from 'src/app/states/todo.state';
 import { MyProfile, SupabaseService } from 'src/app/supabase.service';
@@ -15,7 +15,6 @@ import { MyProfile, SupabaseService } from 'src/app/supabase.service';
 })
 export class UserDetailComponent implements OnInit {
   @Select(HeroState.getSelectedUser) selectedUser?: Observable<MyProfile>;
-  @Select(HeroState.getUsers) users?: Observable<MyProfile[]>;
 
   user?: MyProfile;
   userId?: any;
@@ -57,16 +56,6 @@ export class UserDetailComponent implements OnInit {
       this.userId = map.get('id');
       console.log('userId?:' + this.userId);
       this.store.dispatch(new SetSelectedUser(this.userId));
-    });
-
-    this.users?.subscribe((us) => {
-      if (us) {
-        console.log('users', us);
-        if (us.length == 0) {
-          console.log('zero');
-          this.store.dispatch(new GetUsers(''));
-        }
-      }
     });
   }
   backClicked() {

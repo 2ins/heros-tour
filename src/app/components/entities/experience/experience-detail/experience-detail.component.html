@@ -10,6 +10,21 @@
         ><br />
         <br />
         <ng-container *ngTemplateOutlet="detailText"></ng-container>
+        <button
+          #btnEdit
+          (click)="edit()"
+          *ngIf="editEnabled"
+          mat-menu-item
+          style="
+            float: right;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            color: blue;
+          "
+        >
+          <mat-icon>edit</mat-icon>
+          Edit
+        </button>
       </div>
     </div>
     <br />
@@ -37,13 +52,6 @@
     <br />
     <br />
     <ng-container *ngTemplateOutlet="detailText"></ng-container>
-    <!--
-    <app-qualities-list-grid
-      *ngIf="heroX.qualities"
-      [qualities]="heroX.qualities"
-      [showMore]="true"
-    ></app-qualities-list-grid>
-  -->
 
     <div #scrollTargetx id="scrollId"></div>
     <app-qualities-list-xp
@@ -131,6 +139,7 @@
         <label
           >{{ heroX.profile.username }} @<b>{{ heroX.master.name }}</b></label
         >
+
         <button
           *ngIf="editEnabled"
           mat-button

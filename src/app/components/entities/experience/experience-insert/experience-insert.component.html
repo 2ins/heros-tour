@@ -130,7 +130,7 @@
     </app-experience-article>
   </div>
 
-  <div class="flex-container">
+  <div class="flex-container" style="margin-right: 20px">
     <div
       class="flex-item"
       *ngFor="let el of hashMap.keys()"
@@ -168,120 +168,6 @@
   </div>
 
   <br />
-  <!--
-  <div *ngIf="isMobile">
-    <div
-      *ngFor="let quality of qualities | async"
-      style="display: flex; justify-content: center; align-items: center"
-    >
-      <div
-        *ngIf="quality.selected == true"
-        class="widthMobile"
-        style="
-          border: solid gray 1px;
-          padding: 5px;
-          margin: 10px;
-          border-radius: 5%;
-        "
-        [ngClass]="quality.virtue"
-      >
-        <div style="text-align: center">
-          <p>
-            <b style="color: green; font-size: large">{{ quality.name }}</b>
-          </p>
-        </div>
-        <img
-          style="border-radius: 3%"
-          width="99%"
-          src="{{
-            'https://enrgmsdppekwfvmbdxsl.supabase.co/storage/v1/object/public/q/' +
-              quality.id +
-              '.jpg'
-          }}"
-        />
-        <div style="color: green; margin-left: 30">
-          <b>{{ quality.name }} </b>is:
-
-          <div style="color: gray; border-radius: 5%">
-            {{ quality.description }}
-          </div>
-          <br />
-          <div>
-            your experience
-
-            <textarea
-              placeholder="Describe how {{ quality.name }} has been good"
-              style="width: 95%; border: 1px solid gray; margin-left: 5px"
-              matInput
-              cdkTextareaAutosize
-              #autosize="cdkTextareaAutosize"
-              cdkAutosizeMinRows="3"
-              cdkAutosizeMaxRows="10"
-              [(ngModel)]="quality.desc_xp"
-            ></textarea>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div *ngIf="!isMobile">
-    <div *ngFor="let quality of qualities | async">
-      <div class="three-columns-grid" *ngIf="quality.selected == true">
-        
-
-        <div
-          style="
-            border: solid gray 1px;
-            padding: 5px;
-            margin: 1px;
-            border-radius: 5%;
-            float: left;
-          "
-          [ngClass]="quality.virtue"
-        >
-          <img
-            style="border-radius: 3%"
-            width="99%"
-            src="{{
-              'https://enrgmsdppekwfvmbdxsl.supabase.co/storage/v1/object/public/q/' +
-                quality.id +
-                '.jpg'
-            }}"
-          />
-          <div
-            style="color: green; margin-left: 30"
-            [ngClass]="{ parent: !isMobile }"
-          ></div>
-        </div>
-        <div>
-          <b>{{ quality.name }} </b>
-          <div style="color: gray; border-radius: 5%; background-color: bisque">
-            {{ quality.description }}
-          </div>
-          <br />
-        </div>
-        <div>
-          <div [ngClass]="{ child: !isMobile }">
-            your experience
-
-            <textarea
-              placeholder="Describe how {{ quality.name }} has been good"
-              style="width: 95%; border: 1px solid gray; margin-left: 5px"
-              matInput
-              cdkTextareaAutosize
-              #autosize="cdkTextareaAutosize"
-              cdkAutosizeMinRows="5"
-              cdkAutosizeMaxRows="10"
-              [(ngModel)]="quality.desc_xp"
-            ></textarea>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
--->
 
   <div style="width: 99%; margin-bottom: 40px">
     <div>

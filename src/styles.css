@@ -143,4 +143,12 @@ mat-tab
 }
 .linkColor {
   color: #99c3ff;
+  cursor: pointer;
+}
+
+@media (hover: none) {
+  .mat-expansion-panel:not(.mat-expanded):not([aria-disabled="true"])
+    .mat-expansion-panel-header:hover {
+    background: #1f1f1f;
+  }
 }

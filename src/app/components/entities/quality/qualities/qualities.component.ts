@@ -46,7 +46,6 @@ export class QualitiesComponent implements OnInit {
 
   ngOnInit(): void {
     this.isMobile = this.mobileService.isMobile();
-    //this.store.dispatch(new GetQualities());
     this.activatedRoute.data.subscribe((d) => {
       console.log('data', d);
     });
@@ -63,7 +62,6 @@ export class QualitiesComponent implements OnInit {
       }
     });
     this.qualities?.subscribe((e) => {
-      console.log('mbe', e);
       if (e.length == 0) {
         this.store.dispatch(new GetQualities());
       }

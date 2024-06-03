@@ -1,6 +1,17 @@
 <mat-card (click)="onSelect(user)" *ngIf="user && !isMobile">
-  <div fxLayout="row" style="height: 150px">
+  <h2 style="margin-left: 20px; text-align: left; border: 0px solid white">
+    {{ user.username }}
+  </h2>
+  <div fxLayout="row" style="height: 250px">
     <div style="margin-right: 10px; position: relative">
+      <div
+        style="
+          display: flex;
+          justify-content: center;
+          border: 1px solid black;
+          width: 100%;
+        "
+      ></div>
       <div
         routerLink="/users/user/{{ user.id }}"
         style="
@@ -11,7 +22,7 @@
           position: absolute;
           top: 0%;
           left: 0%;
-          transform: translate(5%, -30%);
+          transform: translate(5%, -10%);
           padding: 10px;
         "
       >
@@ -25,30 +36,28 @@
       <br /><br />
       <br />
     </div>
-    <div fxFlex="50"></div>
-    <div fxFlex="50">
-      <b>{{ user.username }}</b>
-
+    <div fxFlex="40"></div>
+    <div fxFlex="60">
       <span class="name">
-        <div *ngIf="user.activities">
-          <div>
-            <label
-              style="color: blue; cursor: pointer"
-              *ngFor="let a of user.activities"
-              routerLink="/activities/activity/{{ a.id }}"
-              >#{{ a.name }}&nbsp;
-            </label>
-          </div>
-        </div>
+        <app-qualities-list-horizontal
+          [qualities]="user.qualities"
+          [total]="user.tot_xps"
+        ></app-qualities-list-horizontal>
       </span>
     </div>
   </div>
   <div>
     <div>
-      <app-qualities-list-horizontal
-        [qualities]="user.qualities"
-        [total]="user.tot_xps"
-      ></app-qualities-list-horizontal>
+      <div *ngIf="user.activities">
+        <div>
+          <label
+            class="linkColor"
+            *ngFor="let a of user.activities"
+            routerLink="/activities/activity/{{ a.id }}"
+            >• {{ a.description }}&nbsp;
+          </label>
+        </div>
+      </div>
     </div>
   </div>
 </mat-card>
@@ -91,10 +100,10 @@
         <div *ngIf="user.activities">
           <div>
             <label
-              style="color: blue; cursor: pointer"
+              class="linkColor"
               *ngFor="let a of user.activities"
               routerLink="/activities/activity/{{ a.id }}"
-              >#{{ a.name }}&nbsp;
+              >• {{ a.description }}&nbsp;
             </label>
           </div>
         </div>

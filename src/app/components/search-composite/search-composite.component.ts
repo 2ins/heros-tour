@@ -67,12 +67,7 @@ export class SearchCompositeComponent implements OnInit {
   ngOnInit(): void {
     this.qualities?.subscribe((quos) => {
       this.theQualities = quos;
-      this.theQualities.forEach((el: Quality) => {
-        if (!this.hashMap.get(el.virtue)) {
-          this.hashMap.set(el.virtue, []);
-        }
-        this.hashMap.get(el.virtue)?.push(el);
-      });
+      this.generatehash();
     });
 
     this.isMobile = this.mobile.isMobile();
@@ -90,7 +85,9 @@ export class SearchCompositeComponent implements OnInit {
 
     this.searchX?.subscribe((sea) => {
       this.searchLoc = sea.location;
+
       this.theQualities?.map((e) => (e.selected = false));
+
       sea.arr.forEach((index) => {
         if (this.theQualities) {
           const quality = this.theQualities.find(
@@ -103,6 +100,20 @@ export class SearchCompositeComponent implements OnInit {
       });
     });
   }
+  private generatehash() {
+    if (this.theQualities) {
+      this.hashMap.clear();
+
+      this.theQualities.forEach((el: Quality) => {
+        if (!this.hashMap.get(el.virtue)) {
+          this.hashMap.set(el.virtue, []);
+        }
+
+        this.hashMap.get(el.virtue)?.push(el);
+      });
+    }
+  }
+
   getArr(): number[] {
     var arr: number[] = [];
     if (this.theQualities) {

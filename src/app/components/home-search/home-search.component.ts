@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Select, Store } from '@ngxs/store';
 import { User } from '@supabase/supabase-js';
 import { Observable } from 'rxjs';
@@ -21,7 +22,8 @@ export class HomeSearchComponent implements OnInit {
   constructor(
     private readonly supabase: SupabaseService,
     private mobile: MobileService,
-    private store: Store
+    private store: Store,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -53,5 +55,8 @@ export class HomeSearchComponent implements OnInit {
       return null;
     }
     return data.user;
+  }
+  onUserClick(): void {
+    this.router.navigate(['/users/user', this.profile.id]);
   }
 }

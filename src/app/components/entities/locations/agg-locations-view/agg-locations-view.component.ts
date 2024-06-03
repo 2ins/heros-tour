@@ -41,20 +41,18 @@ export class AggLocationsViewComponent implements OnInit {
   constructor(private store: Store, private router: Router) {}
 
   ngOnInit(): void {
-    this.store.dispatch(new GetAggLocationsCombo());
-
     this.locationsCombo?.subscribe((e) => {
-      console.log(e);
+      if (e.length == 0) {
+        this.store.dispatch(new GetAggLocationsCombo());
+      }
     });
     this.qualitites?.subscribe((e) => {
-      console.log('mbe', e);
       if (e.length == 0) {
         this.store.dispatch(new GetQualities());
       }
       this.thequalitites = e;
     });
     this.searchX?.subscribe((e) => {
-      console.log('oioi');
       this.sea = e;
       if (!this.sea) {
         this.store.dispatch(

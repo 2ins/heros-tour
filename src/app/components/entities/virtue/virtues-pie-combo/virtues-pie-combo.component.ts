@@ -104,12 +104,12 @@ export class VirtuesPieComboComponent implements OnInit {
         label: 'Dataset 1',
         data: [0, 0, 0, 0, 0, 0],
         backgroundColor: [
-          '#fffc7f4d',
-          '#038aff4d',
-          '#fe79684d',
-          '#c9f29b4d',
-          '#ff94704d',
-          '#d5b8ff4d',
+          '#fffc7f',
+          '#038aff',
+          '#fe7968',
+          '#c9f29b',
+          '#ff9470',
+          '#d5b8ff',
         ],
       },
     ],
@@ -243,7 +243,7 @@ export class VirtuesPieComboComponent implements OnInit {
         position: Position.BOTTOM,
         align: Align.START,
         labels: {
-          color: Color.GRAY,
+          color: Color.WHITE,
           usePointStyle: true,
         },
       },
@@ -251,7 +251,7 @@ export class VirtuesPieComboComponent implements OnInit {
       datalabels: {
         borderRadius: 2,
         align: Align.END,
-        color: Color.GRAY,
+        color: Color.WHITE,
         anchor: Anchor.END,
         offset: 5,
         formatter: function (value, context) {

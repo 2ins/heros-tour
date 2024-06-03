@@ -18,9 +18,10 @@ export class MenuListComponent implements OnInit {
   user: any = null;
 
   ngOnInit(): void {
-    this.loadUser().then(() =>
-      this.store.dispatch(new SetUserProfile(this.user))
-    );
+    this.loadUser().then(() => {
+      this.store.dispatch(new SetUserProfile(this.user));
+      console.log('USER:', this.user);
+    });
   }
 
   async loadUser() {
@@ -37,7 +38,10 @@ export class MenuListComponent implements OnInit {
   }
 
   async signInWithGoogle() {
-    await this.supabase.signInWithProvider('google');
+    this.supabase.signInWithProvider('google').then(() => {
+      this.store.dispatch(new SetUserProfile(this.user));
+      console.log('USER:', this.user);
+    });
   }
 
   async signInWithGitHub() {
