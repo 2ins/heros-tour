@@ -16,11 +16,25 @@
               <app-experience-master-user-pic
                 [master_url]="quality.master_img"
                 [profile_url]="quality.user_img"
+                [profile_id]="quality.user_id"
               >
               </app-experience-master-user-pic>
             </div>
             <div class="user-info">
-              <div>{{ quality.user_name }}</div>
+              <div
+                *ngIf="
+                  quality.user_id != '1ed79d05-52f2-4cea-9cc7-bba7d34aa420'
+                "
+              >
+                {{ quality.user_name }}
+              </div>
+              <div
+                *ngIf="
+                  quality.user_id == '1ed79d05-52f2-4cea-9cc7-bba7d34aa420'
+                "
+              >
+                InnerNautic reports
+              </div>
               <div>@{{ quality.master_name }}</div>
             </div>
           </div>

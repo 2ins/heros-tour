@@ -14,6 +14,7 @@ export interface Master {
   locations?: LocationAggDbItem[];
   activities?: Activity[];
   avatar_url: string;
+  resume?: Resume[];
 }
 export interface MasterTable {
   id?: number;
@@ -29,4 +30,10 @@ export interface MasterTable {
 export interface MasterActivityTable {
   id_master?: number;
   id_activity: number;
+}
+
+export interface Resume {
+  id: number;
+  name: string;
+  description: string;
 }

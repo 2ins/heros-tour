@@ -21,7 +21,7 @@ import { HeroState } from '../../../../states/todo.state';
 import { PopupComponent } from '../../../popup/popup.component';
 @Component({
   selector: 'app-master-detail',
-  templateUrl: './master-detail.component.html',
+  templateUrl: './user-detail.component.html',
   styleUrls: ['./master-detail.component.css'],
 })
 export class MasterDetailComponent implements OnInit, OnDestroy {

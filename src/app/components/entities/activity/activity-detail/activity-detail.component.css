@@ -54,3 +54,22 @@ div.inlineTag {
   margin-left: 0px;
   width: 55%;
 }
+
+.WI {
+  background-color: rgba(255, 252, 127);
+}
+.CO {
+  background-color: rgba(3, 138, 255);
+}
+.HU {
+  background-color: rgba(254, 121, 104);
+}
+.JU {
+  background-color: rgba(201, 242, 155);
+}
+.TE {
+  background-color: rgba(255, 148, 112);
+}
+.TR {
+  background-color: rgba(213, 184, 255);
+}

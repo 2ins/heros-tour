@@ -12,7 +12,16 @@ export class ExperienceMasterUserPicComponent implements OnInit {
   @Input()
   master_url?: string;
 
+  @Input()
+  profile_id?: string;
+
+  isRepo: boolean = false;
+
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (this.profile_id == '1ed79d05-52f2-4cea-9cc7-bba7d34aa420') {
+      this.isRepo = true;
+    }
+  }
 }

@@ -4,6 +4,7 @@ import { Select, Store } from '@ngxs/store';
 import { User } from '@supabase/supabase-js';
 import { Observable } from 'rxjs';
 import { SetUserProfile } from 'src/app/actions/profiles.action';
+import { Search } from 'src/app/model/search';
 import { MobileService } from 'src/app/services/mobile.service';
 import { HeroState } from 'src/app/states/todo.state';
 import { MyProfile, SupabaseService } from 'src/app/supabase.service';
@@ -17,6 +18,7 @@ export class HomeSearchComponent implements OnInit {
   authenticated: boolean = false;
   isMobile: boolean = false;
   @Select(HeroState.getUserProfile) currentUser?: Observable<MyProfile>;
+  @Select(HeroState.getActivitySearch) searchX?: Observable<Search>;
 
   profile: any = null;
   constructor(

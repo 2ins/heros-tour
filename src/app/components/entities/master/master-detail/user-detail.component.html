@@ -1,0 +1,182 @@
+<div *ngIf="master != undefined">
+  <!--
+
+
+  <div *ngIf="!isMobile">
+    <div fxLayout="row">
+      <div fxFlex.gt-sm="55%">
+        <ng-container *ngTemplateOutlet="detail"></ng-container>
+      </div>
+      <div fxFlex.gt-sm="45%">
+        <ng-container *ngTemplateOutlet="VirtuePie"></ng-container>
+        <div style="border: 0px solid black; z-index: 2">
+          <h1>{{ master.name }}</h1>
+          <div>{{ master.website }}</div>
+        </div>
+        <ng-container *ngTemplateOutlet="ActivitiesDesktop"></ng-container>
+      </div>
+    </div>
+    <ng-container *ngTemplateOutlet="prospect"></ng-container>
+  </div>
+  -->
+  <div *ngIf="isMobile || !isMobile">
+    <ng-container *ngTemplateOutlet="header"></ng-container>
+    <div style="width: 100%; padding-top: 40px" class="inline"></div>
+    <ng-container *ngTemplateOutlet="detail"></ng-container>
+    <!-- <ng-container *ngTemplateOutlet="VirtuePie"></ng-container> -->
+    <div
+      style="
+        border: 1px solid black;
+        border: 0px solid black;
+        position: relative;
+        z-index: 1;
+        top: -80px;
+      "
+    >
+      <ng-container *ngTemplateOutlet="Activities"></ng-container>
+      <br />
+      <ng-container *ngTemplateOutlet="prospect"></ng-container>
+    </div>
+  </div>
+
+  <ng-template #detail>
+    <div>
+      <div style="width: 100%" class="inline">
+        <div
+          style="
+            border: 0px solid black;
+            position: relative;
+            z-index: 1;
+            top: -50px;
+          "
+        >
+          <app-virtues-pie-combo
+            [qualities]="master.qualities"
+            [imgurl]="master.avatar_url"
+            [type]="!isMobile ? 'reduced' : 'full'"
+          ></app-virtues-pie-combo>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template #VirtuePie>
+    <br />
+    <app-virtues-pie [qualities]="master.qualities"></app-virtues-pie>
+    <br />
+    <div style="text-align: center">
+      experiences experienced: <b>{{ master.tot_xps }}</b>
+    </div>
+  </ng-template>
+
+  <ng-template #Activities>
+    <div style="display: flex; justify-content: center; width: 100%">
+      <div *ngIf="master.activities">
+        <div class="inlineTag">
+          <label
+            style="cursor: pointer"
+            class="linkColor"
+            *ngFor="let a of master.activities"
+            routerLink="/activities/activity/{{ a.id }}"
+            >•{{ a.description }}{{ isMobile | delimit }}
+          </label>
+          <br />
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template #ActivitiesDesktop>
+    <div>
+      <div *ngIf="master.activities">
+        <div class="inlineTag">
+          <label
+            style="cursor: pointer; display: block; text-align: left"
+            class="linkColor"
+            *ngFor="let a of master.activities"
+            routerLink="/activities/activity/{{ a.id }}"
+            >•{{ a.description }}{{ isMobile | delimit }}
+          </label>
+          <br />
+        </div>
+      </div>
+    </div>
+  </ng-template>
+  <ng-template #prospect>
+    <div>
+      <div>
+        <app-qualities-list-grid
+          [qualities]="master.qualities"
+          [total]="master.tot_xps"
+        ></app-qualities-list-grid>
+      </div>
+      <br />
+
+      <div *ngIf="master.resume" style="margin-left: 10px">
+        <div *ngFor="let res of master.resume">
+          <b>{{ res.name }}</b>
+          <p>{{ res.description }}</p>
+        </div>
+      </div>
+
+      <div style="text-align: left">
+        <br /><br />
+        <h2 style="text-align: center">Experiences</h2>
+        <div class="heroes">
+          <div *ngFor="let hero of master.heroes">
+            <app-experience-item
+              [hero]="hero"
+              [reverse]="true"
+            ></app-experience-item>
+            <br />
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+  <ng-template #header>
+    <div
+      style="
+        float: left;
+        width: 100%;
+        z-index: 0;
+        margin-bottom: 20px;
+        background-color: black;
+        border: solid grey 1px;
+        position: fixed;
+        z-index: 10;
+      "
+    >
+      <div style="border-bottom: 0px solid black; color: white">
+        <button mat-button (click)="backClicked()">
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+        master: <b>{{ master.name }}</b>
+        <!--
+        <button
+          mat-button
+          style="border: 0px solid black; background-color: white; float: right"
+          [matMenuTriggerFor]="menu"
+          *ngIf="isOwner"
+        >
+          <mat-icon class="circle-icon-actions">more_horizon</mat-icon>
+        </button>
+      --></div>
+    </div>
+  </ng-template>
+</div>
+
+<!-- MENU drop down -->
+<mat-menu #menu="matMenu">
+  <div style="padding-right: 15px">
+    <button
+      #btnEdit
+      (click)="edit()"
+      mat-menu-item
+      style="float: right; margin-right: 10px; margin-bottom: 10px; color: blue"
+    >
+      <mat-icon>edit</mat-icon>
+      Edit
+    </button>
+  </div>
+</mat-menu>

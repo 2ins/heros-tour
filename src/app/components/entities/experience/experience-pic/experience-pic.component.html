@@ -1,25 +1,46 @@
 <div id="container" *ngIf="hero != undefined" style="color: white">
   <div id="infoi" style="text-align: center">
-    <div
-      class="image-cropper-detail"
-      routerLink="/users/user/{{ hero.profile.id }}"
-      style="cursor: pointer"
-    >
-      <img
-        #prImg
-        [ngClass]="
-          prImg.width >= prImg.height
-            ? 'profile-pic-height'
-            : 'profile-pic-width'
-        "
-        class="profile-pic"
-        src="{{
-          'https://enrgmsdppekwfvmbdxsl.supabase.co/storage/v1/object/public/avatars/' +
-            hero.profile.avatar_url
-        }}"
-      />
+    <div *ngIf="hero.json">
+      <div
+        class="image-cropper-detail"
+        routerLink="/users/user/{{ hero.profile.id }}"
+        style="cursor: pointer"
+      >
+        <img
+          #prImg
+          [ngClass]="
+            prImg.width >= prImg.height
+              ? 'profile-pic-height'
+              : 'profile-pic-width'
+          "
+          class="profile-pic"
+          src="/assets/black_turtle.jpg"
+        />
+      </div>
+      <label>reported by InnerNautic </label>
     </div>
-    <label *ngIf="hero.json">reported by: </label>{{ hero.profile.username }}
+    <div *ngIf="!hero.json">
+      <div
+        class="image-cropper-detail"
+        routerLink="/users/user/{{ hero.profile.id }}"
+        style="cursor: pointer"
+      >
+        <img
+          #prImg
+          [ngClass]="
+            prImg.width >= prImg.height
+              ? 'profile-pic-height'
+              : 'profile-pic-width'
+          "
+          class="profile-pic"
+          src="{{
+            'https://enrgmsdppekwfvmbdxsl.supabase.co/storage/v1/object/public/avatars/' +
+              hero.profile.avatar_url
+          }}"
+        />
+      </div>
+      {{ hero.profile.username }}
+    </div>
   </div>
   <div id="navi" style="text-align: center">
     {{ hero.master.name }}

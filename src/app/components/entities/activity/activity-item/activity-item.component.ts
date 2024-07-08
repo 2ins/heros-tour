@@ -37,7 +37,7 @@ export class ActivityItemComponent implements OnInit {
   }
 
   onSelect(activity: Activity): void {
-    this.store.dispatch(new SetSelectedActivity(activity.id, ''));
+    this.store.dispatch(new SetSelectedActivity(activity.id, '', []));
     this.router.navigate(['/activities/activity/', activity.id]);
   }
 }

@@ -178,6 +178,24 @@
         Masters
       </h2>
 
+      <div
+        *ngIf="search | async as x"
+        style="text-align: left; margin-left: 25px"
+      >
+        <div *ngIf="x.arr">with the following qualities:</div>
+        <div style="margin: 5px">
+          <mat-chip-list>
+            <mat-chip
+              style="color: black; border: 1px solid black"
+              *ngFor="let a of x.arr"
+              [ngClass]="a | virtueColorFinderByStrenghtId"
+            >
+              {{ a | nameStrenghtFinder }}
+            </mat-chip>
+          </mat-chip-list>
+        </div>
+      </div>
+
       <mat-grid-list
         cols="2"
         rowHeight="200px"

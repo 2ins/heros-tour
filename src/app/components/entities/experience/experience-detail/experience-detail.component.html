@@ -5,9 +5,15 @@
         <ng-container *ngTemplateOutlet="detail"></ng-container>
       </div>
       <div fxFlex.gt-sm="55%">
-        <label style="color: gray"
+        <label style="color: gray" *ngIf="!heroX.json"
           >{{ heroX.profile.username }} @<b>{{ heroX.master.name }}</b></label
-        ><br />
+        >
+        <label style="color: gray" *ngIf="heroX.json"
+          >InnerNautic reports an on-line article @<b>{{
+            heroX.master.name
+          }}</b></label
+        >
+        <br />
         <br />
         <ng-container *ngTemplateOutlet="detailText"></ng-container>
         <button
@@ -136,8 +142,11 @@
         <button mat-button (click)="backClicked()">
           <mat-icon>arrow_back</mat-icon>
         </button>
-        <label
+        <label style="color: gray" *ngIf="!heroX.json"
           >{{ heroX.profile.username }} @<b>{{ heroX.master.name }}</b></label
+        >
+        <label style="color: gray" *ngIf="heroX.json"
+          >InnerNautic reports @<b>{{ heroX.master.name }}</b></label
         >
 
         <button

@@ -388,6 +388,17 @@ export class SupabaseService {
       loc: location,
     });
   }
+  getMastersOfActivityByLocationAndQualities(
+    idActivity: number,
+    location: string,
+    qualities?: number[]
+  ) {
+    return this.supabase.rpc('getmastersbyactivity_loc_qualities', {
+      idactivity: idActivity,
+      loc: location,
+      arr: qualities,
+    });
+  }
 
   getActivityOverviewXP(idAct: number) {
     return this.supabase

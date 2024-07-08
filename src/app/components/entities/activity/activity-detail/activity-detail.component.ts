@@ -57,9 +57,10 @@ export class ActivityDetailComponent implements OnInit {
       if (this.activityId) {
         var loc = this.theSearch?.location;
         console.log('this.theSearch', this.theSearch);
+        var qualities = this.theSearch?.arr;
 
         this.store.dispatch(
-          new SetSelectedActivity(this.activityId, loc || '')
+          new SetSelectedActivity(this.activityId, loc || '', qualities)
         );
       }
     });

@@ -3,17 +3,19 @@
     <div id="infoi">
       <div class="image-cropper-detail" style="cursor: pointer">
         <img
+          *ngIf="!isRepo"
           #prImg
           class="profile-pic"
           src="{{
             'https://enrgmsdppekwfvmbdxsl.supabase.co/storage/v1/object/public/avatars/' +
               profile_url
           }}"
-          [ngClass]="
-            prImg.width >= prImg.height
-              ? 'profile-pic-height'
-              : 'profile-pic-width'
-          "
+        />
+        <img
+          *ngIf="isRepo"
+          #prImg
+          class="profile-pic"
+          src="/assets/black_turtle.jpg"
         />
       </div>
     </div>
@@ -26,11 +28,6 @@
             'https://enrgmsdppekwfvmbdxsl.supabase.co/storage/v1/object/public/avatars/' +
               master_url
           }}"
-          [ngClass]="
-            mstrImg.width >= mstrImg.height
-              ? 'profile-pic-height'
-              : 'profile-pic-width'
-          "
         />
       </div>
     </div>

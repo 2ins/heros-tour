@@ -16,6 +16,7 @@
               *ngIf="hero?.profile && hero?.master && !isMasterDetail"
               [profile_url]="hero.profile.avatar_url"
               [master_url]="hero.master.avatar_url"
+              [profile_id]="hero.profile.id"
             ></app-experience-master-user-pic>
             <img
               *ngIf="isMasterDetail"

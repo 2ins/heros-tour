@@ -88,7 +88,7 @@ export class ActivitiesComponent implements OnInit {
   }
 
   onSelect(activity: Activity): void {
-    this.store.dispatch(new SetSelectedActivity(activity.id, ''));
+    this.store.dispatch(new SetSelectedActivity(activity.id, '', []));
   }
 
   getNotification(evt: Event) {
