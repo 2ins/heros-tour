@@ -6,16 +6,7 @@
         routerLink="/users/user/{{ hero.profile.id }}"
         style="cursor: pointer"
       >
-        <img
-          #prImg
-          [ngClass]="
-            prImg.width >= prImg.height
-              ? 'profile-pic-height'
-              : 'profile-pic-width'
-          "
-          class="profile-pic"
-          src="/assets/black_turtle.jpg"
-        />
+        <img #prImg class="profile-pic" src="/assets/black_turtle.jpg" />
       </div>
       <label>reported by InnerNautic </label>
     </div>
@@ -27,12 +18,7 @@
       >
         <img
           #prImg
-          [ngClass]="
-            prImg.width >= prImg.height
-              ? 'profile-pic-height'
-              : 'profile-pic-width'
-          "
-          class="profile-pic"
+          class="profile-pic profile-pic-width"
           src="{{
             'https://enrgmsdppekwfvmbdxsl.supabase.co/storage/v1/object/public/avatars/' +
               hero.profile.avatar_url

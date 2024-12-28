@@ -1,0 +1,70 @@
+<div>
+  <div style="display: block" class="jojo">
+    Qualities that you can expect to develop:
+  </div>
+  <mat-chip-set
+    aria-label="Quality list"
+    style="
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+      margin: 5px;
+    "
+  >
+    <ng-container *ngFor="let q of visibleQualities">
+      <mat-chip
+        (click)="miomet(q)"
+        class="normalChip"
+        [ngClass]="{ chipSelected: q == quality }"
+      >
+        {{ q.Quality }}
+      </mat-chip>
+    </ng-container>
+  </mat-chip-set>
+  <div>
+    <div *ngIf="quality">
+      <ul *ngFor="let grp of quality.group">
+        <li *ngFor="let cit of grp.Citations" (click)="open(cit)">
+          "{{ cit.citation }}" <br />
+          <b *ngIf="grp.author_name" style="color: gray">
+            by {{ grp.author_name }}</b
+          >
+
+          <div *ngIf="cit.selected" style="margin-left: 30px">
+            <div class="titleDetailCit">context:</div>
+            {{ cit.context }}<br />
+            <div class="titleDetailCit">deduction:</div>
+            {{ grp.Deductions }}<br />
+
+            <div class="titleDetailCit">description:</div>
+            {{ grp.Description }} <br />
+
+            <div (click)="go(grp)" class="linkColor">
+              go to experience detail
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div style="display: none; justify-content: center; align-items: center">
+    <div
+      mat-button
+      (click)="showAllQualities()"
+      style="
+        text-align: center;
+        margin: 15px;
+        background-color: #28282b;
+        border-radius: 15px;
+        padding: 7px;
+        width: 300px;
+        color: white;
+        cursor: pointer;
+      "
+    >
+      <div *ngIf="!showAll">Show All</div>
+      <div *ngIf="showAll">Show Less</div>
+    </div>
+  </div>
+</div>

@@ -15,6 +15,7 @@ export interface Master {
   activities?: Activity[];
   avatar_url: string;
   resume?: Resume[];
+  table: any[];
 }
 export interface MasterTable {
   id?: number;

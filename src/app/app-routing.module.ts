@@ -14,6 +14,8 @@ import { AggLocationsViewComponent } from './components/entities/locations/agg-l
 import { MasterDetailComponent } from './components/entities/master/master-detail/master-detail.component';
 import { MasterInsertComponent } from './components/entities/master/master-insert/master-insert.component';
 import { MastersComponent } from './components/entities/master/masters/masters.component';
+import { FreeQualitiesComponent } from './components/entities/quality/free-qualities/free-qualities.component';
+import { QualitiesAccordionDeckComponent } from './components/entities/quality/qualities-accordion-deck/qualities-accordion-deck.component';
 import { QualitiesComponent } from './components/entities/quality/qualities/qualities.component';
 import { QualityComponent } from './components/entities/quality/quality/quality.component';
 import { UserDetailComponent } from './components/entities/user/user-detail/user-detail.component';
@@ -30,6 +32,7 @@ import { TestOutlineComponent } from './test-outline/test-outline.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'homesearch', pathMatch: 'full' },
+  { path: 'freequalities', component: FreeQualitiesComponent },
   { path: 'mongo', component: MongoTestComponent },
   { path: 'mongoArticleDetail', component: MongoArticleDetailComponent },
   { path: 'chatgpt', component: ChatInterfaceComponent },
@@ -49,6 +52,8 @@ const routes: Routes = [
   { path: 'searchmaster', component: ExperienceInsertOverviewComponent },
   { path: 'searchactivity', component: ActivitySearchComponent },
   { path: 'testout', component: TestOutlineComponent },
+  { path: 'deck', component: QualitiesAccordionDeckComponent },
+
   {
     path: 'addExperienceOverview',
     component: ExperienceInsertOverviewComponent,

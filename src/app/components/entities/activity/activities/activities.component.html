@@ -1,27 +1,33 @@
-<div fxLayout="row" *ngIf="!isMobile">
+<div fxLayout="row">
   <div fxFlex.gt-sm="99%">
-    <div style="width: 99%">
-      <p>
-        <b style="font-size: x-large">Activities</b
-        ><button
+    <div>
+      <div style="display: flex; align-items: center; width: 99%; gap: 10px">
+        <b style="font-size: x-large; flex-shrink: 0">Activities</b>
+        <form class="example-form" style="flex-grow: 1">
+          <input
+            #textSearch
+            type="text"
+            placeholder="Search for an Activity"
+            [formControl]="control"
+            style="width: 100%"
+          />
+        </form>
+        <button
           [routerLinkActive]="'active'"
           routerLink="/addActivity"
           mat-stroked-button
-          style="
-            margin-right: 10px;
-            margin-bottom: 10px;
-            color: blue;
-            float: right;
-          "
+          style="color: blue"
         >
           Add New Activity
         </button>
-      </p>
+      </div>
+
       <br />
       <div>
-        <mat-grid-list cols="2" rowHeight="190px">
-          <ng-container *ngFor="let a of activities | async">
-            <mat-grid-tile colspan="1">
+        <div></div>
+        <mat-grid-list [cols]="isMobile ? 1 : 2" rowHeight="190px">
+          <ng-container *ngFor="let a of filteredActivities | async">
+            <mat-grid-tile [colspan]="1">
               <div style="width: 100%; height: 100%">
                 <app-activity-item [activity]="a"></app-activity-item>
               </div>
@@ -30,11 +36,5 @@
         </mat-grid-list>
       </div>
     </div>
-  </div>
-</div>
-
-<div *ngIf="isMobile">
-  <div *ngFor="let a of activities | async">
-    <app-activity-item [activity]="a"></app-activity-item>
   </div>
 </div>

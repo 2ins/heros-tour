@@ -1,0 +1,152 @@
+<div *ngIf="qualities" style="display: flex; flex-direction: column; gap: 10px">
+  <div
+    *ngFor="let row of chunks; let rowIndex = index"
+    style="display: flex; flex-direction: column; gap: 10px"
+    [id]="'row-' + rowIndex"
+  >
+    <!-- Row for qualities -->
+    <div style="display: flex; gap: 10px" *ngIf="rowIndex == 0 || showMore">
+      <div
+        *ngFor="let quality of row"
+        [style.flex]="
+          row.length < rows ? '0 0 calc(100% / ' + rows + ' - 10px)' : '1'
+        "
+        style="flex: 1"
+      >
+        <div
+          *ngIf="quality"
+          [style.opacity]="quality != selected ? '0.8' : '1'"
+        >
+          <div *ngIf="quality.discovered">
+            <div
+              class="grid-item"
+              style="border: solid gray 1px; padding: 0; border-radius: 10%"
+              [ngClass]="selected == quality ? quality.virtue : ''"
+            >
+              <p style="text-align: center">
+                <i style="color: black; font-size: xx-small">
+                  {{ quality.virtue | virtueFinder }}
+                </i>
+              </p>
+              <div class="image-container" (click)="onClick(quality, row)">
+                <img
+                  style="
+                    border-radius: 3%;
+                    width: 98%;
+                    display: block;
+                    margin-left: auto;
+                    margin-right: auto;
+                    margin-top: 5px;
+                    cursor: pointer;
+                  "
+                  [src]="
+                    'https://enrgmsdppekwfvmbdxsl.supabase.co/storage/v1/object/public/q/' +
+                    quality.id +
+                    '.jpg'
+                  "
+                />
+                <!--
+                <div
+                  *ngIf="quality.count != undefined && total != undefined"
+                  class="text-overlay"
+                >
+                  {{ quality.count }}
+                </div>
+            
+                <div class="text-overlay-info" (click)="go(quality, row)"></div>
+                  -->
+              </div>
+
+              <div
+                style="
+                  height: 35px;
+                  text-align: center;
+                  display: table;
+                  width: 100%;
+                "
+              >
+                <div
+                  style="
+                    display: table-cell;
+                    vertical-align: middle;
+                    font-size: small;
+                    text-align: center;
+                  "
+                >
+                  <app-star-rating *ngIf="total" [maxStars]="5" [rating]="3">
+                  </app-star-rating>
+                  <b style="color: blue">{{ quality.name }}</b>
+
+                  <br />
+                </div>
+              </div>
+            </div>
+
+            <i>
+              {{ quality.desc_xp }}
+            </i>
+          </div>
+          <div
+            *ngIf="!quality.discovered"
+            (click)="onClick(quality, row)"
+            class="grid-item"
+            style="border: solid gray 0px; padding: 0; border-radius: 10%"
+          >
+            <img
+              src="assets/retro.png"
+              style="
+                width: 100%;
+                height: auto;
+                display: block;
+                border-radius: 10%;
+              "
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Row for additional quality info -->
+    <!--
+  
+    <div
+      style="
+        background-color: black;
+        padding: 0px;
+        border-radius: 0px;
+        border-top: 1px solid white;
+      "
+      *ngIf="selected && row == chunkSelected"
+    >
+      <div *ngIf="selected">
+        <div style="text-align: left; margin: 10px">
+          {{ selected.name }}
+        </div>
+        <app-horizontal-viewer
+          [descrioptions]="selected.desc_all"
+          [qid]="selected.id"
+        ></app-horizontal-viewer>
+      </div>
+    </div>
+  --></div>
+  <!--
+  <div
+    style="
+      text-align: center;
+      margin: 15px;
+      background-color: #28282b;
+      border-radius: 15px;
+      padding: 7px;
+    "
+  >
+  
+    <div *ngIf="showMore">
+      <div style="cursor: pointer" (click)="showChange()">Show less cards</div>
+    </div>
+    <div *ngIf="!showMore">
+      <div style="cursor: pointer" (click)="showChange()">Show more cards</div>
+    </div>
+  </div>
+  
+  </div>
+--></div>

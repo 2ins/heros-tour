@@ -10,6 +10,11 @@
   <div *ngIf="isMobile">
     <div>
       <ng-container *ngTemplateOutlet="detailXp"></ng-container>
+      <div style="border: 0px solid black" *ngIf="profile">
+        <button mat-raised-button color="primary" (click)="addXp()">
+          add new expereince
+        </button>
+      </div>
     </div>
   </div>
 
@@ -42,6 +47,7 @@
             [reverse]="true"
             [isMasterDetail]="true"
           ></app-experience-item>
+
           <br />
         </div>
       </div>
@@ -64,6 +70,7 @@
           experiences: <b>{{ x.tot_xps }}</b>
         </div>
       </div>
+
       <br />
       <div style="border: 0px solid black" *ngIf="profile">
         <button mat-raised-button color="primary" (click)="addXp()">

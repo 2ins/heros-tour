@@ -146,7 +146,7 @@ export class VirtuesPieComponent implements OnInit, OnChanges {
   options = {
     responsive: true,
     aspectRatio: 1.5,
-    borderColor: 'black',
+    borderColor: 'white',
     borderWidth: 1,
 
     scales: {
@@ -201,7 +201,7 @@ export class VirtuesPieComponent implements OnInit, OnChanges {
         },
       },
       datalabels: {
-        display: false,
+        display: true,
         borderRadius: 15,
         align: 'end',
         color: 'white',
@@ -236,7 +236,7 @@ export class VirtuesPieComponent implements OnInit, OnChanges {
           var appo = (100 / max) * (max - value) + 5;
           //50 * (1 - value / max + (max - value));
 
-          return value;
+          return labels[context.dataIndex];
         },
       },
     },
@@ -265,7 +265,7 @@ export class VirtuesPieComponent implements OnInit, OnChanges {
         offset: 5,
         formatter: function (value, context) {
           const labels: String[] = context.chart.data.labels as String[];
-          return labels[context.dataIndex];
+          // return labels[context.dataIndex];
           //return labels[context.dataIndex] + ` ${value}`;
         },
       },

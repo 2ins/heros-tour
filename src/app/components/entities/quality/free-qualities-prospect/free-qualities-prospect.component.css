@@ -1,0 +1,43 @@
+.jojo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+  font-family: Arial, sans-serif;
+  font-size: 15px;
+  color: #4a4a4a;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+/* Cambia il colore di sfondo della chip selezionata */
+.normalChip {
+  flex-shrink: 0;
+  background-color: #212121;
+  border: 1px solid #fff;
+  color: #fff;
+  border-radius: 5px;
+  padding: 8px 12px;
+  font-size: 13px;
+  font-style: normal;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.chipSelected {
+  flex-shrink: 0;
+  background-color: #212121;
+
+  border: 1px solid #fff;
+  color: #fff;
+  border-radius: 5px;
+  padding: 8px 12px;
+  font-size: 13px;
+  font-style: normal;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  background-color: #4caf50; /* Verde */
+}
+
+.titleDetailCit {
+  font-style: bold;
+  color: #4caf50;
+}

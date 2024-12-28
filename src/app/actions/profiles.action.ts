@@ -25,3 +25,8 @@ export class SetProfile {
   static readonly type = '[Profile] SetProfile';
   constructor(public payload: MyProfile) {}
 }
+
+export class SetUserProfileAux {
+  static readonly type = '[Profile] SetProfileAux';
+  constructor(public payload: User) {}
+}

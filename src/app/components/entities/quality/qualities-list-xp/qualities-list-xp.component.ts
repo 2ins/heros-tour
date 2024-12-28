@@ -6,6 +6,7 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { Quality } from 'src/app/model/quality';
+import { MobileService } from 'src/app/services/mobile.service';
 import { ScrollService } from 'src/app/services/scroll.service';
 
 @Component({
@@ -16,7 +17,8 @@ import { ScrollService } from 'src/app/services/scroll.service';
 export class QualitiesListXpComponent implements OnInit {
   constructor(
     private scrollService: ScrollService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private ms: MobileService
   ) {}
 
   @Input()
@@ -25,7 +27,11 @@ export class QualitiesListXpComponent implements OnInit {
   @Input()
   preselected?: number;
 
-  ngOnInit(): void {}
+  isMobile?: boolean;
+
+  ngOnInit(): void {
+    this.isMobile = this.ms.isMobile();
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['qualities'] || changes['preselected']) {

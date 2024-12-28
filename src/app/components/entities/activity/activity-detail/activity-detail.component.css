@@ -73,3 +73,117 @@ div.inlineTag {
 .TR {
   background-color: rgba(213, 184, 255);
 }
+
+div.inline {
+  text-align: center;
+}
+div.inlineTag {
+  text-align: left;
+  color: blue;
+}
+
+.image-main {
+  width: 90%;
+  border-radius: 15%;
+  overflow: hidden;
+
+  border: solid white 1px;
+
+  padding: 0px;
+  margin: 0px;
+}
+.image-cropper-xp {
+  width: 75px;
+  height: 75px;
+  overflow: hidden;
+  border-radius: 50%;
+}
+.profile-pic {
+  display: inline;
+  margin: 0 auto;
+  width: 100%;
+  height: 100%;
+}
+
+/* HORIZONTAL SCROLL */
+.scroll-container {
+  overflow: auto;
+  white-space: nowrap;
+
+  background: transparent;
+  height: 100%;
+  border-radius: 15px;
+}
+
+.gridscroll {
+  display: inline-block;
+}
+
+.gridscroll div {
+  display: inline-block;
+}
+
+.gridscroll img {
+  margin-right: 0px;
+  border-radius: 10%;
+}
+
+h2 {
+  text-align: left;
+  margin-left: 25px;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 0.1px dotted gray;
+}
+
+.icon-left,
+.icon-right {
+  flex: 0 0 auto;
+  margin: 0 5px; /* Spazio tra icone e input */
+  border: 0px solid black;
+}
+.title {
+  font-size: x-large;
+  float: left;
+  border: 0px solid black;
+  width: 100%;
+}
+
+.containerAll {
+  margin-left: 10px;
+}
+.two-columns {
+  display: flex;
+  width: 100%;
+  max-width: 100%;
+}
+
+.column1 {
+  border: 0px solid gray;
+  width: 45%;
+}
+.column2 {
+  border: 0px solid gray;
+  margin-left: 0px;
+  width: 55%;
+}
+
+.footCont {
+  margin: 10px;
+}
+
+.jojo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+  font-family: Arial, sans-serif;
+  font-size: 15px;
+  color: #4a4a4a;
+  font-weight: bold;
+  margin-bottom: 10px;
+}

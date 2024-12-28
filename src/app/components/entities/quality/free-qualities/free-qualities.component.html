@@ -1,0 +1,23 @@
+<div style="padding: 0px">
+  <div class="grid-container">
+    <div *ngFor="let quality of thequalitites" class="grid-item">
+      <!-- Titolo cliccabile -->
+      <div (click)="open(quality)" class="title">
+        {{ quality.quality }}
+      </div>
+
+      <!-- Contenuto visibile solo quando expanded = true -->
+      <div *ngIf="quality.expanded" class="content">
+        <ul>
+          <li *ngFor="let activity of quality.activities">
+            {{ activity.activity_name }}
+          </li>
+        </ul>
+        <footer class="grid-footer">
+          <p><strong>Total:</strong> {{ quality.total }}</p>
+          <p (click)="open(quality)"><strong>Go</strong></p>
+        </footer>
+      </div>
+    </div>
+  </div>
+</div>

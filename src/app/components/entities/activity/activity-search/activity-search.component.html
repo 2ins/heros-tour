@@ -26,10 +26,7 @@
   </div>
 
   <div style="margin: 20px">
-    <div
-      *ngFor="let item of filteredStreets | async"
-      style="display: flex; height: 40px"
-    >
+    <div *ngFor="let item of activities" style="display: flex; height: 40px">
       <div style="width: 90%">
         <!--<img
         with="40"
@@ -120,6 +117,7 @@
         #auto="matAutocomplete"
         (optionSelected)="unFocusOnSearchControl()"
       >
+        <!--
         <mat-option
           mat-dialog-close
           *ngFor="let item of filteredStreets | async"
@@ -136,7 +134,31 @@
             }}"
           />{{ item.name }}
         </mat-option>
+      -->
       </mat-autocomplete>
     </div>
   </form>
+</div>
+
+<div
+  class="grid-container"
+  *ngIf="(filteredStreets | async)?.length != null"
+  [ngStyle]="{
+    'grid-template-columns': isMobile ? 'repeat(3, 1fr)' : 'repeat(6, 1fr)'
+  }"
+>
+  <div *ngFor="let act of filteredStreets | async">
+    <div class="image-container grid-item">
+      <img
+        src="{{
+          'https://enrgmsdppekwfvmbdxsl.supabase.co/storage/v1/object/public/avatars/' +
+            act.img_url
+        }}"
+        alt="{{ act.description }}"
+      />
+      <div style="font-size: 11px" class="overlay-text">
+        {{ act.description }}
+      </div>
+    </div>
+  </div>
 </div>

@@ -35,13 +35,15 @@ export class HomeSearchComponent implements OnInit {
 
   async loadUser() {
     if (!this.profile) {
-      this.profile = await this.getUser();
-      this.store.dispatch(new SetUserProfile(this.profile));
+      await this.getUser().then((p) => {
+        this.profile = p;
+        this.store.dispatch(new SetUserProfile(this.profile));
+      });
     }
   }
 
   async signInWithGoogle() {
-    this.supabase.signInWithProvider('google').then;
+    this.supabase.signInWithProvider('google');
   }
 
   signOut() {

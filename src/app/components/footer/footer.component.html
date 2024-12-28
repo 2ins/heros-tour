@@ -25,8 +25,24 @@
   </div>
 
   <div class="icon-elem">
+    <button [routerLinkActive]="'active'" [routerLink]="'/freequalities'">
+      <mat-icon>all_inclusive</mat-icon>
+    </button>
+  </div>
+
+  <div class="icon-elem icon-elem-cst">
     <button [routerLinkActive]="'active'" [routerLink]="'/qualities'">
       <img class="icon" src="assets/cards_black.png" />
+    </button>
+  </div>
+
+  <div class="icon-elem" style="color: white" *ngIf="false">
+    <button
+      [routerLinkActive]="'active'"
+      [routerLink]="'/searchactivity'"
+      [queryParams]="{ type: 'search' }"
+    >
+      <img class="icon" src="assets/star.png" />
     </button>
   </div>
 

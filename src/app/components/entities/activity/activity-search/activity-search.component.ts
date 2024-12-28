@@ -116,7 +116,7 @@ export class ActivitySearchComponent implements OnInit {
         this._normalizeValue(activities.description).includes(filterValue)
       );
     }
-    return [];
+    return this.activities;
   }
   private _normalizeValue(value: string): string {
     return value.toLowerCase().replace(/\s/g, '');

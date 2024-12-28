@@ -1,3 +1,56 @@
+<div *ngIf="user == undefined && isOwner">
+  <div>
+    <button mat-button (click)="backClicked()">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    {{ theUserLogged?.email }}
+  </div>
+
+  <br />
+  <div
+    style="
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 50px;
+      font-size: 20px;
+    "
+  >
+    you did not add any experience yet
+  </div>
+
+  <br />
+  <div style="margin-left: 50px">
+    <button
+      #btnEdit
+      (click)="edit()"
+      mat-menu-item
+      style="
+        float: right;
+        margin-right: 10px;
+        margin-bottom: 10px;
+        color: white;
+      "
+    >
+      <mat-icon style="color: white">edit</mat-icon>
+      Edit Profile
+    </button>
+    <button
+      #btnEdit
+      (click)="onLogOut()"
+      mat-menu-item
+      style="
+        float: right;
+        margin-right: 10px;
+        margin-bottom: 10px;
+        color: white;
+      "
+    >
+      <mat-icon style="color: white">logout</mat-icon>
+      Log out
+    </button>
+  </div>
+</div>
 <div *ngIf="user != undefined">
   <div *ngIf="!isMobile">
     <div fxLayout="row">

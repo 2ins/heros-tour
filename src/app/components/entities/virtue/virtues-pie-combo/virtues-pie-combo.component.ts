@@ -31,6 +31,9 @@ export class VirtuesPieComboComponent implements OnInit {
   @Input()
   type?: string = 'full';
 
+  @Input()
+  labels?: boolean = true;
+
   constructor(
     private readonly supabase: SupabaseService,
     private store: Store,

@@ -1,0 +1,52 @@
+.customAcc {
+  margin-bottom: 1px;
+  background-color: white;
+}
+
+/* Specifica lo stile per il pannello header quando è chiuso */
+.specific-class {
+  background-color: white !important;
+  color: black;
+}
+
+/* Sovrascrivi il colore di sfondo per il pannello aperto */
+.mat-expansion-panel-header.mat-expanded {
+  background-color: white !important;
+}
+
+/* Specifica lo stile per il pannello header quando è chiuso */
+.mat-expansion-panel-header {
+  background-color: white !important;
+  color: black !important;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.circle {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+
+  border-radius: 50%;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.side-bar {
+  width: 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.vertical-text {
+  writing-mode: vertical-lr;
+  transform: rotate(180deg);
+  white-space: nowrap;
+  color: black;
+}

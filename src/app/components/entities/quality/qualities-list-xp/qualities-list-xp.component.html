@@ -1,52 +1,53 @@
-<div class="container" style="width: 99%" #container>
-  <div>
-    <div class="heroes">
-      <div id="parent">
+<div
+  style="
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-top: 10px;
+  "
+>
+  <div
+    *ngFor="let quality of qualities"
+    style="width: 45%; margin-bottom: 20px; margin-top: 5px; margin-left: 10px"
+    [ngStyle]="{ width: isMobile ? '100%' : '45%' }"
+  >
+    <div [ngClass]="{ 'selected-quality': quality.id == preselected }">
+      <div fxLayout="">
         <div>
-          <div *ngFor="let quality of qualities" class="child">
-            <div
-              style="margin-left: 20px"
-              [ngClass]="{ 'selected-quality': quality.id == preselected }"
-            >
-              <div fxLayout="row">
-                <div>
-                  <div class="inline">
-                    <div style="width: 100%">
-                      <img
-                        [ngClass]="quality.virtue"
-                        style="
-                          width: 100px;
-                          height: 100px;
-                          margin-right: 8px;
+          <div>
+            <div style="width: 100%">
+              <img
+                [ngClass]="quality.virtue"
+                style="
+                  width: 100px;
+                  height: 100px;
+                  margin-right: 8px;
+                  margin-left: 10px;
 
-                          border-radius: 15%;
-                          padding: 3px;
-                          border: 1px solid black;
-                        "
-                        src="{{
-                          'https://enrgmsdppekwfvmbdxsl.supabase.co/storage/v1/object/public/q/' +
-                            quality.id +
-                            '.jpg'
-                        }}"
-                      />
-                    </div>
-                  </div>
-                </div>
-                <div style="margin-left: 10px; margin-top: 0px">
-                  <div>
-                    <p>
-                      <b style="color: white">{{ quality.name }}</b>
-                    </p>
-                  </div>
-                  <div style="font-style: italic; color: gray">
-                    {{ quality.desc_xp }}
-                  </div>
-
-                  <br />
-                </div>
-              </div>
+                  border-radius: 15%;
+                  padding: 3px;
+                  border: 1px solid black;
+                "
+                src="{{
+                  'https://enrgmsdppekwfvmbdxsl.supabase.co/storage/v1/object/public/q/' +
+                    quality.id +
+                    '.jpg'
+                }}"
+              />
             </div>
           </div>
+        </div>
+        <div style="margin-left: 10px; margin-top: 0px">
+          <div>
+            <p>
+              <b style="color: white">{{ quality.name }}</b>
+            </p>
+          </div>
+          <div style="font-style: italic; color: gray">
+            {{ quality.desc_xp }}
+          </div>
+
+          <br />
         </div>
       </div>
     </div>

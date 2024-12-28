@@ -15,13 +15,16 @@ export class LoginComponentComponent {
   constructor(private supabaseService: SupabaseService, private store: Store) {}
 
   ngOnInit() {
-    this.loadUser().then(() =>
-      this.store.dispatch(new SetUserProfile(this.user))
-    );
+    console.log('set prof 1');
+    this.loadUser().then(() => {
+      console.log('set prof 2');
+    });
   }
 
   async loadUser() {
     this.user = await this.getUser();
+    this.store.dispatch(new SetUserProfile(this.user));
+    console.log('this.user: ', this.user);
   }
 
   async signInWithGoogle() {

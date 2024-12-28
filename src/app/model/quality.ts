@@ -14,6 +14,7 @@ export interface Quality {
   desc_xp?: string;
   desc_all?: HeroListElement[];
   isSearch: boolean;
+  discovered?: boolean;
 }
 
 export interface Virtue {

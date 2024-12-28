@@ -158,7 +158,7 @@
 
       <div *ngFor="let quality of hashMap.get(el)?.values()">
         <mat-checkbox
-          (change)="updateItem(quality)"
+          (change)="updateItem(quality, qualityDetailTemplate)"
           [checked]="quality.selected"
         >
           {{ quality.name }}
@@ -251,6 +251,59 @@
       </div>
     </div>
   </div>
+
+  <!-- Definisci il template con l'immagine -->
+  <ng-template #qualityDetailTemplate>
+    <div mat-dialog-content style="text-align: center" *ngIf="selectedQuality">
+      <!-- Titolo al centro -->
+      <h1 mat-dialog-title style="text-align: center">
+        {{ selectedQuality.name }}
+      </h1>
+
+      <!-- Immagine grande al centro -->
+      <div style="display: flex; justify-content: center; margin: 20px 0">
+        <img
+          [ngClass]="selectedQuality.virtue"
+          style="
+            width: 150px; /* Imposta una larghezza maggiore per l'immagine */
+            height: 150px;
+            border-radius: 15%;
+            padding: 3px;
+            border: 1px solid black;
+          "
+          src="{{
+            'https://enrgmsdppekwfvmbdxsl.supabase.co/storage/v1/object/public/q/' +
+              selectedQuality.id +
+              '.jpg'
+          }}"
+        />
+      </div>
+
+      <!-- Descrizione al centro -->
+      <p style="text-align: center; margin: 20px 0">
+        {{ selectedQuality.description }}
+      </p>
+
+      <!-- Textarea con larghezza massima -->
+      <textarea
+        class="custom-textarea"
+        placeholder="Describe how {{ selectedQuality.name }} has been good"
+        style="
+          width: 100%; /* Larghezza massima */
+          max-width: 100%; /* Assicura che non ci siano limiti di larghezza */
+          border: 0.1px solid gray;
+          margin-top: 20px;
+        "
+        rows="5"
+        [(ngModel)]="selectedQuality.desc_xp"
+      ></textarea>
+    </div>
+
+    <!-- Azioni del dialogo -->
+    <div mat-dialog-actions style="justify-content: center">
+      <button mat-button (click)="dialog.closeAll()">Close</button>
+    </div>
+  </ng-template>
 
   <ng-template #header>
     <div

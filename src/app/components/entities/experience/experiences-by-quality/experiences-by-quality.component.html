@@ -1,29 +1,110 @@
+<ng-template #header>
+  <div
+    style="
+      float: left;
+      width: 100%;
+      z-index: 0;
+      margin-bottom: 20px;
+      background-color: black;
+      border: solid grey 1px;
+      position: fixed;
+      z-index: 10;
+    "
+  >
+    <div style="border-bottom: 0px solid black; color: white">
+      <button mat-button (click)="backClicked()">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+      quality: <b>{{ quality }}</b>
+    </div>
+  </div>
+</ng-template>
+
+<div *ngIf="isMobile">
+  <ng-container *ngTemplateOutlet="header"></ng-container>
+  <div style="width: 100%; padding-top: 40px" class="inline"></div>
+</div>
+
 <div style="margin: 10px">
   <h1>{{ quality }}</h1>
 
-  <h2>Strenghts</h2>
-  <ul *ngIf="strengthsCount">
-    <li *ngFor="let entry of objectEntries(strengthsCount)">
-      {{ entry[1].strength }}: {{ entry[1].count }}
-    </li>
-  </ul>
-  <h2>Activities</h2>
-  <ul *ngIf="activitiesCount">
-    <li *ngFor="let entry of objectEntries(activitiesCount)">
-      {{ entry[1].name }}: {{ entry[1].count }}
-    </li>
-  </ul>
-  <h2>Total Experiences: {{ theExps?.length }}</h2>
+  <div style="display: flex">
+    <!-- Colonna 2: Activities -->
+    <div style="flex: 1">
+      Activities
+      <div *ngIf="activitiesCount">
+        <label
+          style="cursor: pointer; display: block"
+          class="linkColor"
+          *ngFor="let entry of objectEntries(activitiesCount)"
+        >
+          • {{ entry[1].name }} ({{ entry[1].count }})
+        </label>
+      </div>
+    </div>
+  </div>
 </div>
 
-<div>
+<div style="flex: 1; margin: 10px">
+  Strengths
+  <div *ngIf="strengthsCount" style="display: flex; flex-wrap: wrap; gap: 10px">
+    <label
+      style="cursor: pointer; white-space: nowrap"
+      *ngFor="let entry of objectEntries(strengthsCount)"
+    >
+      • {{ entry[1].strength }} ({{ entry[1].count }})
+    </label>
+  </div>
+</div>
+
+<div style="flex: 1; margin: 10px">
+  Total Experiences: {{ theExps?.length }}
+</div>
+
+<hr />
+
+<div style="margin: 10px">
+  <h2>Related Experiences</h2>
   <div>
     <mat-accordion [multi]="false">
-      <mat-expansion-panel *ngFor="let hero of heroes | async">
-        <mat-expansion-panel-header class="custom-expansion-panel-header">
+      <mat-expansion-panel
+        *ngFor="let hero of heroes | async"
+        style="background-color: #28282b; color: white"
+      >
+        <mat-expansion-panel-header
+          class="custom-expansion-panel-header, specific-class"
+          style="background-color: #28282b; color: white"
+        >
           <mat-panel-title>
-            <div>
-              {{ hero.value?.Description }}
+            <div style="width: 100%">
+              <div style="color: white; margin-bottom: 8px; width: 100%">
+                {{ hero.value?.Description }}
+              </div>
+              <div *ngIf="hero.activities">
+                <label
+                  class="linkColor"
+                  style="font-size: x-small"
+                  *ngFor="let a of hero.activities"
+                  >• {{ a.description }}&nbsp;
+                </label>
+              </div>
+              <!--
+              
+
+
+              <div
+                *ngIf="hero.activities"
+                style="color: gray; font-size: small"
+              >
+                <label
+                  style="cursor: pointer; display: float"
+                  *ngFor="let a of hero.activities"
+                  class="linkColor"
+                >
+                  • {{ a.description }}&nbsp;
+                </label>
+              </div>
+              -->
             </div>
           </mat-panel-title>
         </mat-expansion-panel-header>
@@ -32,7 +113,9 @@
           <b>context:</b><br />{{ cit.context }} <bR /><bR /> <b>citation:</b
           ><br />"<i>{{ cit.citation }}</i
           >"
+          <hr />
         </div>
+
         <br />
 
         cards linked:
@@ -65,15 +148,13 @@
 
           <div style="margin-left: 15px; width: 100%; padding-bottom: 5px">
             <div>
-              <div style="text-align: left; color: black" *ngIf="!hero.json">
+              <div style="text-align: left" *ngIf="!hero.json">
                 {{ hero.profile.username }}
-                <b style="text-align: left; color: black">
-                  @{{ hero.master.name }}
-                </b>
+                <b style="text-align: left"> @{{ hero.master.name }} </b>
               </div>
-              <div style="text-align: left; color: black" *ngIf="hero.json">
+              <div style="text-align: left" *ngIf="hero.json">
                 {{ hero.profile.username }} reported an article on
-                <b style="text-align: left; color: black">
+                <b style="text-align: left">
                   {{ hero.master.name }}
                 </b>
               </div>
@@ -94,9 +175,7 @@
             <div style="float: left">
               <span style="display: flex">
                 <div *ngIf="hero.activities">
-                  <label
-                    style="color: blue; cursor: pointer"
-                    *ngFor="let a of hero.activities"
+                  <label class="linkColor" *ngFor="let a of hero.activities"
                     >• {{ a.description }}&nbsp;
                   </label>
                 </div>

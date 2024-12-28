@@ -5,6 +5,7 @@ div.inlineTag {
   text-align: left;
   color: blue;
 }
+
 .image-main {
   width: 90%;
   border-radius: 15%;
@@ -97,4 +98,16 @@ h2 {
 
 .footCont {
   margin: 10px;
+}
+
+.jojo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+  font-family: Arial, sans-serif;
+  font-size: 15px;
+  color: #4a4a4a;
+  font-weight: bold;
+  margin-bottom: 10px;
 }

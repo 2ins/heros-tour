@@ -9,6 +9,7 @@ import { Search } from 'src/app/model/search';
 import { MobileService } from 'src/app/services/mobile.service';
 import { HeroState } from 'src/app/states/todo.state';
 import { SupabaseService } from 'src/app/supabase.service';
+import { transformToFlatArray } from 'src/app/utils/utilityfunctions';
 
 @Component({
   selector: 'app-activity-detail',
@@ -24,6 +25,7 @@ export class ActivityDetailComponent implements OnInit {
   activity?: Activity;
   activityId?: any;
   isMobile: boolean = false;
+  freequalities: any[] = [];
 
   @Select(HeroState.getActivitySearch) search?: Observable<Search>;
   theSearch?: Search;
@@ -45,6 +47,10 @@ export class ActivityDetailComponent implements OnInit {
     this.selectedActivity?.subscribe((a) => {
       this.activity = a;
       a.qualities?.sort((a, b) => b.count - a.count);
+      //GESTISCI QUI LE QUAILITES GENERICHE
+      if (a.table) {
+        this.freequalities = transformToFlatArray(a.table);
+      }
     });
 
     this.search?.subscribe((x) => {

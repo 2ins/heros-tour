@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { Select, Store } from '@ngxs/store';
-import { Observable } from 'rxjs';
+import { map, Observable, startWith } from 'rxjs';
 import {
   GetActivitiesOverview,
   SetSelectedActivity,
@@ -24,6 +25,10 @@ export class ActivitiesComponent implements OnInit {
   search: Search = { search: '', arr: [], location: '' };
   isMobile: boolean = false;
   indxTab: number = 0;
+  control = new FormControl();
+
+  theActivities: Activity[] = [];
+  filteredActivities?: Observable<Activity[]>;
 
   constructor(
     private readonly supabase: SupabaseService,
@@ -31,29 +36,39 @@ export class ActivitiesComponent implements OnInit {
     private ms: MobileService
   ) {}
 
+  private _filter(value: string): Activity[] {
+    if (value.length > 0) {
+      const filterValue = this._normalizeValue(value);
+      return this.theActivities.filter((activities) =>
+        this._normalizeValue(activities.description).includes(filterValue)
+      );
+    }
+    return this.theActivities;
+  }
+  private _normalizeValue(value: string): string {
+    return value.toLowerCase().replace(/\s/g, '');
+  }
+
   ngOnInit(): void {
+    this.filteredActivities = this.control.valueChanges.pipe(
+      startWith(''),
+      map((value) => this._filter(value))
+    );
+
+    this.activities?.subscribe((as) => {
+      this.theActivities = as; // Salva tutte le attività
+      this.filteredActivities = this.control.valueChanges.pipe(
+        startWith(''), // Avvia con un valore vuoto
+        map((value) => this._filter(value)) // Applica il filtro
+      );
+    });
+
     this.searchX?.subscribe((x) => {
       this.search = x;
     });
 
     this.isMobile = this.ms.isMobile();
 
-    /*
-    this.activities?.subscribe((as) => {
-      as?.sort((a, b) =>
-        // b.name.toLowerCase() > a.name.toLowerCase() ? -1 : 1
-        {
-          var appoA = ((a.count || 1) * 100) / (a.xps_count || 1);
-          var appoB = ((b.count || 1) * 100) / (b.xps_count || 1);
-          if (appoA > appoB) return -1;
-          else return 1;
-        }
-      );
-      as.forEach((cur) => {
-        cur.qualities?.sort((a, b) => b.count - a.count);
-      });
-    });
-*/
     // this.store.dispatch(new GetActivitiesOverview(this.search));
     //ho la seguente espressione per effettuare sorting fra activities.
     //il requisito cambia voglio eseguire l'ordinamento cosi:

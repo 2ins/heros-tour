@@ -1,0 +1,15 @@
+<div style="display: flex; gap: 5px; cursor: pointer">
+  <span
+    *ngFor="let star of stars; let index = index"
+    (click)="setRating(index + 1)"
+    (mouseover)="hoverRating(index + 1)"
+    (mouseleave)="clearHover()"
+    [ngClass]="{
+      filled: index < (hoveredRating || rating),
+      empty: index >= (hoveredRating || rating)
+    }"
+    class="star"
+  >
+    ★
+  </span>
+</div>

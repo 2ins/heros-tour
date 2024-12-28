@@ -81,11 +81,7 @@
           </div>
         </div>
       </div>
-      <p style="text-align: center">
-        <i style="color: black; font-size: xx-small">
-          {{ quality.virtue | virtueFinder }}
-        </i>
-      </p>
+      <p style="text-align: center"></p>
 
       <div>
         <img
@@ -112,6 +108,7 @@
 
   <div style="padding: 10px; margin: 10px">
     <h1 style="color: green">Activities related</h1>
+
     <app-activities-accordion-list
       [quality]="quality"
     ></app-activities-accordion-list>
@@ -124,7 +121,7 @@
         width: 100%;
         z-index: 0;
         margin-bottom: 20px;
-        background-color: black;
+
         border: solid grey 1px;
         position: fixed;
         z-index: 10;

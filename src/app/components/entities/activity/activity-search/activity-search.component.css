@@ -1,6 +1,87 @@
-.input-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%; /* Assicurati che il contenitore abbia la larghezza desiderata */
+.grid-container {
+  display: grid;
+
+  gap: 10px;
+  padding: 10px;
+  max-width: 100%; /* Assicura che la griglia non superi la larghezza disponibile */
+  margin: 0 auto; /* Centra la griglia */
+}
+
+.grid-item {
+  position: relative; /* Per posizionare gli elementi interni */
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: black;
+  cursor: pointer;
+}
+
+.description {
+  text-align: center;
+  font-weight: bold;
+  color: white;
+  margin-bottom: 8px;
+}
+
+.image-container {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1; /* Div quadrato */
+  overflow: hidden;
+}
+
+.image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Adatta l'immagine senza distorsioni */
+  filter: brightness(100%); /* Scurisce l'immagine */
+}
+
+.overlay-text {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translate(-50%, -90%);
+  color: white;
+  font-size: 1em;
+
+  text-align: center;
+  pointer-events: none; /* Impedisce clic su testo */
+  border: 0px solid white;
+  width: 100%;
+  background-color: black;
+
+  font-size: 11px;
+  white-space: nowrap; /* Non permette al testo di andare a capo */
+  overflow: hidden; /* Nasconde il testo che supera la larghezza */
+  text-overflow: ellipsis; /* Aggiunge "..." al testo troncato */
+}
+
+h3.title {
+  margin: 0;
+  font-size: 1em;
+  font-weight: bold;
+}
+
+.content {
+  margin-top: 10px;
+  text-align: left;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+li {
+  margin: 5px 0;
+}
+
+.grid-footer {
+  margin-top: 10px;
+  border-top: 1px solid #555;
+  padding-top: 5px;
+  text-align: center;
+  font-size: 0.9em;
 }

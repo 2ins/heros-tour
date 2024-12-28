@@ -13,6 +13,7 @@ export interface Activity {
   masters_search_count?: number;
   masters?: Master[];
   description_xp?: Quality[];
+  table?: any[];
 }
 
 export interface ActivityTable {

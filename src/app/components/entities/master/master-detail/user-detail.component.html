@@ -1,25 +1,5 @@
 <div *ngIf="master != undefined">
-  <!--
-
-
-  <div *ngIf="!isMobile">
-    <div fxLayout="row">
-      <div fxFlex.gt-sm="55%">
-        <ng-container *ngTemplateOutlet="detail"></ng-container>
-      </div>
-      <div fxFlex.gt-sm="45%">
-        <ng-container *ngTemplateOutlet="VirtuePie"></ng-container>
-        <div style="border: 0px solid black; z-index: 2">
-          <h1>{{ master.name }}</h1>
-          <div>{{ master.website }}</div>
-        </div>
-        <ng-container *ngTemplateOutlet="ActivitiesDesktop"></ng-container>
-      </div>
-    </div>
-    <ng-container *ngTemplateOutlet="prospect"></ng-container>
-  </div>
-  -->
-  <div *ngIf="isMobile || !isMobile">
+  <div *ngIf="isMobile">
     <ng-container *ngTemplateOutlet="header"></ng-container>
     <div style="width: 100%; padding-top: 40px" class="inline"></div>
     <ng-container *ngTemplateOutlet="detail"></ng-container>
@@ -34,7 +14,64 @@
       "
     >
       <ng-container *ngTemplateOutlet="Activities"></ng-container>
+
+      <ng-container *ngTemplateOutlet="prospect"></ng-container>
+    </div>
+  </div>
+
+  <div *ngIf="!isMobile">
+    <div fxLayout="row">
+      <div fxFlex.gt-sm="100%">
+        <div class="two-columns">
+          <div class="column2">
+            <ng-container *ngTemplateOutlet="detail"></ng-container>
+          </div>
+          <div class="column1">
+            <div style="padding-top: 0px; margin-left: 10px">
+              <h1 style="text-align: left; margin-bottom: 0px">
+                {{ master.name }}
+              </h1>
+              <div
+                *ngIf="helpText"
+                style="
+                  text-align: left;
+                  margin-right: 0px;
+                  font-style: italic;
+                  font-size: small;
+                "
+              >
+                is a Master and has the following vision and teaches the
+                following activities.
+              </div>
+
+              <div style="margin-top: 15px">
+                <div style="margin-left: 15px; margin-top: 5px">
+                  <ng-container *ngTemplateOutlet="Activities"></ng-container>
+                </div>
+              </div>
+              <div style="text-align: center; margin: 10px">
+                experiences:
+                <b>{{ master.tot_xps }}</b>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
       <br />
+    </div>
+
+    <!-- <ng-container *ngTemplateOutlet="VirtuePie"></ng-container> -->
+    <div
+      style="
+        border: 1px solid black;
+        border: 0px solid black;
+        position: relative;
+        z-index: 1;
+        top: -80px;
+      "
+    >
+      <br />
+
       <ng-container *ngTemplateOutlet="prospect"></ng-container>
     </div>
   </div>
@@ -70,17 +107,63 @@
   </ng-template>
 
   <ng-template #Activities>
-    <div style="display: flex; justify-content: center; width: 100%">
-      <div *ngIf="master.activities">
+    <div
+      *ngIf="helpText"
+      style="
+        text-align: center;
+        margin-right: 0px;
+        font-style: italic;
+        font-size: small;
+      "
+    >
+      {{ master.name }} is a Master and has the following vision and teaches the
+      following activities.
+    </div>
+    <div class="jojo" style="font-weight: bold; margin-bottom: 10px">
+      Vision
+    </div>
+    <div style="margin-left: 20px; margin-right: 10px">
+      We come together internationally to remember what it means to connect to
+      each other, through dance, music, play, and community.
+    </div>
+    <div style="text-align: right; margin-right: 20px; font-style: italic">
+      <a
+        [href]="master.website"
+        target="_blank"
+        style="
+          text-decoration: none;
+          color: inherit;
+          margin-right: 20px;
+          margin-top: 10px;
+        "
+      >
+        {{ master.website }}
+      </a>
+    </div>
+
+    <div
+      style="
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        margin: 10px;
+      "
+    >
+      <div *ngIf="master.activities" style="text-align: center">
+        <div class="jojo" style="font-weight: bold; margin-bottom: 10px">
+          Activities
+        </div>
+
         <div class="inlineTag">
           <label
-            style="cursor: pointer"
+            style="cursor: pointer; display: block; margin: 5px 0"
             class="linkColor"
             *ngFor="let a of master.activities"
             routerLink="/activities/activity/{{ a.id }}"
-            >•{{ a.description }}{{ isMobile | delimit }}
+          >
+            • {{ a.description }}{{ isMobile | delimit }}
           </label>
-          <br />
         </div>
       </div>
     </div>
@@ -105,24 +188,44 @@
   <ng-template #prospect>
     <div>
       <div>
+        <div
+          *ngIf="helpText"
+          style="
+            text-align: center;
+            margin-top: 55px;
+            font-style: italic;
+            font-size: small;
+          "
+        >
+          People attending these experience picked the following qualities of
+          self development. the most popular ones
+        </div>
+
+        <!--
+        <hr />
+        <h2 style="text-align: left">Cards</h2>
+      
+       
         <app-qualities-list-grid
           [qualities]="master.qualities"
           [total]="master.tot_xps"
         ></app-qualities-list-grid>
+         -->
+
+        <app-qualities-horizontal-compact
+          [qualities]="master.qualities"
+          [total]="master.tot_xps"
+          (notifySelection)="appo($event)"
+        ></app-qualities-horizontal-compact>
+        <app-free-qualities-prospect [freequalities]="filteredfreequalities">
+        </app-free-qualities-prospect>
       </div>
       <br />
 
-      <div *ngIf="master.resume" style="margin-left: 10px">
-        <div *ngFor="let res of master.resume">
-          <b>{{ res.name }}</b>
-          <p>{{ res.description }}</p>
-        </div>
-      </div>
-
-      <div style="text-align: left">
-        <br /><br />
-        <h2 style="text-align: center">Experiences</h2>
-        <div class="heroes">
+      <div style="text-align: left; display: none">
+        <hr />
+        <h2 style="text-align: left">Experiences</h2>
+        <div class="heroes" style="display: none">
           <div *ngFor="let hero of master.heroes">
             <app-experience-item
               [hero]="hero"
@@ -152,16 +255,16 @@
           <mat-icon>arrow_back</mat-icon>
         </button>
         master: <b>{{ master.name }}</b>
-        <!--
+
         <button
           mat-button
           style="border: 0px solid black; background-color: white; float: right"
           [matMenuTriggerFor]="menu"
-          *ngIf="isOwner"
+          *ngIf="profile"
         >
           <mat-icon class="circle-icon-actions">more_horizon</mat-icon>
         </button>
-      --></div>
+      </div>
     </div>
   </ng-template>
 </div>
@@ -177,6 +280,15 @@
     >
       <mat-icon>edit</mat-icon>
       Edit
+    </button>
+    <button
+      #btnEdit
+      (click)="addXp()"
+      mat-menu-item
+      style="float: right; margin-right: 10px; margin-bottom: 10px; color: blue"
+    >
+      <mat-icon>add</mat-icon>
+      Add Experience
     </button>
   </div>
 </mat-menu>

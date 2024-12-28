@@ -1,25 +1,35 @@
 <div *ngIf="activity != undefined">
   <div *ngIf="!isMobile">
     <div fxLayout="row">
-      <div fxFlex.gt-sm="70%">
+      <div fxFlex.gt-sm="100%">
         <div class="two-columns">
-          <div class="column1">
-            <ng-container *ngTemplateOutlet="detailDesc"></ng-container>
-          </div>
           <div class="column2">
+            <ng-container *ngTemplateOutlet="detail"></ng-container>
+          </div>
+          <div class="column1">
             <div style="padding-top: 0px; margin-left: 10px">
+              <div
+                style="
+                  text-align: left;
+                  margin-top: 0px;
+                  font-style: italic;
+                  font-size: small;
+                "
+              >
+                Activity
+              </div>
               <h1 style="text-align: left; margin-bottom: 0px">
                 {{ activity.description }}
               </h1>
 
-              <div style="text-align: left">
-                experiences:
-                <b>{{ activity.xps_count }}</b>
+              <div style="margin-top: 15px">
+                <div style="margin-left: 15px; margin-top: 5px">
+                  <ng-container *ngTemplateOutlet="Activities"></ng-container>
+                </div>
               </div>
-
-              <div style="text-align: left">
-                masters:
-                <b>{{ activity.master_count }}</b>
+              <div style="text-align: center; margin: 10px">
+                experiences:
+                <b>{{ activity.count }}</b>
               </div>
             </div>
           </div>
@@ -27,38 +37,75 @@
       </div>
       <br />
     </div>
-    <ng-container *ngTemplateOutlet="prospect"></ng-container>
+
+    <!-- <ng-container *ngTemplateOutlet="VirtuePie"></ng-container> -->
+    <div
+      style="
+        border: 1px solid black;
+        border: 0px solid black;
+        position: relative;
+        z-index: 1;
+        top: -80px;
+      "
+    >
+      <br />
+
+      <ng-container *ngTemplateOutlet="prospect"></ng-container>
+    </div>
+    <ng-container *ngTemplateOutlet="masters"></ng-container>
   </div>
   <div *ngIf="isMobile">
     <ng-container *ngTemplateOutlet="header"></ng-container>
     <div style="width: 100%; padding-top: 40px"></div>
+
     <ng-container *ngTemplateOutlet="detailXp"></ng-container>
 
-    <ng-container *ngTemplateOutlet="prospect"></ng-container>
+    <div>
+      <div style="width: 100%; border: 0 white">
+        <div
+          style="
+            text-align: left;
+            margin-left: 25px;
+            margin-top: 15px;
+            border: 0px solid white;
+          "
+        >
+          experiences:
+          <b>{{ activity.xps_count }}</b>
+          masters:
+          <b>{{ activity.master_count }}</b>
+        </div>
+        DIOPORCO
+        <app-free-qualities-prospect
+          [freequalities]="freequalities"
+        ></app-free-qualities-prospect>
+      </div>
+    </div>
+
+    <div style="position: relative; z-index: 1; top: -30px">
+      DIOCANE
+      <ng-container *ngTemplateOutlet="masters"></ng-container>
+    </div>
   </div>
 
   <ng-template #detailXp>
     <div>
       <div style="width: 100%" class="inline">
-        <div>
-          <div style="width: 100%; margin: 10px">
-            <div>
-              <h1 style="text-align: left">
-                {{ activity.description }}
-              </h1>
-            </div>
-          </div>
-        </div>
-        <div style="display: flex; justify-content: center">
-          <div class="image-main">
-            <img
-              src="{{
-                'https://enrgmsdppekwfvmbdxsl.supabase.co/storage/v1/object/public/avatars/' +
-                  activity.img_url
-              }}"
-              class="profile-pic"
-            />
-          </div>
+        <div
+          style="
+            border: 0px solid black;
+            position: relative;
+            z-index: 1;
+            top: -50px;
+          "
+        >
+          <app-virtues-pie-combo
+            [qualities]="activity.qualities"
+            [imgurl]="activity.img_url"
+            [type]="!isMobile ? 'reduced' : 'full'"
+          ></app-virtues-pie-combo>
+
+          <ng-container *ngTemplateOutlet="Activities"></ng-container>
         </div>
       </div>
     </div>
@@ -98,44 +145,21 @@
 
   <ng-template #detail>
     <div>
-      <div *ngIf="activity != undefined" style="width: 100%" class="inline">
-        <h1 style="text-align: center">{{ activity.description }}</h1>
-        <div style="color: blue">
-          <b>#{{ activity.name }}</b>
-        </div>
-
-        <br />
-        <div style="color: blue">
-          <a
-            *ngIf="activity.description"
-            href="{{ activity.description | replace : ' ' : '+' }}"
-            target="_blank"
-            ><img
-              style="width: 50px"
-              class="img-responsive"
-              src="assets/gg.png"
-          /></a>
-        </div>
-
-        <button
-          (click)="edit()"
-          mat-stroked-button
-          style="margin-right: 10px; margin-bottom: 10px; color: blue"
+      <div style="width: 100%" class="inline">
+        <div
+          style="
+            border: 0px solid black;
+            position: relative;
+            z-index: 1;
+            top: -50px;
+          "
         >
-          Edit
-        </button>
-        <br />
-        <br />
-        <div style="text-align: center">
-          experiences:
-          <b>{{ activity.xps_count }}</b>
+          <app-virtues-pie-combo
+            [qualities]="activity.qualities"
+            [imgurl]="activity.img_url"
+            [type]="!isMobile ? 'reduced' : 'full'"
+          ></app-virtues-pie-combo>
         </div>
-
-        <div style="text-align: center">
-          masters:
-          <b>{{ activity.master_count }}</b>
-        </div>
-        <br />
       </div>
     </div>
   </ng-template>
@@ -152,16 +176,7 @@
     <br />
   </ng-template>
 
-  <ng-template #prospect>
-    <div style="border-top: 0px solid gray">
-      <app-qualities-accordion-list
-        [qualities]="activity.qualities"
-        [tot_xps]="activity.xps_count"
-      >
-      </app-qualities-accordion-list>
-    </div>
-    <br />
-
+  <ng-template #masters>
     <div class="inline" style="width: 100%; border-top: 0px solid gray">
       <h2
         *ngIf="theSearch?.location"
@@ -182,7 +197,7 @@
         *ngIf="search | async as x"
         style="text-align: left; margin-left: 25px"
       >
-        <div *ngIf="x.arr">with the following qualities:</div>
+        <div *ngIf="x.arr.length > 0">with the following qualities:</div>
         <div style="margin: 5px">
           <mat-chip-list>
             <mat-chip
@@ -237,6 +252,46 @@
           <mat-icon class="circle-icon-actions">more_horizon</mat-icon>
         </button>
       </div>
+    </div>
+  </ng-template>
+
+  <ng-template #prospect>
+    <div>
+      <app-free-qualities-prospect [freequalities]="freequalities">
+      </app-free-qualities-prospect>
+      <hr />
+      <div style="display: BLOCK">
+        <h2 style="text-align: left">Cards</h2>
+
+        <app-qualities-horizontal-compact
+          [qualities]="activity.qualities"
+          [total]="activity.xps_count"
+        ></app-qualities-horizontal-compact>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template #Activities>
+    <div class="jojo" style="font-weight: bold; margin-bottom: 10px">
+      Vision
+    </div>
+    <div style="margin-left: 20px; margin-right: 10px">
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+      tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+      quis nostrum exercitationem ullamco laboriosam, activity.description
+    </div>
+    <div style="text-align: right; margin-right: 20px; font-style: italic">
+      <a
+        target="_blank"
+        style="
+          text-decoration: none;
+          color: inherit;
+          margin-right: 20px;
+          margin-top: 10px;
+        "
+      >
+        activity.website
+      </a>
     </div>
   </ng-template>
 </div>

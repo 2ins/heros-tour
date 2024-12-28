@@ -1,0 +1,47 @@
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 5 colonne per riga */
+  gap: 10px;
+}
+
+.grid-item {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+  padding: 10px;
+  background-color: black;
+  color: white;
+  text-align: center;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  margin: 0px;
+}
+
+h3.title {
+  margin: 0;
+  font-size: 1em;
+  font-weight: bold;
+}
+
+.content {
+  margin-top: 10px;
+  text-align: left;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+li {
+  margin: 5px 0;
+}
+
+.grid-footer {
+  margin-top: 10px;
+  border-top: 1px solid #555;
+  padding-top: 5px;
+  text-align: center;
+  font-size: 0.9em;
+}

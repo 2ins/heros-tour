@@ -59,6 +59,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthComponent } from './auth/auth.component';
 import { AppContainerComponent } from './components/app-container/app-container.component';
+import { ActivitiesAccordionListComponent } from './components/entities/activity/activities-accordion-list/activities-accordion-list.component';
 import { ActivitiesComponent } from './components/entities/activity/activities/activities.component';
 import { ActivityDetailComponent } from './components/entities/activity/activity-detail/activity-detail.component';
 import { ActivityInsertComponent } from './components/entities/activity/activity-insert/activity-insert.component';
@@ -77,15 +78,19 @@ import { ExperiencesByQualityComponent } from './components/entities/experience/
 import { ExperiencesComponent } from './components/entities/experience/experiences/experiences.component';
 import { AggLocationsViewComponent } from './components/entities/locations/agg-locations-view/agg-locations-view.component';
 import { LocationMasterItemComponent } from './components/entities/locations/location-master-item/location-master-item.component';
+import { MultipleLocationsMapComponent } from './components/entities/maps/multiple-locations-map/multiple-locations-map.component';
 import { HorizontalViewerComponent } from './components/entities/master/horizontal-viewer/horizontal-viewer.component';
 import { MasterDetailComponent } from './components/entities/master/master-detail/master-detail.component';
 import { MasterInsertComponent } from './components/entities/master/master-insert/master-insert.component';
 import { MasterItemComponent } from './components/entities/master/master-item/master-item.component';
 import { MastersComponent } from './components/entities/master/masters/masters.component';
+import { QualitiesAccordionDeckComponent } from './components/entities/quality/qualities-accordion-deck/qualities-accordion-deck.component';
+import { QualitiesAccordionListComponent } from './components/entities/quality/qualities-accordion-list/qualities-accordion-list.component';
 import { QualitiesListGridComponent } from './components/entities/quality/qualities-list-grid/qualities-list-grid.component';
 import { QualitiesListHorizontalComponent } from './components/entities/quality/qualities-list-horizontal/qualities-list-horizontal.component';
 import { QualitiesListVerticalBigComponent } from './components/entities/quality/qualities-list-vertical-big/qualities-list-vertical-big.component';
 import { QualitiesListVerticalComponent } from './components/entities/quality/qualities-list-vertical/qualities-list-vertical.component';
+import { QualitiesListXpComponent } from './components/entities/quality/qualities-list-xp/qualities-list-xp.component';
 import { QualitiesComponent } from './components/entities/quality/qualities/qualities.component';
 import { QualityComponent } from './components/entities/quality/quality/quality.component';
 import { UserDetailComponent } from './components/entities/user/user-detail/user-detail.component';
@@ -101,6 +106,7 @@ import { HomeSearchComponent } from './components/home-search/home-search.compon
 import { HomeviewComponent } from './components/homeview/homeview.component';
 import { ImageCropperUtilComponent } from './components/image-cropper-util/image-cropper-util.component';
 import { LocationsComponent } from './components/locations/locations.component';
+import { LoginComponentComponent } from './components/login-component/login-component.component';
 import { MenuListComponent } from './components/menu-list/menu-list.component';
 import { MongoArticleDetailComponent } from './components/mongo/mongo-article-detail/mongo-article-detail.component';
 import { MongoTestComponent } from './components/mongo/mongo-test/mongo-test.component';
@@ -117,23 +123,22 @@ import { PercentageQualityPipe } from './percentage-quality.pipe';
 import { DelimitPipe } from './pipes/delimit.pipe';
 import { DescriptionManagerPipe } from './pipes/description-manager.pipe';
 import { FilterByVirtuePipe } from './pipes/filter-by-virtue-pipe.pipe';
+import { FindQualityFromSearchPipe } from './pipes/find-quality-from-search.pipe';
 import { LocationCompactDetailPipe } from './pipes/location-compact-detail.pipe';
 import { LocationCompactPipe } from './pipes/location-compact.pipe';
 import { NameStrenghtFinderPipe } from './pipes/name-strenght-finder.pipe';
 import { ParseLocationPipe } from './pipes/parse-location.pipe';
+import { StrenghtCardByXpsPipe } from './pipes/strenght-card-by-xps.pipe';
 import { VirtueColorFinderByStrenghtIdPipe } from './pipes/virtue-color-finder-by-strenght-id.pipe';
 import { VirtueColorFinderPipe } from './pipes/virtue-color-finder.pipe';
 import { VirtueFinderPipe } from './pipes/virtue-finder.pipe';
 import { ReplacePipe } from './replace-pipe.pipe';
 import { HeroState } from './states/todo.state';
 import { TestOutlineComponent } from './test-outline/test-outline.component';
-import { QualitiesAccordionListComponent } from './components/entities/quality/qualities-accordion-list/qualities-accordion-list.component';
-import { MultipleLocationsMapComponent } from './components/entities/maps/multiple-locations-map/multiple-locations-map.component';
-import { StrenghtCardByXpsPipe } from './pipes/strenght-card-by-xps.pipe';
-import { QualitiesListXpComponent } from './components/entities/quality/qualities-list-xp/qualities-list-xp.component';
-import { FindQualityFromSearchPipe } from './pipes/find-quality-from-search.pipe';
-import { ActivitiesAccordionListComponent } from './components/entities/activity/activities-accordion-list/activities-accordion-list.component';
-import { LoginComponentComponent } from './components/login-component/login-component.component';
+import { QualitiesHorizontalCompactComponent } from './components/entities/quality/qualities-horizontal-compact/qualities-horizontal-compact.component';
+import { FreeQualitiesComponent } from './components/entities/quality/free-qualities/free-qualities.component';
+import { FreeQualitiesProspectComponent } from './components/entities/quality/free-qualities-prospect/free-qualities-prospect.component';
+import { StarRatingComponent } from './components/star-rating/star-rating.component';
 
 //import ChartDataLabels from 'chartjs-plugin-datalabels';
 
@@ -239,6 +244,11 @@ Chart.defaults.plugins.tooltip.enabled = false;
     FindQualityFromSearchPipe,
     ActivitiesAccordionListComponent,
     LoginComponentComponent,
+    QualitiesAccordionDeckComponent,
+    QualitiesHorizontalCompactComponent,
+    FreeQualitiesComponent,
+    FreeQualitiesProspectComponent,
+    StarRatingComponent,
   ],
   imports: [
     BrowserModule,

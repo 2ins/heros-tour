@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Select, Store } from '@ngxs/store';
@@ -5,6 +6,7 @@ import { Observable } from 'rxjs';
 import { GetHeroesByQuality } from 'src/app/actions/hero.action';
 import { ElemCount, ElemCountIds } from 'src/app/model/article';
 import { Hero } from 'src/app/model/hero';
+import { MobileService } from 'src/app/services/mobile.service';
 import { HeroState } from 'src/app/states/todo.state';
 
 @Component({
@@ -15,15 +17,17 @@ import { HeroState } from 'src/app/states/todo.state';
 export class ExperiencesByQualityComponent implements OnInit {
   @Select(HeroState.getHeroList) heroes?: Observable<Hero[]>;
   theExps?: Hero[];
-
   quality?: string;
   strengthsCount?: { strength: string; count: number }[];
   activitiesCount?: { id: number; name: string; count: number }[];
+  isMobile: boolean = false;
 
   constructor(
     private store: Store,
     private activatedRoute: ActivatedRoute,
-    private route: Router
+    private route: Router,
+    private location: Location,
+    private ms: MobileService
   ) {}
 
   open(hero: Hero) {
@@ -35,6 +39,7 @@ export class ExperiencesByQualityComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.isMobile = this.ms.isMobile();
     this.activatedRoute.data.subscribe((data) => {
       console.log('byQuality', data['byQuality']); // qui puoi accedere al valore di byQuality
     });
@@ -104,5 +109,15 @@ export class ExperiencesByQualityComponent implements OnInit {
     frequencyArray.sort((a, b) => b.count - a.count);
 
     return frequencyArray;
+  }
+
+  backClicked() {
+    this.location.back();
+
+    if (this.location.back.length === 0) {
+      this.route.navigate(['/home']);
+    } else {
+      this.location.back();
+    }
   }
 }

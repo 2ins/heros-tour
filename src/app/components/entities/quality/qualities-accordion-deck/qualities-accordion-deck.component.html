@@ -1,0 +1,47 @@
+<div *ngFor="let el of hashMap.keys()">
+  <div style="background-color: white; display: flex">
+    <div class="side-bar" [ngClass]="el">
+      <span class="vertical-text"> {{ el | virtueFinder }}</span>
+    </div>
+    <mat-accordion [multi]="false" style="flex: 1">
+      <div *ngFor="let quality of hashMap.get(el)?.values(); let i = index">
+        <mat-expansion-panel class="customAcc">
+          <mat-expansion-panel-header class="specific-class">
+            <mat-panel-title>
+              {{ quality.name }}
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div>
+            <img
+              width="100%"
+              src="{{
+                'https://enrgmsdppekwfvmbdxsl.supabase.co/storage/v1/object/public/q/' +
+                  quality.id +
+                  '.jpg'
+              }}"
+            />
+          </div>
+          <br />
+
+          <div>
+            {{ quality.description }}
+            <hr />
+            <div *ngIf="showMore[i]">
+              {{ data[quality.id - 1].title }}
+            </div>
+
+            <div class="button-container">
+              <button
+                mat-button
+                (click)="toggleShowMore(i)"
+                style="color: blue"
+              >
+                {{ showMore[i] ? "Show Less" : "Show More" }}
+              </button>
+            </div>
+          </div>
+        </mat-expansion-panel>
+      </div>
+    </mat-accordion>
+  </div>
+</div>

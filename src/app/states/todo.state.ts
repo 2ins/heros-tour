@@ -38,9 +38,10 @@ import {
   SetSelectedUser,
   SetUserProfile,
 } from '../actions/profiles.action';
-import { GetQualities } from '../actions/quality.action';
+import { GetFreeQualities, GetQualities } from '../actions/quality.action';
 import { SetActivitySearch } from '../actions/search.action';
 import { Activity, ActivityTable } from '../model/activity';
+import { FreeQuality } from '../model/freequality';
 import { Hero, HeroTable } from '../model/hero';
 import { ImageHelp } from '../model/image';
 import {
@@ -76,6 +77,7 @@ export class HeroStateModel {
   aggComboLocations: LocationAggComboDbItem[] = [];
   addedMaster?: MasterTable;
   imageFile?: ImageHelp;
+  freeQualities?: FreeQuality[] = [];
 }
 
 @State<HeroStateModel>({
@@ -101,6 +103,7 @@ export class HeroStateModel {
     allMasters: [],
     newHeroTable: undefined,
     imageFile: undefined,
+    freeQualities: [],
   },
 })
 @Injectable()
@@ -194,6 +197,10 @@ export class HeroState {
   @Selector()
   static getImageFile(state: HeroStateModel) {
     return state.imageFile;
+  }
+  @Selector()
+  static getFreeQualities(state: HeroStateModel) {
+    return state.freeQualities;
   }
 
   @Action(GetHeroes)
@@ -602,10 +609,13 @@ export class HeroState {
       (response: any) => {
         this.loadingService.stop();
         var selectedUser = response[0].data[0] as MyProfile;
+        console.log('obj dio merda', selectedUser);
         var mapped = response[1].data.map(function (obj: any) {
           return obj.j;
         });
-        selectedUser.heroes = mapped;
+        if (selectedUser) {
+          selectedUser.heroes = mapped;
+        }
         const state = getState();
         setState({
           ...state,
@@ -644,6 +654,13 @@ export class HeroState {
     { payload, loc, qualities }: SetSelectedActivity
   ) {
     this.loadingService.start();
+    console.log('HEYHEY', payload, loc, qualities);
+    if (loc == undefined) {
+      loc = '';
+    }
+    if (qualities == undefined) {
+      qualities = [];
+    }
     const queryMasters =
       this.supabase.getMastersOfActivityByLocationAndQualities(
         payload,
@@ -674,6 +691,8 @@ export class HeroState {
     { getState, setState }: StateContext<HeroStateModel>,
     { payload }: SetUserProfile
   ) {
+    console.log('payload', payload);
+    console.log('set prof 3');
     if (payload) {
       this.loadingService.start();
     } else {
@@ -684,17 +703,20 @@ export class HeroState {
         userProfile: undefined,
       });
     }
+
     var prof = this.supabase.profile(payload);
 
     return from(prof).pipe(
       tap(({ data: result, error, status }) => {
         this.loadingService.stop();
-        console.log('data profile:', result);
+
+        var appo = result as MyProfile;
+        console.log('data profile:', appo);
         const state = getState();
 
         setState({
           ...state,
-          userProfile: result as MyProfile,
+          userProfile: appo,
         });
       })
     );
@@ -824,5 +846,22 @@ export class HeroState {
       ...state,
       imageFile: undefined,
     });
+  }
+
+  @Action(GetFreeQualities)
+  getFreeQualities({ getState, setState }: StateContext<HeroStateModel>) {
+    this.loadingService.start();
+    const query = this.supabase.getFreeQualities();
+
+    return from(query).pipe(
+      tap(({ data: result, error, status }) => {
+        this.loadingService.stop();
+        const state = getState();
+        setState({
+          ...state,
+          freeQualities: result as FreeQuality[],
+        });
+      })
+    );
   }
 }

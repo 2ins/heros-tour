@@ -316,7 +316,7 @@ export class SupabaseService {
   }
   getMasterById(idMaster: number) {
     return this.supabase
-      .from('overview_masters_extended')
+      .from('overview_masters_extended_tables')
       .select(`*`)
       .eq('id', idMaster);
   }
@@ -402,7 +402,7 @@ export class SupabaseService {
 
   getActivityOverviewXP(idAct: number) {
     return this.supabase
-      .from('overview_activities_extended')
+      .from('overview_activities_extended_tables')
       .select(`*`)
       .eq('id', idAct);
   }
@@ -427,5 +427,9 @@ export class SupabaseService {
     return this.supabase.rpc('func_find_locations_geom_by_master', {
       masterid: idMaster,
     });
+  }
+  //search heroes no parameters
+  getFreeQualities() {
+    return this.supabase.from('free_qualities').select(`*`);
   }
 }

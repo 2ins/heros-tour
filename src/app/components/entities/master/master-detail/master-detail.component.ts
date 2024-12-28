@@ -11,11 +11,14 @@ import {
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Select, Store } from '@ngxs/store';
+import { User } from '@supabase/supabase-js';
 import { Observable, Subscription } from 'rxjs';
 import { SetSelectedMaster } from 'src/app/actions/master.action';
+import { SetUserProfile } from 'src/app/actions/profiles.action';
 import { Quality } from 'src/app/model/quality';
 import { MobileService } from 'src/app/services/mobile.service';
 import { MyProfile, SupabaseService } from 'src/app/supabase.service';
+import { transformToFlatArray } from 'src/app/utils/utilityfunctions';
 import { Master } from '../../../../model/master';
 import { HeroState } from '../../../../states/todo.state';
 import { PopupComponent } from '../../../popup/popup.component';
@@ -25,6 +28,7 @@ import { PopupComponent } from '../../../popup/popup.component';
   styleUrls: ['./master-detail.component.css'],
 })
 export class MasterDetailComponent implements OnInit, OnDestroy {
+  [x: string]: any;
   @Select(HeroState.getSelectedMaster) selectedMaster?: Observable<Master>;
   @Select(HeroState.getUserProfile) currentUser?: Observable<MyProfile>;
   //@Select(HeroState.getMasterList) masters?: Observable<Master[]>;
@@ -39,8 +43,23 @@ export class MasterDetailComponent implements OnInit, OnDestroy {
   randomNumber?: number;
   authenticated: boolean = false;
   profile: any = null;
+  freequalities: any[] = [];
+  filteredfreequalities: any[] = [];
+  helpText: boolean = false;
 
   centersAppo: google.maps.LatLngLiteral[] = [];
+
+  filterByStrength = (data: any[], strength: string): any[] => {
+    return data
+      .map((item) => ({
+        ...item,
+        group: item.group.filter(
+          (group: { Seligman_Strengths: string | string[] }) =>
+            group.Seligman_Strengths.includes(strength)
+        ),
+      }))
+      .filter((item) => item.group.length > 0);
+  };
 
   constructor(
     private store: Store,
@@ -74,6 +93,12 @@ export class MasterDetailComponent implements OnInit, OnDestroy {
       this.master = m;
       this.qualities = m.qualities;
 
+      if (m.table) {
+        this.freequalities = transformToFlatArray(m.table);
+
+        this.filteredfreequalities = this.freequalities;
+      }
+
       // Assicurati che m.locations sia definito prima di procedere
       if (m.locations) {
         var appo = m.locations
@@ -104,23 +129,38 @@ export class MasterDetailComponent implements OnInit, OnDestroy {
   addXp() {
     this.isMobile = false;
     const appo = { oggetto: this.master };
-    console.log('da passare:', appo);
     this.route.navigateByUrl('/addnew', { state: appo });
   }
 
   ngOnInit(): void {
-    console.log('this.centersAppo', this.centersAppo);
-
     this.isMobile = this.ms.isMobile();
     this.activatedRoute.paramMap.subscribe((map) => {
       this.masterId = map.get('id');
-
       this.store.dispatch(new SetSelectedMaster(this.masterId));
     });
-    this.currentUser?.subscribe((cu) => {
-      this.profile = cu;
-    });
+    this.loadUser();
   }
+
+  //***********tutto qui la gestione corretta dell'utenza passa per qui */
+  async loadUser() {
+    if (!this.profile) {
+      await this.getUser().then((p) => {
+        this.profile = p;
+        this.store.dispatch(new SetUserProfile(this.profile));
+      });
+    }
+  }
+
+  async getUser(): Promise<User | null> {
+    const { data, error } = await this.supabase.getUserSupabase();
+    if (error) {
+      console.error('Error fetching user:', error);
+      return null;
+    }
+    return data.user;
+  }
+
+  /////////////////////////////
 
   backClicked() {
     this.location.back();
@@ -146,5 +186,15 @@ export class MasterDetailComponent implements OnInit, OnDestroy {
     this._snackBar.openFromComponent(PopupComponent, {
       duration: 2 * 1000,
     });
+  }
+
+  appo(sel: Quality) {
+    this.filteredfreequalities = this.filterByStrength(
+      this.freequalities,
+      sel.name
+    );
+    console.log(
+      'filteredfreequalities aggiornato:' + this.filteredfreequalities.length
+    );
   }
 }

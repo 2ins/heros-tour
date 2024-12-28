@@ -5,8 +5,10 @@ import {
   ElementRef,
   NgZone,
   OnInit,
+  TemplateRef,
   ViewChild,
 } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
@@ -27,6 +29,11 @@ import { MyProfile, SupabaseService } from 'src/app/supabase.service';
   styleUrls: ['./experience-insert.component.css'],
 })
 export class ExperienceInsertComponent implements OnInit, AfterViewInit {
+  selectedQuality?: Quality;
+
+  // Usa ViewChild per ottenere il riferimento al template
+  @ViewChild('qualityDetailTemplate') qualityDetailTemplate!: TemplateRef<any>;
+
   copy() {
     var date = this.article?.header.date;
     var place = this.article?.header.place;
@@ -96,7 +103,8 @@ export class ExperienceInsertComponent implements OnInit, AfterViewInit {
     private ngZone: NgZone,
     private lctn: Location,
     private el: ElementRef,
-    private loc: Location
+    private loc: Location,
+    public dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -148,6 +156,7 @@ export class ExperienceInsertComponent implements OnInit, AfterViewInit {
     });
 
     this.profile?.subscribe((p) => {
+      console.log('MY PROFILE: ', p.id);
       if (p) {
         this.myProfile = p;
       }
@@ -188,9 +197,23 @@ export class ExperienceInsertComponent implements OnInit, AfterViewInit {
     this.selectedMaster = m;
   }
 
-  updateItem(q: Quality): void {
+  openDialog(templateRef: TemplateRef<any>): void {
+    this.dialog.open(templateRef, {
+      width: '90vw', // Imposta la larghezza al 100% della viewport
+      height: '90vh', // Imposta l'altezza al 100% della viewport
+      maxWidth: '100vw', // Rimuove il limite massimo della larghezza
+      maxHeight: '100vh', // Rimuove il limite massimo dell'altezza
+      panelClass: 'full-screen-dialog', // Aggiungi una classe personalizzata per eventuali stili aggiuntivi
+    });
+  }
+
+  updateItem(q: any, templateRef: TemplateRef<any>): void {
     console.log('dai: ', q);
     q.selected = !q.selected;
+    if (q.selected) {
+      this.selectedQuality = q;
+      this.openDialog(templateRef);
+    }
   }
 
   save(): void {
